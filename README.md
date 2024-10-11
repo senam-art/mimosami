@@ -1,5 +1,5 @@
-# mimosami
-Mimosami is a bakery specializing in quality cakes, brownies, and cookies with a wide range of customization options. Currently, all sales and marketing are done through Instagram. However, with increased order volumes, xMimosami faces challenges managing its orders and inventory effectively.
+# The Power
+Mimosami is a bakery specializing in quality cakes, brownies, and cookies with a wide range of customization options. Currently, all sales and marketing are done through Instagram. However, with increased order volumes, Mimosami faces challenges managing its orders and inventory effectively. Mosami has reached out to the web development firm, Power to create a a dynamic and stylish e-commerce website to transition from taking orders on social media to a robust online platform that effectively manages customer orders. 
 
 
 ### Project Overview: Mimosami E-Commerce Website
@@ -7,24 +7,13 @@ Mimosami is a bakery specializing in quality cakes, brownies, and cookies with a
 #### The Client
 At Mimosami, the focus is on creating high-quality baked goods that bring joy to every bite. Specializing in cakes, brownies, and cookies, they take pride in using the finest ingredients to craft treats that are not only delicious but also customizable to fit each customer's unique preferences. Whether celebrating a special occasion or simply craving something sweet, Mimosami’s commitment to quality and personalization ensures every order is just right.
 
-#### Project Goals
-Mimosami seeks a dynamic and stylish e-commerce website to transition from taking orders on social media to a robust online platform that effectively manages customer orders. 
+#### Features
+**Product Catalog**: Mimosami can update their product catalog, allowing users to browse available items and leave reviews to enhance customer engagement.
 
-#### Key Features
-- **Admin Page**: 
-  - The website will include an admin page that provides essential sales analytics and inventory management tools.
+**Managing Orders**: Customers will be able to place orders directly through the website, and Mimosami will have access to a database to view and manage these orders efficiently.
 
-- **Automated Inventory Management**: 
-  - The inventory management system will automatically track changes in inventory based on customer orders and connect to suppliers to update stock levels when supplies are low.
+**Admin Page**: The website will include an admin page that provides sales analytics and inventory management tools.
 
-- **Managing Orders**: 
-  - Customers will be able to place orders directly through the website, and Mimosami will have access to a database to view and manage these orders efficiently.
+**Sales Tracking**: The admin dashboard will enable Mimosami to track sales performance, providing insights to inform business decisions.
 
-- **Product Catalog**: 
-  - Mimosami can update their product catalog, allowing users to browse available items and leave reviews to enhance customer engagement.
-
-- **Sales Tracking**: 
-  - The admin dashboard will enable Mimosami to track sales performance, providing insights to inform business decisions.
-
-- **Inventory Tracking**: 
-  - Mimosami will be able to monitor their inventory through an intuitive admin dashboard, ensuring they maintain adequate stock levels for customer demand.
+- **Inventory Management**: The inventory management system will automatically track changes in inventory based on customer orders and connect to suppliers to update stock levels when supplies are low.
