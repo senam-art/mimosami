@@ -1,0 +1,53 @@
+/*Imports*/
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+/*Body*/
+body{
+    font-family:'Garet',sans-serif;
+    background-color:#FBFBFB;
+    margin:0px;
+    padding:0px;
+    font:'Montserrat', sans-serif;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    gap: 10px;
+    padding: 10px;
+  }
+
+  button{
+    
+  }
+
+/*Header*/
+header{
+    background-color: #F1A1A5;
+    text-align:center;
+    padding:10px;
+    margin:0px;
+}
+
+nav{
+    background-color: #FBFBFB;
+    margin:0px;
+    text-align:left;
+}
+
+footer{
+    background-color: #855363; 
+    justify-content: center;  
+}
+
+/*Fonts*/
+h1{
+    font-family:'Quicksand',sans-serif;
+    color:#1B0B0B;
+}
+
+/*Sections*/
+#heading{
+    background-color:#CFE6FC;
+}
