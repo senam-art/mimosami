@@ -18,49 +18,59 @@ body{
     padding: 15px;
   }
 
-  .grid-container-4-columns {
+.grid-container-4-columns {
     display: grid;
-    grid-template-columns: auto auto auto auto;
+    grid-template-columns: 25% 25% 25% 25%;
     margin: 15px;
     padding: 15px;
   }
 
-.grid-item {
+  .grid-item {
+    margin:20px;
+    padding:10px;
+  }
+
+#card  {
     background-color: #FBFBFB;
     border-radius:20px;
-    padding: 20px;
     text-align: center;
   }
 
 .item1 { grid-area: header;
         background-color:#CFE6FC;
-        border-radius:0px 0px 20px 20px ; }
+        border-bottom-left-radius:40px;
+        border-bottom-right-radius:40px;
+        margin-bottom:30px ; }
+
+.item2b {grid-area: logo;
+        padding: 10px;
+        display: flex;           
+        justify-content: center;
+        align-items: center;  }
 
 .item2 {grid-area: menu;
-        background-color:#CFE6FC;
-        padding: 10px;
-        border-radius: 20px;}
+        background-color:#F1A1A5;
+        padding: 30px;
+        border-radius: 40px;
+        margin-right:30px ;}
 
 .item3 { grid-area: main;
-        background-color:#e2e7ec; }
+        background-color:#CFE6FC;
+        border-radius: 40px;
+        padding: 10px; }
 
 .item4 { grid-area: footer; }
 
 .grid-container-webpage-setup {
   display: grid;
   grid-template-areas:
-    'header header header header header header'
-    'menu main main main main main'
-    'footer footer foooter footer footer footer'
-    grid-template-columns: 16.6% 16.6% 16.6% 16.6% 16.6% 16.6% ;
+    'logo logoS header header header header'
+    'menu menu main main main main'
+    'footer footer footer footer footer footer';
+    grid-template-columns: auto 1fr 1fr 1fr 1fr 1fr; ;
     grid-template-rows: auto;
-  padding: 10px;
+    margin: 0px 30px;
 }
-
-.grid-container-webpage-setup> div {
-    text-align: center;
-    padding: 20px 0;
-  }
 
 /*Header*/
 header{
@@ -91,7 +101,7 @@ h1{
 h2{
     font-family:'Quicksand',sans-serif;
     color:#1B0B0B;
-    font-size:0px;
+    font-size:15px;
 }
 
 p{
@@ -102,4 +112,27 @@ p{
 /*Sections*/
 #heading{
     background-color:#CFE6FC;
+}
+
+/*Buttons*/
+.menu{
+    background-color: #F1A1A5;
+    border-radius: 20px;
+    color: #FBFBFB;
+    font-weight: 300;
+    font-size: 20px;
+    border: none;
+    align-items: center;
+    font-family:'Montserrat',sans-serif;
+    padding:10px;
+    margin:20px;
+    width:80%;
+}
+
+.selected{
+    background-color: #855363;
+}
+
+.menu:hover{
+    background-color: #855363;  
 }
