@@ -4,30 +4,96 @@
 	<meta name='viewport' content="width=device-width inital-scale=1.0">
 	<title>Dashboard</title>
 	<link rel="icon" type="image/x-icon" href="xxx">
-<link rel="stylesheet" href="MimosamiStyle.css">
+    <link rel="stylesheet" href="MimosamiStyle2.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
 </head>
 
 <body>
 
-<header>
+    <div class="grid-container-webpage-setup">
+        <div class="item1">
+            <div class="grid-container-2-columns">
+                <div class="grid-item">
+                    <h1 style="text-align:left">Dashboard</h1>
+                </div>
+                <div class="grid-item">
+                    <img src="profile.png">
+                </div>
+            </div>
+        </div>
 
-</header>
+        <div class="item2">
+            <img src="MimosamiLogo.png" alt="MimosamiLogo" style="width:100%;max-width:50px">
+        </div>
+ 
+        <div class="item3">
+            <div class="grid-container-4-columns">
+                <div class="grid-item">
+                    <p>Total Sales</p>
+                    <h2>GHC 2000</h2>
+                </div>
 
-<nav>
-    
-</nav>
+                <div class="grid-item">
+                    <p>Total Customers</p>  
+                    <h2>150</h2>                  
+                </div>
 
-<main>
+                <div class="grid-item">
+                    <p>Monthly Sales</p>
+                    <h2>GHC 500</h2>                   
+                </div>
 
-</main>
+                <div class="grid-item">
+                    <p>Monthly Customers</p>  
+                    <h2>50</h2>                    
+                </div>
 
-<footer>
+            </div>
 
-</footer>
+            <div class="grid-container-2-columns">
+                <div class="grid-item">
+                    <h2>Sales by Prodcut</h2>
+                </div>
+
+                <div class="grid-item">
+                    <h2>Sales by Prodcut</h2>
+                </div>
+                
+                <div class="grid-item">
+                    <h2>Sales by Prodcut</h2>
+                </div>
+                
+                <div class="grid-item">
+                    <h2>Sales by Prodcut</h2>
+                </div> 
+            </div>
+        </div>  
+        
+        <div class="item4">
+
+        <div>
+
+    </div>
 
 </body>
 
 <script>
+const data = [
+{ year: 2010, count: 10 },
+{ year: 2011, count: 20 },
+{ year: 2012, count: 15 },
+{ year: 2013, count: 25 },
+{ year: 2014, count: 22 },
+{ year: 2015, count: 30 },
+{ year: 2016, count: 28 },
+];
+
+const myChart = new Chart("myChart", {
+type: "bar",
+data: {},
+options: {}
+});
+
 </script>
 
 </html>

@@ -1,0 +1,105 @@
+/*Imports*/
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+/*Body*/
+body{
+    font-family:'Garet',sans-serif;
+    background-color:#FBFBFB;
+    margin:0px;
+    padding:0px;
+    font:'Montserrat', sans-serif;
+}
+
+.grid-container-2-columns {
+    display: grid;
+    grid-template-columns: auto auto;
+    margin: 15px;
+    padding: 15px;
+  }
+
+  .grid-container-4-columns {
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    margin: 15px;
+    padding: 15px;
+  }
+
+.grid-item {
+    background-color: #FBFBFB;
+    border-radius:20px;
+    padding: 20px;
+    text-align: center;
+  }
+
+.item1 { grid-area: header;
+        background-color:#CFE6FC;
+        border-radius:0px 0px 20px 20px ; }
+
+.item2 {grid-area: menu;
+        background-color:#CFE6FC;
+        padding: 10px;
+        border-radius: 20px;}
+
+.item3 { grid-area: main;
+        background-color:#e2e7ec; }
+
+.item4 { grid-area: footer; }
+
+.grid-container-webpage-setup {
+  display: grid;
+  grid-template-areas:
+    'header header header header header header'
+    'menu main main main main main'
+    'footer footer foooter footer footer footer'
+    grid-template-columns: 16.6% 16.6% 16.6% 16.6% 16.6% 16.6% ;
+    grid-template-rows: auto;
+  padding: 10px;
+}
+
+.grid-container-webpage-setup> div {
+    text-align: center;
+    padding: 20px 0;
+  }
+
+/*Header*/
+header{
+    background-color: #F1A1A5;
+    text-align:center;
+    padding:10px;
+    margin:0px;
+}
+
+nav{
+    background-color: #FBFBFB;
+    margin:0px;
+    text-align:left;
+}
+
+footer{
+    background-color: #855363; 
+    justify-content: center;  
+}
+
+/*Fonts*/
+h1{
+    font-family:'Quicksand',sans-serif;
+    color:#1B0B0B;
+    font-weight: bold;
+}
+
+h2{
+    font-family:'Quicksand',sans-serif;
+    color:#1B0B0B;
+    font-size:0px;
+}
+
+p{
+    font-family:'Montserrat',sans-serif;
+    color:#1B0B0B;
+}
+
+/*Sections*/
+#heading{
+    background-color:#CFE6FC;
+}
