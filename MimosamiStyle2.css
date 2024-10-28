@@ -9,20 +9,21 @@ body{
     margin:0px;
     padding:0px;
     font:'Montserrat', sans-serif;
+    font-size:16px;
 }
 
 .grid-container-2-columns {
     display: grid;
-    grid-template-columns: auto auto;
-    margin: 15px;
-    padding: 15px;
+    grid-template-columns:repeat(4, 1fr);
+    margin: 2%;
+    padding: 2%;
   }
 
 .grid-container-4-columns {
     display: grid;
     grid-template-columns: 25% 25% 25% 25%;
-    margin: 15px;
-    padding: 15px;
+    margin: 2%
+    padding: 2%;
   }
 
   .grid-item {
@@ -96,6 +97,8 @@ h1{
     font-family:'Quicksand',sans-serif;
     color:#1B0B0B;
     font-weight: bold;
+    margin:0px;
+    padding:0px;
 }
 
 h2{
@@ -135,4 +138,13 @@ p{
 
 .menu:hover{
     background-color: #855363;  
+}
+
+input{
+    font-size: 15px;
+    border-color: #1B0B0B;
+    border-radius: 20px;
+    font-family:'Montserrat', sans-serif; 
+    padding:10px;
+    border:none;
 }
