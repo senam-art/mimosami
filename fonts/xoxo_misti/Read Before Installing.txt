@@ -1,0 +1,2 @@
+Note: Due to the chalky detail, this font is heavy to load and may freeze or crash the Windows font viewer.
+You should avoid previewing it before installing it (do not double-click on the font file, but right-click > Install)
