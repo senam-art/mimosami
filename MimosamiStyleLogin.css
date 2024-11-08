@@ -1,0 +1,141 @@
+/*Imports*/
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+/*Body*/
+body{
+    font-family:'Montserrat',sans-serif;
+    background-color:#CFE6FC;
+    margin:0px;
+    padding:0px;
+    font-size:16px;
+    
+}
+
+.grid-container-2-columns {
+    display: grid;
+    grid-template-columns:repeat(2, 1fr);
+    margin: 2%;
+    padding: 2%;
+  }
+
+  .grid-item {
+    margin:2%;
+    padding:10px;
+  }
+
+#card  {
+    background-color: #FBFBFB;
+    border-radius:20px;
+    text-align: center;
+    padding:15px;
+    margin:10px
+  }
+
+.item1 { grid-area: header;
+        margin-bottom:30px ;}
+
+.item1b { grid-area: button;
+    margin-bottom:30px ;
+    }
+
+.pink-container{
+    background-color:#F1A1A5;
+    padding: 30px;
+    border-radius: 40px;
+    justify-content: center;    
+}
+
+.item2 { grid-area: main;
+    background-color:#f2f7f8;
+    border-top-left-radius: 40px;
+    border-top-left-radius: 40px;
+    padding: 10px; }
+
+
+.grid-container-webpage-setup {
+  display: grid;
+  grid-template-areas:
+    'header header header header header button'
+    'main main main main main main'
+    'main main main main main main';
+    grid-template-columns: auto 1fr 1fr 1fr 1fr 1fr; ;
+    grid-template-rows: auto;
+    margin: 0px 30px;
+}
+
+/*Fonts*/
+h1{
+    font-family:'Quicksand',sans-serif;
+    color:#1B0B0B;
+    font-weight: bold;
+    margin:0px;
+    padding:0px;
+}
+
+h2{
+    font-family:'Quicksand',sans-serif;
+    color:#1B0B0B;
+    font-size:1rem;
+}
+
+p{
+    font-family:'Montserrat',sans-serif;
+    color:#1B0B0B;
+}
+
+a{
+    text-decoration: none;
+    color: inherit;
+}
+
+/*Sections*/
+/*Buttons*/
+button{
+    background-color: #F1A1A5;
+    border-radius: 20px;
+    color: #FBFBFB;
+    font-weight: 300;
+    font-size: 12px;
+    border: none;
+    font-family:'Montserrat',sans-serif;
+    padding:10px;
+    margin:2%;  
+    width:100px;
+}
+
+.selected{
+    background-color: #855363;
+}
+
+.button:hover{
+    background-color: #855363;  
+}
+
+input{
+    font-size: 1rem;
+    border-color: #1B0B0B;
+    border:none;
+    border-bottom: 2px;
+    font-family:'Montserrat', sans-serif; 
+    padding:10px;
+}
+
+/*Media*/
+@media (max-width: 768px) {
+    .grid-container-4-columns {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .grid-container-2-columns {
+        grid-template-columns: 1fr; 
+    }
+
+    .menu {
+        font-size: 1rem;
+    }
+
+    .item2 {
+        margin-right: 0; 
+    }
+}
