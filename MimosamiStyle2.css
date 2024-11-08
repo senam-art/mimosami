@@ -129,6 +129,11 @@ p{
     color:#1B0B0B;
 }
 
+a{
+    text-decoration: none;
+    color: inherit;
+}
+
 /*Sections*/
 #heading{
     background-color:#CFE6FC;
@@ -180,30 +185,16 @@ input{
 }
 
 /*Table*/
-table{
+table{ 
 	justify-content: space-evenly;
-	border-collapse: collapse;
-  width: 100%;
-}
-
-thead{
+    width: 95%;
     background-color: #FBFBFB;
     border-radius:20px;
     text-align: center;
-    margin:2%;
-    padding:10px;
-    margin-bottom:10pxs;
-
+    margin:5%;
+    padding:15px;
+    
 }
-
-tbody{
-    background-color: #FBFBFB;
-    border-radius:20px;
-    text-align: center;
-    margin:2%;
-    padding:10px;
-}
-
 
 /*Media*/
 @media (max-width: 768px) {
