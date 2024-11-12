@@ -3,15 +3,19 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 
 /*Body*/
-body{
+html, body{
     font-family:'Montserrat',sans-serif;
-    background-color:#CFE6FC;
+    background-color:#f2f7f8;
     margin:0px;
     padding:0px;
     font-size:16px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
     
 }
 
+/*Containers*/
 .grid-container-2-columns {
     display: grid;
     grid-template-columns:repeat(2, 1fr);
@@ -19,9 +23,9 @@ body{
     padding: 2%;
   }
 
-  .grid-item {
+.grid-item {
     margin:2%;
-    padding:10px;
+    padding:30px;
   }
 
 #card  {
@@ -33,10 +37,18 @@ body{
   }
 
 .item1 { grid-area: header;
-        margin-bottom:30px ;}
+        margin:20px 10px 0px 10px;}
+
+.item1a {grid-area: logo;
+    display: flex;           
+    justify-content: center;
+    align-items: center; 
+    flex-direction: column;
+
+    }
 
 .item1b { grid-area: button;
-    margin-bottom:30px ;
+    margin:30px 10px 0px 10px;
     }
 
 .pink-container{
@@ -47,21 +59,27 @@ body{
 }
 
 .item2 { grid-area: main;
-    background-color:#f2f7f8;
+    background-color:#CFE6FC;
     border-top-left-radius: 40px;
-    border-top-left-radius: 40px;
-    padding: 10px; }
+    border-top-right-radius: 40px;
+    padding: 10px;
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center; }
 
 
 .grid-container-webpage-setup {
   display: grid;
   grid-template-areas:
-    'header header header header header button'
+    'logo header header header header button'
     'main main main main main main'
     'main main main main main main';
     grid-template-columns: auto 1fr 1fr 1fr 1fr 1fr; ;
     grid-template-rows: auto;
-    margin: 0px 30px;
+    margin: 0px 70px;
+    flex-direction: column;
+    flex-grow: 1;
 }
 
 /*Fonts*/
@@ -89,7 +107,6 @@ a{
     color: inherit;
 }
 
-/*Sections*/
 /*Buttons*/
 button{
     background-color: #F1A1A5;
@@ -112,13 +129,29 @@ button{
     background-color: #855363;  
 }
 
-input{
+input:not(#submit) {
     font-size: 1rem;
     border-color: #1B0B0B;
     border:none;
-    border-bottom: 2px;
+    border-bottom: 2px solid black;
     font-family:'Montserrat', sans-serif; 
     padding:10px;
+    margin:10px;
+ 
+}
+
+#submit {
+    border-radius: 30px;
+    font-size: 12px;
+    border:none;
+    font-family:'Montserrat', sans-serif; 
+    padding:15px;
+    margin:10px;
+ 
+}
+
+.submit{
+    border-radius: 10px;
 }
 
 /*Media*/
