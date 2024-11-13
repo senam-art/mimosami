@@ -30,7 +30,7 @@
                     <h1> Welcome to Mimosami!</h1>
                     <p>Login to your account</p>
                     <p>Already have an account?</p>
-                    <button><a href ="UserLogin.html">Login Up!</a></button>
+                    <button><a href ="UserLogin.html">Login!</a></button>
                 </div>
 
                 <div class="grid-item" id="card">
@@ -41,7 +41,7 @@
                         <input id="uname" type="text" placeholder="Username" required><br>
                         <input id="email" type="email" placeholder="Email" required><br>
                         <input id="pword" type="password" placeholder="Password" required> <br>
-                        <input id="reenterpword" type="password" placeholder="Retype your password" required> <br>
+                        <input id="pwordretype" type="password" placeholder="Retype your password" required> <br>
                         <input type="submit" id="submit">
                     </form>
                 </div>
@@ -53,28 +53,62 @@
 </body>
 
 <script>
-const form=document.getElementById("login");
+    const form=document.getElementById("signup");
 
-form.addEventListener('submit', function(event){
-    event.preventDefault();
+    form.addEventListener('submit', function(event){
+        event.preventDefault();
 
-    const uname=document.getElementById('uname').value;
-    const pword=document.getElementById('pword').value;
+        const fname=document.getElementById('fname').value;
+        const lname=document.getElementById('lname').value;
+        const uname=document.getElementById('uname').value;
+        const email=document.getElementById('email').value;
+        const pword=document.getElementById('pword').value;
+        const pwordretype=document.getElementById('pwordretype').value;
 
-    if(uname ===""){
-        alert('Please enter your username.');
-        return;
+
+        if(fname ===""){
+            alert('Please enter your first name.');
+            return;
+        }
+
+
+        if(lname ===""){
+            alert('Please enter your last name.');
+            return;
+        }
+
+        if(uname ===""){
+            alert('Please enter your username.');
+            return;
+        }
+
+        if(!emailIsValid(email)){
+            alert('Please enter a valid email address.');
+            return;
+        }
+
+
+        if(!pwordIsValid(pword)){
+            alert('Please enter a valid password. It should contain at least 8 characters, 1 upper case letter, 3 numbers, 1 special character');
+            return;
+        }
+
+        if(pwordretype!==pword){
+            alert('Your passwords do not match.');
+            return;
+        }
+
+
+        alert("Waiting to Sign up.");
+        form.submit();
+        });
+
+    function emailIsValid(email){
+        return /^[^\s@]+@[^\s@]+$/.test(email);
     }
 
-
-    if(pword ===""){
-        alert('Please enter your password.');
-        return;
+    function pwordIsValid(pword){
+        return /^(?=.*[A-Z])(?=(?:.*\d.*\d.*\d))(?=.*[!@#$%^&*()_+=[\]{};':"\\|,.<>/?~`-])[A-Za-z\d!@#$%^&*()_+=[\]{};':"\\|,.<>/?~`-]{8,}$/.test(pword);
     }
-
-    alert("Waiting to login.");
-    form.submit();
-    });
-    
 </script>
 </html>

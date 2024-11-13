@@ -49,6 +49,7 @@
 </body>
 
 <script>
+<!--Javascipt-->
 const form=document.getElementById("login");
 
 form.addEventListener('submit', function(event){
@@ -71,6 +72,20 @@ form.addEventListener('submit', function(event){
     alert("Waiting to login.");
     form.submit();
     });
+
+<!--PHP-->
+fetch("http://localhost/Group_Project/api.php")
+            .then(response => response.json())
+            .then(data => {
+                const studentList = document.getElementById('student-list');
+                studentList.innerHTML = ''; // Clear the loading text
+                data.forEach(student => {
+                    const studentInfo = document.createElement('p');
+                    studentInfo.textContent = `ID: ${student.id}, Name: ${student.name}, Email: ${student.email}, Course: ${student.course}`;
+                    studentList.appendChild(studentInfo);
+                });
+            })
+            .catch(error => console.error('Error:', error));
     
 </script>
 </html>
