@@ -1,12 +1,10 @@
 <?php
 header("Content-Type: application/json");
 
-$servername = "localhost";
-$username = "root";
-$password = ""; // Default for XAMPP
-$dbname = "demo.db";
-
-//use dede's database detaild
+$servername = "169.239.251.102";
+$username = "akua.amofa";
+$password = "newtoMysql@2"; // Default for XAMPP
+$dbname = "mimosami.db";
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
