@@ -2,9 +2,9 @@
 header("Content-Type: application/json");
 
 $servername = "localhost";
-$username = "akua.amofa";
-$password = "newtoMysql@2"; // Default for XAMPP
-$dbname = "mimosami.db";
+$username = "maisy.baer";
+$password = "smarty8Aa.g@"; // Default for XAMPP
+$dbname = "webtech_fall2024_maisy_baer";
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
@@ -15,17 +15,6 @@ if ($conn->connect_error) {
     exit();
 }
 
-$sql = "SELECT id, name, email, course FROM students";
-$result = $conn->query($sql);
-
-$students = [];
-if ($result->num_rows > 0) {
-    while ($row = $result->fetch_assoc()) {
-        $students[] = $row;
-    }
-}
-
 $conn->close();
-echo json_encode($students);
 
 ?>
