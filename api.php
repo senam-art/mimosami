@@ -1,7 +1,7 @@
 <?php
 header("Content-Type: application/json");
 
-$servername = "169.239.251.102";
+$servername = "localhost";
 $username = "akua.amofa";
 $password = "newtoMysql@2"; // Default for XAMPP
 $dbname = "mimosami.db";
