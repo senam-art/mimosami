@@ -23,7 +23,6 @@
             <button><a href="AdminLogin.html">Admin</a></button>
         </div>
 
-        <div class="item2">
 
             <div class="grid-container-2-columns">
                 <div class="grid-item">
