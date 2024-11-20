@@ -82,7 +82,7 @@ body{
 .grid-container-webpage-setup {
   display: grid;
   grid-template-areas:
-    'logo logoS header header header header'
+    'logo logo header header header header'
     'menu menu main main main main'
     'footer footer footer footer footer footer';
     grid-template-columns: auto 1fr 1fr 1fr 1fr 1fr; ;
