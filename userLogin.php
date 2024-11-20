@@ -2,9 +2,9 @@
 session_start();
 
 $servername = "localhost";
-$db_username = "akua.amofa";
-$db_password = "newtoMysql@2";
-$dbname = "mimosami.db";
+$db_username = "maisy.baer";
+$db_password = "smarty8Aa.g@";
+$dbname = "webtech_fall2024_maisy_baer";
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $conn = new mysqli($servername, $db_username, $db_password, $dbname);
