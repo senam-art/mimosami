@@ -4,14 +4,14 @@
 
 @font-face {
   font-family: "dahlia";
-  src: url("fonts/Pretty_Dahlia.otf") format("opentype");
+  src: url("../fonts/Pretty_Dahlia.otf") format("opentype");
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: "XOXO Misti";
-  src: url("fonts/xoxo_misti/XOXO Misti.ttf") format("truetype");
+  src: url("../fonts/xoxo_misti/XOXO Misti.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
 }
