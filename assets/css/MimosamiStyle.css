@@ -267,28 +267,28 @@ footer {
 }
 
 .grid-item1 {
-  background-image: url("images/pexels-laarkstudio-7243524.jpg");
+  background-image: url("../images/bread.jpg");
   height: 80%;
   background-size: cover;
   border-radius: 10%;
 }
 
 .grid-item2 {
-  background-image: url("images/pexels-polina-tankilevitch-4109791.jpg");
+  background-image: url("../images/cupcake.jpg");
   height: 80%;
   background-size: cover;
   border-radius: 10%;
 }
 
 .grid-item3 {
-  background-image: url("images/pexels-karolina-grabowska-5386710.jpg");
+  background-image: url("../images/brownies-home.jpg");
   height: 80%;
   background-size: cover;
   border-radius: 10%;
 }
 
 .grid-item4 {
-  background-image: url("images/pexels-karolina-grabowska-4197911.jpg");
+  background-image: url(""../images/bread.jpg");
   height: 80%;
   background-size: cover;
   border-radius: 10%;
