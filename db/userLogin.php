@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $row = $result->fetch_assoc();
         if (password_verify($pword, $row['pword'])) {
             $_SESSION['username'] = $uname;
-            header("Location: Homepage.html");
+            header("Location: view/Products.php");
             exit();
         } else {
             echo "Invalid username or password!";
