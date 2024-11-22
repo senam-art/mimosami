@@ -2,12 +2,6 @@
 session_start();
 
     include '../db/config.php';
-
-    if ($conn->connect_error) {
-        echo "Connection failed: " . $conn->connect_error;
-    } else {
-        echo "Connection successful!";
-    }
     
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $productId = intval($_POST['product_id']);
@@ -55,8 +49,7 @@ session_start();
 <main>
     <div class="banner">
         <nav class="nav-links">
-                <button class="nav-button"><a href="UserLogin.html">Basket</a></button>
-                <button class="nav-button"><a href="Signup.php">Checkout</a></button>
+                <button class="nav-button"><a href="checkout.html">Basket</a></button>
         </nav>
     
         <header class="scrolled">
@@ -79,7 +72,7 @@ session_start();
                 <img style="width:100px; height:auto" src="../assets/images/fudgy_brownies.jpg">
             </div>
 
-            <div class="product-grid-item">
+            <div class="product-grid-item" id="">
                 <h3 id="productName">Brownies</h3>
                 <p>Fudgy, rich brownies with chunks of dark chocolate for cocoa lovers.</p>
                 <h3 id="price">$20</h3>
