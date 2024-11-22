@@ -4,8 +4,8 @@ session_start();
     include '../db/config.php';
     
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $productId = intval($_POST['product_id']);
-        $quantity = intval($_POST['quantity']);
+        $productId = $_POST['product_id'];
+        $quantity = htmlspecialchars($_POST['quantity']);
     
         $stmt = $pdo->prepare("SELECT * FROM mimosami_products WHERE id = ?");
         $stmt->execute([$productId]);
@@ -72,12 +72,12 @@ session_start();
                 <img style="width:100px; height:auto" src="../assets/images/fudgy_brownies.jpg">
             </div>
 
-            <div class="product-grid-item" id="">
+            <div class="product-grid-item" id="P002">
                 <h3 id="productName">Brownies</h3>
                 <p>Fudgy, rich brownies with chunks of dark chocolate for cocoa lovers.</p>
                 <h3 id="price">$20</h3>
                 <form id="addToBasket" method="POST">
-                    <input type="hidden" name="product_id" value="<?= $product['id']; ?>">
+                    <input type="hidden" id="product_id" value="P002>
                     <div>
                         <button class="plus-btn" type="button" name="button">+</button>
                         <input type="text" name="quantity" id="brownie-quantity" value="1">
