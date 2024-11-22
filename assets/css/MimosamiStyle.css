@@ -319,3 +319,13 @@ input{
   width:10px;
   margin:10px
 }
+
+
+button {
+  background-color: #eef3f8;
+  color: black;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  border-radius: 5px;
+}
