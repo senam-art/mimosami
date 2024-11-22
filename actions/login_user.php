@@ -45,7 +45,7 @@ if ($results->num_rows > 0) {
         echo 'Incorrect password. Please try again.';
     }
 } else {
-    echo 'User not in the system.';
+    echo 'User not in the system please.';
 }
 
 $stmt->close();
