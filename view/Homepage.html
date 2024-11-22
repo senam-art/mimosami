@@ -10,79 +10,70 @@
 
 <body>
 
-<nav>
-    <h1 class="logo">Mimosami</h1>
-    <div class="nav-links">
-        <button><a href="#">Log In</a></button>
-        <button><a href="#">Sign Up</a></button>
-        <!-- <img src="MimosamiLogo.png" alt="cupcake"> -->
-    </div>
-</nav>
+<div class="banner">
+    <nav class="nav-links">
+            <button class="nav-button"><a href="UserLogin.html">Log In</a></button>
+            <button class="nav-button"><a href="Signup.php">Sign Up</a></button>
+    </nav>
 
-<div class="div2">
-    <video autoplay loop muted>
-        <source src="../assets/videos/mimovid2.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-    </video>
+    <header class="scrolled">
+        <a href="Homepage.html"><h1>Mimosami</h1></a>
+    </header>
 </div>
 
-<div class="div3">
-    <div class="scrolling-text-inner" style="--marquee-speed: 20s; --direction:scroll-left" role="marquee">
-        <p class="scrolling-text-item">New arrivals! Try them now!New arrivals! Try them now!New arrivals! Try them now!New arrivals! </p>
+<main>
+    <div class="homepageVideo">
+        <video autoplay loop muted>
+            <source src="../assets/videos/mimovid2.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
     </div>
-</div>
 
+    <div class="marquee">
+        <div class="scrolling-text-inner" style="--marquee-speed: 20s; --direction:scroll-left" role="marquee">
+            <div class="scrolling-text-item">
+                <p>New arrivals! Try them now!New arrivals! Try them now!New arrivals! Try them now!New arrivals! </p>
+            </div>
+        </div>
+    </div>
 
-<script>
-   window.addEventListener('scroll', function() {
-    const nav = document.querySelector('nav');
-    if (window.scrollY > 50) {
-        nav.classList.add('scrolled');
-    } else {
-        nav.classList.remove('scrolled');
-    }
-});
+    <!--Gallery-->
+    <div class="gallery">
+        <div class="grid-item"><img src="../assets/images/cupcake.jpg"></div>
+        <div class="grid-item"><img src="../assets/images/brownies-home.jpg"></div>
+        <div class="grid-item"><img src="../assets/images/brownies-home.jpg"></div>
+    </div>
 
+    <div class="marquee" id="type2">
+        <div class="scrolling-text-inner" style="--marquee-speed: 20s; --direction:scroll-left" role="marquee">
+            <div class="scrolling-text-item">
+                <p>Mimosami  Mimosami  Mimosami  Mimosami  Mimosami Mimosami Mimosami Mimosami Mimosami Mimosami Mimosami Mimosami Mimosami Mimosami</p>
+            </div>
+        </div>
+    </div>
 
-    
-</script>
-
-<div class="div4">
-    <div class="grid-item1">
+    <div class="grid-container-2-columns description">
         
+        <div class="product-grid-item">
+            <h1>xo,Mimosami</h1>
+            <p>
+                Where every bite is a little moment of joy. 
+                We’re so happy to have you here! From freshly baked brownies, cupcakes, cookies, and cakes, we’ve got a treat for every sweet tooth.
+                Whether you're celebrating a special occasion or simply craving something delicious, we promise to deliver the freshest, most delightful goodies, made with love and a sprinkle of happiness.
+                <br>
+                Take a look around, and let us sweeten your day!
+            </p>
+            <a href="Products.html"><button id="action-button" class="custom-button">Shop Now</button></a>
+        </div>
+        
+        <div class="product-grid-item">
+            <div class="image-div">
+                <img src="../assets/logo/MimosamiLogo.png" alt="A cute image" style="width:300px; height:auto">
+            </div>
+        </div>
 
     </div>
-    <div class="grid-item2"></div>
-    <div class="grid-item3"></div>
-    <div class="grid-item4"></div>
-</div>
-
-
-<div class="div5">
-    Mimosami  Mimosami  Mimosami  Mimosami  Mimosami Mimosami Mimosami Mimosami Mimosami Mimosami Mimosami Mimosami Mimosami Mimosami 
-</div>
-
-<div class="div6">
-    <div class="text-div">
-        <h1>xo,Mimosami</h1>
-        <br>
-        <p>
-            Where every bite is a little moment of joy. 
-            We’re so happy to have you here! From freshly baked brownies, cupcakes, cookies, and cakes, we’ve got a treat for every sweet tooth.
-            Whether you're celebrating a special occasion or simply craving something delicious, we promise to deliver the freshest, most delightful goodies, made with love and a sprinkle of happiness.
-
-            Take a look around, and let us sweeten your day!
-        </p>
-        <button id="action-button" class="custom-button">Shop Now</button>
-    </div>
-    <div class="image-div">
-        <img src="../assets/logo/MimosamiLogo.png" alt="A cute image">
-    </div>
-</div>
-
-</body>
-</html>
-
+</main>
 
 <footer>
     <div class="footer-content">
@@ -94,10 +85,5 @@
     Powered by Power</p>
 </footer>
 
-
 </body>
-
-<script>
-</script>
-
 </html>

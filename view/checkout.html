@@ -5,14 +5,29 @@
   <title>CodePen - Daily UI - Credit card checkout</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet"><link rel="stylesheet" href="./style.css">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/MimosamiCheckoutStyle.css">
 
 </head>
 <body>
+  <div class="banner">
+    <nav class="nav-links">
+            <button class="nav-button"><a href="UserLogin.html">Basket</a></button>
+            <button class="nav-button"><a href="Signup.php">Checkout</a></button>
+    </nav>
+
+    <header class="scrolled">
+        <a href="Homepage.html"><h1>Mimosami</h1></a>
+    </header>
+</div>
+
+<h2>Basket</h2>
+
+<h2>Checkout</h2>
 <!-- partial:index.partial.html -->
 <div class="product-container">
   <div class="image">
-    <img src="brownie.png" alt="Image" />
+    <img src="../assets/images/brownies.png" alt="Image" />
 
   </div>
   <div class="details">
@@ -51,9 +66,9 @@
     <label for="exp">Email</label>
     <input id="exp" type="text" />
   </div> -->
+  
   <button class="purchase-button" data-content="PURCHASE">PURCHASE</button>
 </div>
-<!-- partial -->
   
 </body>
 </html>

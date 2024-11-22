@@ -4,14 +4,14 @@
 	<meta name='viewport' content="width=device-width inital-scale=1.0">
 	<title>Inventory Dashboard</title>
 	<link rel="icon" type="image/x-icon" href="xxx">
-    <link rel="stylesheet" href="MimosamiStyle2.css">
+    <link rel="stylesheet" href="..\assets\css\MimosamiStyle2.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css"> <!--DataTables CSS -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- jQuery -->
     <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script> <!-- DataTables JS -->
 </head>
 
 <body>
-    <h1>a big foix</h1>
+
 
     <div class="grid-container-webpage-setup">
         
@@ -23,20 +23,20 @@
                 </div>
                 <div class="grid-item" style="text-align: right;">
                     <input type="text" placeholder="Search..">
-                    <img src="profile.png" alt="Profile" style="width:100%;max-width:50px">
+                    <img src="..\assets\images\profile.png" alt="Profile" style="width:100%;max-width:50px">
                 </div>
             </div>
         </div>
 
         <div class="item2b">
-            <img src="MimosamiLogo.png" alt="MimosamiLogo" style="width:100%;max-width:100px">
+            <img src="..\assets\logo\MimosamiLogo.png" alt="MimosamiLogo" style="width:100%;max-width:100px">
         </div>
 
         <div class="item2">
             <div class="menu-container">
-            <button class="menu"><a href ="SalesDashbaord.html">Sales</a></button><br>
-            <button class="menu"><a href ="OrderDashbaord.html"></a>Order</button><br>
-            <button class="menu selected"><a href ="InventoryDashbaord.html"></a>Inventory</button>
+            <button class="menu"><a href ="..\view\SalesDashboard.html">Sales</a></button><br>
+            <button class="menu"><a href ="..\view\OrderDashboard.html"></a>Order</button><br>
+            <button class="menu selected"><a href ="..\view\InventoryDashboard.html"></a>Inventory</button>
             </div>
         </div>
  
@@ -105,8 +105,52 @@
 </body>
 
 <script>
+    document.addEventListener("DOMContentLoaded", () => {
+        // Add event listeners to Edit buttons
+        const editButtons = document.querySelectorAll("button.action:nth-child(1)");
+        editButtons.forEach(button => {
+            button.addEventListener("click", (event) => {
+                const row = event.target.closest("tr");
+                const itemCell = row.children[1]; // Assuming "Item" is the second column
+                const quantityCell = row.children[2]; // Assuming "Quantity" is the third column
+                
+                // If the button is in "Save" mode, save the changes
+                if (button.textContent === "Save") {
+                    const newItemName = itemCell.querySelector("input").value;
+                    const newQuantity = quantityCell.querySelector("input").value;
+                    
+                    // Update the table with new values
+                    itemCell.textContent = newItemName;
+                    quantityCell.textContent = newQuantity;
+                    
+                    // Revert the button text back to "Edit"
+                    button.textContent = "Edit";
+                } else {
+                    // If the button is in "Edit" mode, replace text with input fields for editing
+                    const itemName = itemCell.textContent;
+                    const quantityValue = quantityCell.textContent;
+                    
+                    itemCell.innerHTML = `<input type="text" value="${itemName}">`;
+                    quantityCell.innerHTML = `<input type="number" value="${quantityValue}">`;
+                    
+                    // Change the button text to "Save"
+                    button.textContent = "Save";
+                }
+            });
+        });
 
+        // Add event listeners to Restock buttons
+        const restockButtons = document.querySelectorAll("button.action:nth-child(2)");
+        restockButtons.forEach(button => {
+            button.addEventListener("click", () => {
+                alert("The supplier has been contacted for restocking!");
+            });
+        });
+    });
 </script>
+ 
+
+    
 
 
 </html>
