@@ -35,9 +35,9 @@
 
                 <div class="grid-item" id="card">
                     <h2>Login</h2>
-                    <form>
-                        <input id="uname" type="text" placeholder="Username" required><br>
-                        <input id="pword" type="password" placeholder="Password" required> <br>
+                    <form id="login" action="../actions/login_user.php" method="POST">
+                        <input id="uname" name="uname" type="text" placeholder="Username" required><br>
+                        <input id="pword" name="pword"type="password" placeholder="Password" required> <br>
                         <input type="submit" id="submit">
                     </form>
                 </div>

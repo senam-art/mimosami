@@ -28,7 +28,7 @@ session_start();
         } else {
             echo "Product not found.";
         }
-    }
+    
 ?>
 
 <!DOCTYPE html>

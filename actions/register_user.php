@@ -1,8 +1,5 @@
 <?php
 include '../db/config.php';
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-global $conn;
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $fname = trim($_POST['fname']);
@@ -13,50 +10,49 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $pwordretype = trim($_POST['pwordretype']);
 
     if (empty($fname) || empty($lname) || empty($uname) || empty($email) || empty($pword) || empty($pwordretype)) {
-        header("Location: Signup.php?error=empty_fields");
-        exit();
+        die("Your fields are empty");
     }
 
     if ($pwordretype !== $pword) {
-        header("Location: Signup.php?error=password_mismatch");
-        exit();
+        die("Your passwords do not match");
     }
 
-    $stmt = $conn->prepare('SELECT email FROM Mimosami_customer WHERE email = ?');
+
+    
+    $stmt = $conn->prepare('SELECT email FROM mimosami_customer WHERE email = ?');
     $stmt->bind_param('s', $email);
     $stmt->execute();
     $results = $stmt->get_result();
     var_dump($results);
-    exit();
 
     if ($results->num_rows > 0) {
-        header("Location: Signup.php?error=email_exists");
-        exit();
-    }
-
-    $stmt = $conn->prepare('SELECT uname FROM Mimosami_customer WHERE uname = ?');
-    $stmt->bind_param('s', $uname);
-    $stmt->execute();
-    $results = $stmt->get_result();
-
-    if ($results->num_rows > 0) {
-        header("Location: Signup.php?error=username_exists");
-        exit();
-    }
-
-    $hashed_password = password_hash($pword, PASSWORD_BCRYPT);
-    $stmt = $conn->prepare('INSERT INTO Mimosami_customer (fname, lname, uname, email, pword) VALUES (?, ?, ?, ?, ?)');
-    $stmt->bind_param('sssss', $fname, $lname, $uname, $email, $hashed_password);
-
-    if ($stmt->execute()) {
-        header("Location: UserLogin.php?success=registration_complete");
+        echo '<script>alert("A user with this email already exists.")</script>';
         exit();
     } else {
-        header("Location: Signup.php?error=registration_failed");
+        $hashed_password = password_hash($pword, PASSWORD_BCRYPT);
+        $stmt = $conn->prepare('INSERT INTO mimosami_customer (fname, lname, uname, email, pword) VALUES (?, ?, ?, ?, ?)');
+        $stmt->bind_param('sssss', $fname, $lname, $uname, $email, $hashed_password);
+    
+        if ($stmt->execute()) {
+            echo '<script>window.location.href = "userLogin.php";</script>';
+        } else {
+            echo '<script>alert("Failed to register. Please try again.")</script>';
+        }
+    }    
+
+    if ($stmt->execute()) {
+        header("Location: ../view/UserLogin.php");
+        exit();
+    } else {
+        header("Location: ../view/Signup.php");
         exit();
     }
 
-    $stmt->close();
+$stmt->close();
+$conn->close();
+
+exit();
 }
 
-$conn->close();
+?>
+

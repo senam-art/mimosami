@@ -7,32 +7,28 @@ ini_set('display_errors', 1);
 
 session_start(); // Start session at the beginning
 
-if ($_SERVER["REQUEST_METHOD"] == 'POST') {
-    $email = trim($_POST['uname']);
-    $password = trim($_POST['password']);
+    $uname = trim($_POST['uname']);
+    $pword = trim($_POST['pword']);
 
-    if (empty($uname) || empty($password)) {
+    if (empty($uname) || empty($pword)) {
         die('Please fill in all required fields');
     }
-    var_dump($password);
+    var_dump($pword);
 
     // Prepare a statement to check if the email is already registered in the database
-    $stmt = $conn->prepare("SELECT email, pword ,CustomerID, fname,lname FROM Mimosami_customer WHERE email = ?");
-    $stmt->bind_param('s', $email); // Bind the email parameter to the query
+    $stmt = $conn->prepare("SELECT uname, pword FROM mimosami_customers WHERE uname = ?");
+    $stmt->bind_param('s', $uname); // Bind the email parameter to the query
     $stmt->execute(); // Execute the query
     $results = $stmt->get_result(); // Get the result of the query
 
     if ($results->num_rows > 0) {
         $user = $results->fetch_assoc();
-        var_dump($user['password']); // Debug output for hashed password
+        var_dump($user['pword']); // Debug output for hashed password
 
-        if (password_verify($password, $user['password'])) {
+        if (password_verify($pword, $user['pword'])) {
             // Store user data in session variables
-            $_SESSION['CustomerID'] = $user['CustomerID'];
-            $_SESSION['email'] = $user['email'];
             $_SESSION['uname'] = $user['uname'];
-            $_SESSION['fname'] = $user['fname'];
-            $_SESSION['lname'] = $user['lname'];
+            $_SESSION['pword'] = $user['pword'];
 
             header('Location: ../view/admin/dashboard.php');
             exit(); // Make sure to exit after the redirect
@@ -43,5 +39,4 @@ if ($_SERVER["REQUEST_METHOD"] == 'POST') {
         echo "User not in the system";
     }
     $stmt->close();
-}
-?>
+    ?>

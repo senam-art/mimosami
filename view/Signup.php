@@ -5,14 +5,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign Up | Mimosami</title>
-    <link rel="stylesheet" href="MimosamiStyleLogin.css">
+    <link rel="stylesheet" href="../assets/css/MimosamiStyleLogin.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
     <div class="grid-container-webpage-setup">
         <div class="item1a">
-            <a href="Homepage.html"><img src="MimosamiLogo.png" alt="Mimosami Logo" style="width:100%;max-width:100px"></a>
+            <a href="Homepage.html"><img src="../assets/logo/MimosamiLogo.png" alt="Mimosami Logo" style="width:100%;max-width:100px"></a>
         </div>
         <div class="item1b">
             <button><a href="AdminLogin.html">Admin</a></button>
@@ -28,7 +28,7 @@
 
             <div class="grid-item" id="card">
                 <h2>Sign Up</h2>
-                <form id="signup-form" action="register_user.php" method="POST">
+                <form id="signup-form" action="../actions/register_user.php" method="POST">
                     <input id="fname" name="fname" type="text" placeholder="First Name" required><br>
                     <input id="lname" name="lname" type="text" placeholder="Last Name" required><br>
                     <input id="uname" name="uname" type="text" placeholder="Username" required><br>
