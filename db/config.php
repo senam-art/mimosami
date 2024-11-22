@@ -1,10 +1,10 @@
 <?php
 header("Content-Type: application/json");
 
-$servername = "localhost";
+$servername = "localhost:3306";
 $username = "maisy.baer";
 $password = "smarty8Aa.g@"; // Default for XAMPP
-$dbname = "mimosami";
+$dbname = "webtech_fall2024_maisy_baer";
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
