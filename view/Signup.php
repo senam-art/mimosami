@@ -2,8 +2,8 @@
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Login</title>
-	<link rel="icon" type="image/x-icon" href="file:///C:/Users/hp/OneDrive/Documents/Ashesi/Year%203_Sem%201/Web%20Technology/Web%20Tech%20Final/power/mimosamifav.ico">
-	<link rel="stylesheet" href="MimosamiStyleLogin.css">
+	<link rel="icon" type="image/x-icon" href="..assets/favicon/mimosamifav.ico">
+	<link rel="stylesheet" href="../assets/css/MimosamiStyleLogin.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
@@ -11,7 +11,7 @@
  
     <div class="grid-container-webpage-setup">
         <div class="item1a">
-            <a href="Homepage.html"><img src="MimosamiLogo.png" alt="MimosamiLogo" style="width:100%;max-width:100px"></a>
+            <a href="Homepage.html"><img src="../assets/logo/MimosamiLogo.png" alt="MimosamiLogo" style="width:100%;max-width:100px"></a>
 
         </div>
 
@@ -20,7 +20,7 @@
         </div>
 
         <div class="item1b">
-            <button><a href="AdminLogin.html">Admin</a></button>
+            <button><a href="AdminLogin.php">Admin</a></button>
         </div>
 
 
@@ -29,7 +29,7 @@
                     <h1> Welcome to Mimosami!</h1>
                     <p>Login to your account</p>
                     <p>Already have an account?</p>
-                    <button><a href ="UserLogin.html">Login!</a></button>
+                    <button><a href ="../db/UserLogin.php">Login!</a></button>
                 </div>
 
                 <div class="grid-item" id="card">
