@@ -10,13 +10,9 @@ session_start();
         $stmt = $pdo->prepare("SELECT * FROM mimosami_products WHERE id = ?");
         $stmt->execute([$productId]);
         $product = $stmt->fetch(PDO::FETCH_ASSOC);
+
     
-        if ($product) {
-                if (!isset($_SESSION['basket'])) {
-                $_SESSION['basket'] = [];
-            }
-    
-            // Add or update product in the basket
+
             if (isset($_SESSION['basket'][$productId])) {
                 $_SESSION['basket'][$productId]['quantity'] += $quantity;
             } else {
@@ -73,9 +69,9 @@ session_start();
             </div>
 
             <div class="product-grid-item" id="P002">
-                <h3 id="productName">Brownies</h3>
+                <h3 id="productName"><?php echo $row['productName']; ?></h3>
                 <p>Fudgy, rich brownies with chunks of dark chocolate for cocoa lovers.</p>
-                <h3 id="price">$20</h3>
+                <h3 id="price"><?php echo $row['price']; ?></h3>
                 <form id="addToBasket" method="POST">
                     <input type="hidden" id="product_id" value="P002>
                     <div>
