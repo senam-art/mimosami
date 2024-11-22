@@ -4,7 +4,7 @@ header("Content-Type: application/json");
 $servername = "localhost";
 $username = "maisy.baer";
 $password = "smarty8Aa.g@"; // Default for XAMPP
-$dbname = "webtech_fall2024_maisy_baer";
+$dbname = "mimosami";
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
