@@ -7,36 +7,46 @@ ini_set('display_errors', 1);
 
 session_start(); // Start session at the beginning
 
-    $uname = trim($_POST['uname']);
-    $pword = trim($_POST['pword']);
+// Check if the required POST keys exist
+if (!isset($_POST['uname']) || !isset($_POST['pword'])) {
+    die('Please fill in all required fields.');
+}
 
-    if (empty($uname) || empty($pword)) {
-        die('Please fill in all required fields');
-    }
-    var_dump($pword);
+// Sanitize and trim user inputs
+$uname = trim($_POST['uname']);
+$pword = trim($_POST['pword']);
 
-    // Prepare a statement to check if the email is already registered in the database
-    $stmt = $conn->prepare("SELECT uname, pword FROM mimosami_customers WHERE uname = ?");
-    $stmt->bind_param('s', $uname); // Bind the email parameter to the query
-    $stmt->execute(); // Execute the query
-    $results = $stmt->get_result(); // Get the result of the query
+if (empty($uname) || empty($pword)) {
+    die('Please fill in all required fields.');
+}
 
-    if ($results->num_rows > 0) {
-        $user = $results->fetch_assoc();
-        var_dump($user['pword']); // Debug output for hashed password
+// Debugging: Uncomment to check form submission
+// var_dump($_POST);
+// var_dump($pword);
 
-        if (password_verify($pword, $user['pword'])) {
-            // Store user data in session variables
-            $_SESSION['uname'] = $user['uname'];
-            $_SESSION['pword'] = $user['pword'];
+// Prepare a statement to check if the email is already registered in the database
+$stmt = $conn->prepare("SELECT uname, pword FROM mimosami_customers WHERE uname = ?");
+$stmt->bind_param('s', $uname); // Bind the email parameter to the query
+$stmt->execute(); // Execute the query
+$results = $stmt->get_result(); // Get the result of the query
 
-            header('Location: ../view/admin/dashboard.php');
-            exit(); // Make sure to exit after the redirect
-        } else {
-            echo 'Incorrect password. Please try again.';
-        }
+if ($results->num_rows > 0) {
+    $user = $results->fetch_assoc();
+    // Debug output for hashed password
+    // var_dump($user['pword']);
+
+    if (password_verify($pword, $user['pword'])) {
+        // Store user data in session variables
+        $_SESSION['uname'] = $user['uname'];
+
+        header('Location: ../view/admin/dashboard.php');
+        exit(); // Make sure to exit after the redirect
     } else {
-        echo "User not in the system";
+        echo 'Incorrect password. Please try again.';
     }
-    $stmt->close();
-    ?>
+} else {
+    echo 'User not in the system.';
+}
+
+$stmt->close();
+?>
