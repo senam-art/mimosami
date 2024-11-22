@@ -1,3 +1,7 @@
+/*Imports*/
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+
 html {
     font-size: 10px;
   }
@@ -6,12 +10,41 @@ html {
     margin: 0;
     padding: 0;
   }
+
+  h1 {
+    font-family: "Quicksand", sans-serif;
+    color: #1a0808;
+    margin: 0;
+    font-size: 50px;
+  }
+  
+  h2{
+    font-family: "Quicksand", sans-serif;
+    color: #1a0808;
+    text-align:center;
+    font-size: 35px;  
+    margin:20px;
+  }
+  
+  h3{
+    font-family:'Quicksand',sans-serif;
+    color:#1B0B0B;
+    font-size:15px;
+    text-align:left;
+  }
+  
+  p{
+    font-family:'Montserrat',sans-serif;
+    color:#1B0B0B;
+    text-align:left;
+  }
   
   *, *::before, *::after {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
   }
+
   
   body {
     font-family: 'IBM Plex Mono', monospace;
@@ -23,6 +56,45 @@ html {
     background-color: var(--backgroundColor, #ffffff);
     line-height: 1.6;
   }
+/*Nav*/
+.banner{
+  position: fixed;
+  width: 100%;
+  z-index: 1000;
+  transition: background-color 0.3s ease, opacity 0.3s ease;
+}
+
+.nav-links {
+  display: flex;
+  gap: 20px; 
+  justify-content: flex-end;
+  flex: 1;
+  padding:10px;
+  background-color: #f1a1a5;
+}
+
+.nav-button{
+  background-color: #f1f1f1; 
+  color:#1b0b0b;
+  border-radius: 10px;
+  border: none;
+  padding:5px;
+  width:80px;
+}
+
+/* Header */
+header {
+  text-align: center;
+  background-color: transparent;
+  border-bottom-left-radius:40px;
+  border-bottom-right-radius:40px;
+}
+
+header.scrolled {
+  background-color: #cfe6fc;
+  opacity: 1;
+}
+
   
   img {
     width: 100%;
