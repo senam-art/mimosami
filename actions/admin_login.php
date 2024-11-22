@@ -3,7 +3,7 @@
 session_start();
 
 // Include database configuration
-require "..//db/senam_config.php"; // Ensure this initializes a PDO instance in $conn
+require "..//db/config.php"; // Ensure this initializes a PDO instance in $conn
 
 // Check if form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {

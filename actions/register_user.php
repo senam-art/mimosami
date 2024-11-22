@@ -2,6 +2,7 @@
 include '../db/config.php';
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
+global $conn;
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $fname = trim($_POST['fname']);
@@ -25,6 +26,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $stmt->bind_param('s', $email);
     $stmt->execute();
     $results = $stmt->get_result();
+    var_dump($results);
+    exit();
 
     if ($results->num_rows > 0) {
         header("Location: Signup.php?error=email_exists");
@@ -57,4 +60,3 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 
 $conn->close();
-?>
