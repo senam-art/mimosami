@@ -2,7 +2,7 @@
     ini_set('display_errors', 1);
     ini_set('display_startup_errors', 1);
     error_reporting(E_ALL);
-    require '../../../actions/admin_login.php'
+    require '../actions/admin_login.php'
 ?>
 
 
@@ -11,7 +11,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Admin Login</title>
 	<link rel="icon" type="image/x-icon" href="file:///C:/Users/hp/OneDrive/Documents/Ashesi/Year%203_Sem%201/Web%20Technology/Web%20Tech%20Final/power/mimosamifav.ico">
-	<link rel="stylesheet" href="../../assets/css/MimosamiStyleLogin.css">
+	<link rel="stylesheet" href="../assets/css/MimosamiStyleLogin.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
@@ -19,7 +19,7 @@
  
     <div class="grid-container-webpage-setup">
         <div class="item1a">
-            <a href="Homepage.html"><img src="../../assets/logo/MimosamiLogo.png" alt="MimosamiLogo" style="width:100%;max-width:100px"></a>
+            <a href="Homepage.html"><img src="../assets/logo/MimosamiLogo.png" alt="MimosamiLogo" style="width:100%;max-width:100px"></a>
 
         </div>
 
@@ -44,7 +44,7 @@
                 <div class="grid-item" id="card">
                     <h2>Login</h2>
 
-                    <form action="../../actions/admin_login.php" method="POST">
+                    <form action="../actions/admin_login.php" method="POST">
                         <input id="uname" name="uname" type="text" placeholder="Username" required><br>
                         <input id="pword" name="pword" type="password" placeholder="Password" required> <br>
                         <input type="submit" id="submit">

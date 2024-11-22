@@ -1,14 +1,9 @@
 <?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
 // Start a session
 session_start();
 
 // Include database configuration
-require "../../db/senam_config.php"; // Ensure this initializes a PDO instance in $conn
-
+require "..//db/senam_config.php"; // Ensure this initializes a PDO instance in $conn
 
 // Check if form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -36,13 +31,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Verify the password
             if (password_verify($password, $row['password'])) {
                 $_SESSION['username'] = $username; // Store username in session
-                // Debugging the redirection URL
-                error_log("Redirecting to: ../view/admin/SalesDashboard.html");
-
-                // Redirect
-                header("Location: ../view/admin/SalesDashboard.html");
-                exit();
-
+                header("Location: ../view/SalesDashboard.html");
                 exit();
             } else {
                 echo "Invalid username or password!";
