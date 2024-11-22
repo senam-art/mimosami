@@ -28,7 +28,7 @@ html, body{
     padding:30px;
   }
 
-#card  {
+#card, .card  {
     background-color: #FBFBFB;
     border-radius:20px;
     text-align: center;
@@ -172,3 +172,92 @@ input:not(#submit) {
         margin-right: 0; 
     }
 }
+
+/*Nav*/
+.banner{
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+    transition: background-color 0.3s ease, opacity 0.3s ease;
+  }
+  
+  .nav-links {
+    display: flex;
+    gap: 20px; 
+    justify-content: flex-end;
+    flex: 1;
+    padding:10px;
+    background-color: #f1a1a5;
+  }
+  
+  .nav-button{
+    background-color: #f1f1f1; 
+    color:#1b0b0b;
+    border-radius: 10px;
+    border: none;
+    padding:5px;
+    width:80px;
+  }
+  
+  /* Header */
+  header {
+    text-align: center;
+    background-color: transparent;
+    border-bottom-left-radius:40px;
+    border-bottom-right-radius:40px;
+    padding:10px;
+    margin-bottom:20px;
+  }
+  
+  header.scrolled {
+    background-color: #cfe6fc;
+    opacity: 1;
+  }
+
+  main{
+    margin:50px 30px;
+  }
+
+/*Footer*/
+footer {
+    background-color: #fbfbfb;
+    color: #f1f1f1;
+    padding: 30px 0;
+    text-align: center;
+  }
+  
+  .footer-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .follow-text {
+    font-size: 18px;
+    margin-right: 15px;
+    /* Space between text and logo */
+    color: #f1a1a5;
+    font-family: "Quicksand", sans-serif;
+    font-weight: bold;
+  }
+  
+  .social-logo {
+    width: 40px;
+    height: 40px;
+    margin-left: 10px;
+  }
+  
+  .footer-note {
+    font-size: 14px;
+    color: #cccccc;
+  }
+  
+  .footer-note a {
+    color: #f1a1a5;
+    text-decoration: none;
+  }
+  
+  .footer-note a:hover {
+    text-decoration: underline;
+  }

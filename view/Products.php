@@ -1,34 +1,31 @@
 <?php
-session_start();
-
     include '../db/config.php';
-    
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $productId = $_POST['product_id'];
-        $quantity = htmlspecialchars($_POST['quantity']);
-    
-        $stmt = $pdo->prepare("SELECT * FROM mimosami_products WHERE id = ?");
-        $stmt->execute([$productId]);
-        $product = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    
+    session_start();
 
-            if (isset($_SESSION['basket'][$productId])) {
-                $_SESSION['basket'][$productId]['quantity'] += $quantity;
-            } else {
-                $_SESSION['basket'][$productId] = [
-                    'name' => $product['name'],
-                    'price' => $product['price'],
-                    'quantity' => $quantity,
-                ];
-            }
-    
-            header('Location: basket.php'); // Redirect to basket page
-            exit;
-        } else {
-            echo "Product not found.";
+    // Query to fetch all products from the database
+    $sql = "SELECT * FROM mimosami_products";
+    $result = $conn->query($sql);
+
+    $products = [];
+    if ($result && $result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $products[] = $row;
         }
-    
+    }
+
+    // Mapping product IDs to their respective images and descriptions
+    $imageMap = [
+        "P001" => "../assets/images/fudgy_brownies.jpg",
+        "P002" => "../assets/images/cookie_monster.jpg",
+        "P003" => "../assets/images/cupcake.jpg"
+    ];
+
+    $descriptionMap = [
+        "P001" => "Celebrate every occasion with our delightful range of cakes. From velvety layers of moist sponge to creamy, flavorful frostings, our cakes are crafted with love and premium ingredients. Whether it’s a birthday, anniversary, or a simple craving, our cakes make every moment special.",
+        "P002" => "Indulge in the ultimate chocolate experience with our fudgy, decadent brownies. Made with rich cocoa and chunks of premium dark chocolate, each bite delivers a luscious melt-in-your-mouth sensation. Perfect for chocolate lovers craving a satisfying treat or a sweet pick-me-up.",
+        "P003" => "Savor the timeless comfort of our freshly baked cookies. Crispy on the edges, soft in the center, and generously filled with chocolate chips, nuts, or a variety of flavorful surprises. Perfect with a glass of milk or as a snack anytime you want to treat yourself."
+    ];
 ?>
 
 <!DOCTYPE html>
@@ -36,8 +33,8 @@ session_start();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="icon" type="image/x-icon" href="xxx">
-	<link rel="stylesheet" href="../assets/css/MimosamiStyle.css">
+    <link rel="icon" type="image/x-icon" href="xxx">
+    <link rel="stylesheet" href="../assets/css/MimosamiStyle.css">
     <title>Products</title>
 </head>
 <body class="products">
@@ -45,9 +42,8 @@ session_start();
 <main>
     <div class="banner">
         <nav class="nav-links">
-                <button class="nav-button"><a href="checkout.html">Basket</a></button>
+            <button class="nav-button"><a href="checkout.php">Basket</a></button>
         </nav>
-    
         <header class="scrolled">
             <a href="Homepage.html"><h1>Mimosami</h1></a>
         </header>
@@ -63,71 +59,40 @@ session_start();
     <div>
         <h2>Products</h2>
 
-        <div class="grid-container-2-columns" id="card">
-            <div class="product-grid-item">
-                <img style="width:100px; height:auto" src="../assets/images/fudgy_brownies.jpg">
-            </div>
-
-            <div class="product-grid-item" id="P002">
-                <h3 id="productName"><?php echo $row['productName']; ?></h3>
-                <p>Fudgy, rich brownies with chunks of dark chocolate for cocoa lovers.</p>
-                <h3 id="price"><?php echo $row['price']; ?></h3>
-                <form id="addToBasket" method="POST">
-                    <input type="hidden" id="product_id" value="P002>
-                    <div>
-                        <button class="plus-btn" type="button" name="button">+</button>
-                        <input type="text" name="quantity" id="brownie-quantity" value="1">
-                        <button class="minus-btn" type="button" name="button">-</button>
+        <div class="grid-container">
+            <?php foreach ($products as $product): 
+                $id = $product['productID'] ?? ''; // Updated to match database column
+                $productName = $product['productName'] ?? 'Unknown Product';
+                $price = $product['price'] ?? '0.00';
+                $image = $imageMap[$id] ?? '../assets/images/default.jpg';
+                $description = $descriptionMap[$id] ?? 'No description available.';
+            ?>
+                <div class="grid-container-2-columns" id="card">
+                    <!-- Product Image -->
+                    <div class="product-grid-item">
+                        <img style="width:100px; height:auto" src="<?php echo htmlspecialchars($image); ?>" alt="<?php echo htmlspecialchars($productName); ?>">
                     </div>
-                    <button type="submit" class="custom-button">Add to basket</button>
-                </form>
-            </div>  
-        </div>
 
-        <div class="grid-container-2-columns" id="card">
-            <div class="product-grid-item">
-                <img style="width:100px; height:auto" src="../assets/images/fudgy_brownies.jpg">
-            </div>
-
-            <div class="product-grid-item">
-                <h3 id="productName">Cookies</h3>
-                <p>Fudgy, rich brownies with chunks of dark chocolate for cocoa lovers.</p>
-                <h3 id="price">$20</h3>
-                <form id="addToBasket" method="POST">
-                    <input type="hidden" name="product_id">
-                    <div>
-                        <button class="plus-btn" type="button" name="button">+</button>
-                        <input type="text" name="quantity" id="cookie-quantity" value="1">
-                        <button class="minus-btn" type="button" name="button">-</button>
+                    <!-- Product Details -->
+                    <div class="product-grid-item">
+                        <h3 id="productName"><?php echo htmlspecialchars($productName); ?></h3>
+                        <p><?php echo htmlspecialchars($description); ?></p>
+                        <h3 id="price">$<?php echo htmlspecialchars($price); ?></h3>
+                        
+                        <!-- Add to Basket Form -->
+                        <form id="addToBasket" method="POST" action="basket.php">
+                        <input type="hidden" name="product_id" value="<?php echo htmlspecialchars($id); ?>">
+                        <input type="hidden" name="product_name" value="<?php echo htmlspecialchars($productName); ?>">
+                        <input type="hidden" name="product_price" value="<?php echo htmlspecialchars($price); ?>">
+                        <input type="text" name="quantity" id="quantity">
+                        <button type="submit" class="custom-button">Add to basket</button>
+                        </form>
                     </div>
-                    <button type="submit" class="custom-button">Add to basket</button>
-                </form>
-            </div>  
+                </div>
+            <?php endforeach; ?>
         </div>
-
-        <div class="grid-container-2-columns" id="card">
-            <div class="product-grid-item">
-                <img style="width:100px; height:auto" src="../assets/images/fudgy_brownies.jpg">
-            </div>
-
-            <div class="product-grid-item">
-                <h3 id="productName">Cakes</h3>
-                <p>Fudgy, rich brownies with chunks of dark chocolate for cocoa lovers.</p>
-                <h3 id="price">$20</h3>
-                <form id="addToBasket" method="POST">
-                    <input type="hidden" name="product_id" value="<?= $product['id']; ?>">
-                    <div>
-                        <button class="plus-btn" type="button" name="button">+</button>
-                        <input type="text" name="quantity" id="cake-quantity" value="1">
-                        <button class="minus-btn" type="button" name="button">-</button>
-                    </div>
-                    <button type="submit" class="custom-button">Add to basket</button>
-                </form>
-            </div>  
-        </div>
-
     </div>
-    
+
     <footer>
         <div class="footer-content">
             <p class="follow-text">Connect</p>
@@ -137,45 +102,14 @@ session_start();
         <a href="#">Privacy Policy</a> | <a href="#">Terms and Conditions</a> <br>
         Powered by Power</p>
     </footer>
-
 </main>
 
 </body>
-
 <script>
-    $(document).ready(function () {
-        $('.minus-btn').on('click', function (e) {
-            e.preventDefault();
-            // Select the corresponding input field
-            const $input = $(this).siblings('#quantity');
-            let value = parseInt($input.val());
 
-            if (value > 1) {
-                value = value - 1;
-            } else {
-                value = 1; // Minimum quantity is 1
-            }
-
-            $input.val(value);
-        });
-
-        $('.plus-btn').on('click', function (e) {
-            e.preventDefault();
-            // Select the corresponding input field
-            const $input = $(this).siblings('#quantity');
-            let value = parseInt($input.val());
-
-            if (value < 100) {
-                value = value + 1;
-            } else {
-                value = 100; // Maximum quantity is 100
-            }
-
-            $input.val(value);
-        });
-    });
 </script>
-
 </html>
+
+
 
 
