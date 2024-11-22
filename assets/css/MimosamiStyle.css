@@ -18,67 +18,17 @@
 
 /*Body*/
 body {
-  font-family: "Garet", sans-serif;
+  font-family: "Monserrat", sans-serif;
   background-color: #fbfbfb;
   margin: 0px;
   padding: 0px;
-  font: "Montserrat", sans-serif;
   box-sizing: border-box;
 }
 
+/*Test*/
 a{
   text-decoration: none;
   color: inherit;
-}
-
-/* Navbar styles */
-nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: transparent;
-  position: fixed;
-  width: 100%;
-  z-index: 1000;
-  transition: background-color 0.3s ease, opacity 0.3s ease;
-  border-bottom-left-radius:40px;
-  border-bottom-right-radius:40px;
-}
-
-nav.scrolled {
-  background-color: #cfe6fc;
-  /* Background color when scrolled */
-  opacity: 1;
-  /* align-items: center; */
-}
-
-/* Make the video full screen */
-.div2 {
-  width: 100%;
-  height: 100vh;
-  position: relative;
-}
-
-.div2 video {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  position: absolute;
-  top: 0;
-  left: 0;
-}
-
-.logo {
-    text-align: center;
-}
-
-
-/* Adjust the styles for .nav-links */
-.nav-links {
-  display: flex;
-  gap: 15px; /* Space between each link */
-  justify-content: flex-end; /* Align links to the right */
-  flex: 1; /* Allow it to take the remaining space */
 }
 
 h1 {
@@ -88,23 +38,100 @@ h1 {
   font-size: 50px;
 }
 
+h2{
+  font-family: "Quicksand", sans-serif;
+  color: #1a0808;
+  text-align:center;
+  font-size: 35px;  
+  margin:20px;
+}
 
+h3{
+  font-family:'Quicksand',sans-serif;
+  color:#1B0B0B;
+  font-size:15px;
+  text-align:left;
+}
+
+p{
+  font-family:'Montserrat',sans-serif;
+  color:#1B0B0B;
+  text-align:left;
+}
+
+
+/*Nav*/
+.banner{
+  position: fixed;
+  width: 100%;
+  z-index: 1000;
+  transition: background-color 0.3s ease, opacity 0.3s ease;
+}
+
+.nav-links {
+  display: flex;
+  gap: 20px; 
+  justify-content: flex-end;
+  flex: 1;
+  padding:10px;
+  background-color: #f1a1a5;
+}
+
+.nav-button{
+  background-color: #f1f1f1; 
+  color:#1b0b0b;
+  border-radius: 10px;
+  border: none;
+  padding:5px;
+  width:80px;
+}
+
+/* Header */
+header {
+  text-align: center;
+  background-color: transparent;
+  border-bottom-left-radius:40px;
+  border-bottom-right-radius:40px;
+}
+
+header.scrolled {
+  background-color: #cfe6fc;
+  opacity: 1;
+}
+
+/* HomepageVideo*/
+.homepageVideo {
+  width: 100%;
+  height: 100vh;
+  position: relative;
+}
+
+.homepageVideo video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+/*Cards*/
 #card h2 {
   font-size: 24px;
   color: #333;
   text-align: center;
 }
 
-
-/*Sections*/
-.div3 {
+/*Marquee*/
+.marquee {
   background-color: #fbfbfb;
   width: 100%;
   height: 10vh;
   overflow: hidden;
+  margin-bottom:10px;
 }
 
-.div3 p {
+.marquee p {
   font-family: "dahlia";
   font-size: 40px;
   color: #1b0b0b;
@@ -113,36 +140,7 @@ h1 {
   margin:20px
 }
 
-/* .div4{
-    width: 100%;
-    height: 50vh;
-    background-color:#CFE6FC;
-} */
-
-.div4 {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
-  padding: 20px;
-  background-color: #d9cfcf;
-}
-
-.grid-item {
-  background-color: #cfe6fc;
-  border-radius: 5px;
-  overflow: hidden;
-}
-
-.grid-item img {
-  width: 100%;
-  /* Make the image take full width of the grid item */
-  height: 50vh;
-  /* Maintain aspect ratio */
-  display: block;
-  /* Remove bottom space */
-}
-
-.div5 {
+.type2 {
   background-color: #cfe6fc;
   width: 100%;
   height: 5vh;
@@ -152,29 +150,38 @@ h1 {
   text-align: center;
 }
 
-.div6 {
+/*scrolling text*/
+.scrolling-text-inner {
   display: flex;
-  /* Use flexbox to align children side by side */
-  justify-content: space-between;
-  /* Space between the two divs */
-  align-items: center;
-  /* Center items vertically */
-  padding: 20px;
-  /* Add some padding */
-  background-color: #f0f0f0;
-  /* Background color for the parent div */
-  height: 70vh;
+  white-space: nowrap;
+  padding: 8px 0;
 }
 
-.text-div {
-  flex: 1;
-  /* Allow this div to take up available space */
+/* Apply the animation to the text items */
+.scrolling-text-inner>div {
+  animation: var(--direction) var(--marquee-speed) linear infinite;
+}
+
+/* Setting the Animation using Keyframes */
+@keyframes scroll-left {
+  0% {
+      transform: translateX(0%);
+  }
+
+  100% {
+      transform: translateX(-100%);
+  }
+}
+
+
+.description {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   padding: 20px;
-  /* Padding around the text */
+  background-color: #f0f0f0;
+  height: 70vh;
   border-right: 2px solid #ccc;
-  /* Add a right border to separate the text div */
-  font-family: "Quicksand", sans-serif;
-  font-size: 20px;
 }
 
 .custom-button {
@@ -207,13 +214,34 @@ h1 {
   /* Optional: rounded corners */
 }
 
+
+/*Gallery*/
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  padding: 20px;
+  background-color: #d9cfcf;
+}
+
+
+.gallery .grid-item{
+  height:300px
+}
+
+.gallery .grid-item img{
+  height:300px;
+  width: 100%;
+  border-radius: 10%;
+}
+
+
+/*Footer*/
 footer {
   background-color: #fbfbfb;
   color: #f1f1f1;
   padding: 30px 0;
-  /* Space around the content */
   text-align: center;
-  /* Center align the text */
 }
 
 .footer-content {
@@ -221,7 +249,6 @@ footer {
   justify-content: center;
   align-items: center;
   margin-bottom: 20px;
-  /* Space between social icons and note */
 }
 
 .follow-text {
@@ -251,86 +278,44 @@ footer {
 
 .footer-note a:hover {
   text-decoration: underline;
-  /* Add an underline on hover */
 }
 
-/*Gallery*/
-.div4 {
+
+
+/*CSS for products page*/
+.grid-container-2-columns {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  /* 4 columns for each image */
-  gap: 20px;
-  /* Space between the images */
-  padding: 20px;
+  grid-template-columns:repeat(2, 1fr);
+  padding: 2%;
 }
 
-.div4 .grid-item1,
-.div4 .grid-item2,
-.div4 .grid-item3,
-.div4 .grid-item4 {
-  height: 300px;
-  /* Adjust height to your preference */
-  background-size: cover;
-  background-position: center;
+.product-grid-item {
+  margin:2%;
+  padding:10px;
 }
 
-.grid-item1 {
-  background-image: url("../images/bread.jpg");
-  height: 80%;
-  background-size: cover;
-  border-radius: 10%;
+#card  {
+  background-color: #FBFBFB;
+  border-radius:20px;
+  text-align: center;
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+  margin:30px;
+  padding:10px;
 }
 
-.grid-item2 {
-  background-image: url("../images/cupcake.jpg");
-  height: 80%;
-  background-size: cover;
-  border-radius: 10%;
+.products{
+  font-family: "Monserrat", sans-serif;
+  background-color: #eef3f8;
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
 }
 
-.grid-item3 {
-  background-image: url("../images/brownies-home.jpg");
-  height: 80%;
-  background-size: cover;
-  border-radius: 10%;
-}
-
-.grid-item4 {
-  background-image: url(""../images/bread.jpg");
-  height: 80%;
-  background-size: cover;
-  border-radius: 10%;
-}
-
-/*scrolling text*/
-.scrolling-text-inner {
-  display: flex;
-  white-space: nowrap;
-  padding: 8px 0;
-}
-
-/* Apply the animation to the text items */
-.scrolling-text-inner>div {
-  animation: var(--direction) var(--marquee-speed) linear infinite;
-}
-
-/* Setting the Animation using Keyframes */
-@keyframes scroll-left {
-  0% {
-      transform: translateX(0%);
-  }
-
-  100% {
-      transform: translateX(-100%);
-  }
-}
-
-@keyframes scroll-right {
-  0% {
-      transform: translateX(-100%);
-  }
-
-  100% {
-      transform: translateX(0%);
-  }
+input{
+  font-size: 25px;
+  border-color: #1B0B0B;
+  border: 2px solid black;
+  font-family:'Montserrat', sans-serif; 
+  width:10px;
+  margin:10px
 }
