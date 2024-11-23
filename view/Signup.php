@@ -1,113 +1,127 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Login</title>
-	<link rel="icon" type="image/x-icon" href="..assets/favicon/mimosamifav.ico">
-	<link rel="stylesheet" href="../assets/css/MimosamiStyleLogin.css">
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up | Mimosami</title>
+    <link rel="stylesheet" href="MimosamiStyleLogin.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
- 
     <div class="grid-container-webpage-setup">
         <div class="item1a">
-            <a href="Homepage.html"><img src="../assets/logo/MimosamiLogo.png" alt="MimosamiLogo" style="width:100%;max-width:100px"></a>
-
+            <a href="Homepage.html"><img src="MimosamiLogo.png" alt="Mimosami Logo" style="width:100%;max-width:100px"></a>
         </div>
-
-        <div class="item1">
-
-        </div>
-
         <div class="item1b">
-            <button><a href="AdminLogin.php">Admin</a></button>
+            <button><a href="AdminLogin.html">Admin</a></button>
         </div>
 
+        <div class="grid-container-2-columns">
+            <div class="grid-item">
+                <h1>Welcome to Mimosami!</h1>
+                <p>Login to your account</p>
+                <p>Already have an account?</p>
+                <button><a href="UserLogin.html">Login!</a></button>
+            </div>
 
-            <div class="grid-container-2-columns">
-                <div class="grid-item">
-                    <h1> Welcome to Mimosami!</h1>
-                    <p>Login to your account</p>
-                    <p>Already have an account?</p>
-                    <button><a href ="../db/UserLogin.php">Login!</a></button>
-                </div>
-
-                <div class="grid-item" id="card">
-                    <h2>Sign up</h2>
-                    <form>
-                        <input id="fname" type="text" placeholder="First Name" required><br>
-                        <input id="lname" type="text" placeholder="Last Name" required> <br>                        
-                        <input id="uname" type="text" placeholder="Username" required><br>
-                        <input id="email" type="email" placeholder="Email" required><br>
-                        <input id="pword" type="password" placeholder="Password" required> <br>
-                        <input id="pwordretype" type="password" placeholder="Retype your password" required> <br>
-                        <input type="submit" id="submit">
-                    </form>
-                </div>
-
+            <div class="grid-item" id="card">
+                <h2>Sign Up</h2>
+                <form id="signup-form" action="register_user.php" method="POST">
+                    <input id="fname" name="fname" type="text" placeholder="First Name" required><br>
+                    <input id="lname" name="lname" type="text" placeholder="Last Name" required><br>
+                    <input id="uname" name="uname" type="text" placeholder="Username" required><br>
+                    <input id="email" name="email" type="email" placeholder="Email" required><br>
+                    <input id="pword" name="pword" type="password" placeholder="Password" required><br>
+                    <input id="pwordretype" name="pwordretype" type="password" placeholder="Retype your password" required><br>
+                    <button type="submit">Sign Up</button>
+                </form>
             </div>
         </div>
     </div>
-
 </body>
 
+</html>
+
+
 <script>
-    const form=document.getElementById("signup");
+    document.getElementById("signup-form").addEventListener("submit", function(event) {
+        event.preventDefault(); // Prevent default form submission
 
-    form.addEventListener('submit', function(event){
-        event.preventDefault();
+        const fname = document.getElementById("fname").value.trim();
+        const lname = document.getElementById("lname").value.trim();
+        const uname = document.getElementById("uname").value.trim();
+        const email = document.getElementById("email").value.trim();
+        const pword = document.getElementById("pword").value.trim();
+        const pwordretype = document.getElementById("pwordretype").value.trim();
 
-        const fname=document.getElementById('fname').value;
-        const lname=document.getElementById('lname').value;
-        const uname=document.getElementById('uname').value;
-        const email=document.getElementById('email').value;
-        const pword=document.getElementById('pword').value;
-        const pwordretype=document.getElementById('pwordretype').value;
+        let isValid = true;
 
+        // Email validation pattern
+        const emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
 
-        if(fname ===""){
-            alert('Please enter your first name.');
-            return;
+        // Clear all previous error messages
+        clearErrors();
+
+        // Validate First Name
+        if (!fname) {
+            displayError("fname", "First name is required.");
+            isValid = false;
         }
 
-
-        if(lname ===""){
-            alert('Please enter your last name.');
-            return;
+        // Validate Last Name
+        if (!lname) {
+            displayError("lname", "Last name is required.");
+            isValid = false;
         }
 
-        if(uname ===""){
-            alert('Please enter your username.');
-            return;
+        // Validate Username
+        if (!uname || uname.length < 3) {
+            displayError("uname", "Username must be at least 3 characters long.");
+            isValid = false;
         }
 
-        if(!emailIsValid(email)){
-            alert('Please enter a valid email address.');
-            return;
+        // Validate Email
+        if (!email.match(emailPattern)) {
+            displayError("email", "Please enter a valid email address.");
+            isValid = false;
         }
 
-
-        if(!pwordIsValid(pword)){
-            alert('Please enter a valid password. It should contain at least 8 characters, 1 upper case letter, 3 numbers, 1 special character');
-            return;
+        // Validate Password
+        if (pword.length < 8) {
+            displayError("pword", "Password must be at least 8 characters long.");
+            isValid = false;
         }
 
-        if(pwordretype!==pword){
-            alert('Your passwords do not match.');
-            return;
+        // Validate Password Match
+        if (pword !== pwordretype) {
+            displayError("pwordretype", "Passwords do not match.");
+            isValid = false;
         }
 
+        // If valid, proceed to submit the form
+        if (isValid) {
+            this.submit();
+        }
+    });
 
-        alert("Waiting to Sign up.");
-        form.submit();
-        });
-
-    function emailIsValid(email){
-        return /^[^\s@]+@[^\s@]+$/.test(email);
+    // Clear all error messages
+    function clearErrors() {
+        document.querySelectorAll(".error-message").forEach((error) => error.remove());
     }
 
-    function pwordIsValid(pword){
-        return /^(?=.*[A-Z])(?=(?:.*\d.*\d.*\d))(?=.*[!@#$%^&*()_+=[\]{};':"\\|,.<>/?~`-])[A-Za-z\d!@#$%^&*()_+=[\]{};':"\\|,.<>/?~`-]{8,}$/.test(pword);
+    // Display error message below the input field
+    function displayError(inputId, message) {
+        const inputField = document.getElementById(inputId);
+        const error = document.createElement("div");
+        error.className = "error-message";
+        error.style.color = "red";
+        error.style.fontSize = "0.9em";
+        error.innerText = message;
+
+        inputField.insertAdjacentElement("afterend", error);
     }
 </script>
+
 </html>
