@@ -2,12 +2,6 @@
 // Start a session
 session_start();
 
-// Database configuration
-$host = 'localhost'; 
-$dbname = 'mimosami'; 
-$username = 'root'; // Your database username, 'root' for local development
-$password = ''; // Your database password, empty for local development unless set
-
 // Create a new mysqli instance
 $conn = new mysqli($host, $username, $password, $dbname);
 

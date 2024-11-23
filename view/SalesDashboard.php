@@ -2,7 +2,7 @@
 
 session_start();
 
-require "../db/senam_config.php";
+require "../db/onlineconfig.php";
 
 // Check if user is logged in
 if (!isset($_SESSION['username'])) {
@@ -160,7 +160,7 @@ $genderCountsJson = json_encode($genderCounts);
 <html>
 <head>
     <meta name='viewport' content="width=device-width initial-scale=1.0">
-    <title>Dashboard</title>
+    <title> Sales Dashboard</title>
     <link rel="icon" type="image/x-icon" href="xxx">
     <link rel="stylesheet" href="../assets/css/MimosamiStyle2.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -174,7 +174,7 @@ $genderCountsJson = json_encode($genderCounts);
         <div class="item1">
             <div class="grid-container-2-columns">
                 <div class="grid-item">
-                    <h1 style="text-align:left">Dashboard</h1>
+                    <h1 style="text-align:left">Sales Dashboard</h1>
                     <p style="text-align:left">Welcome to your Dashboard!</p>
                 </div>
                 <div class="grid-item" style="text-align: right;">
@@ -191,8 +191,8 @@ $genderCountsJson = json_encode($genderCounts);
         <div class="item2">
             <div class="menu-container">
             <button class="menu selected">Sales</button><br>
-            <button class="menu">Order</button><br>
-            <button class="menu">Inventory</button>
+            <button class="menu"><a href = 'OrderDashboard.php'>Order</a></button><br>
+            <button class="menu"><a href = 'InventoryDashboard.php'>Inventory</a></button>
             </div>
         </div>
  
