@@ -133,13 +133,13 @@ button{
     width:100px;
 }
 
-#smallButton {
-  background-color: #eef3f8;
-  color: black;
+.smallButton {
+  background-color: #855363;
+  color: white;
   border: none;
   cursor: pointer;
-  font-size: 10px;
-  border-radius: 5px;
+  font-size: 15px;
+  border-radius: 20px;
 }
 
 .selected{

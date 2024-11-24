@@ -8,18 +8,56 @@ $basketItems = [];
 $sql = "SELECT * FROM mimosami_basket";
 $result = $conn->query($sql);
 
+//insert into table
 if ($result && $result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
+        $basketID = $row['basketID'] ?? 'N/A';
         $productID = $row['productID'] ?? 'N/A';
         $productName = $row['productName'] ?? 'N/A';
         $quantity = $row['quantity'];
         $price = $row['price'];
         $itemTotal = $quantity * $price;
         $total += $itemTotal;
+        $_SESSION['total'] = $total;
 
         $basketItems[] = $row;
     }
 }
+
+//update cart
+if (isset($_POST['addItem'])) {
+    $basketID = $_POST['basketID']; 
+    $sql = "SELECT quantity FROM mimosami_basket WHERE basketID='$basketID'";
+    $result = $conn->query($sql);
+    if ($result && $result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        $quantity = $row['quantity'] + 1;  
+        $updateSQL = "UPDATE mimosami_basket SET quantity='$quantity' WHERE basketID='$basketID'";
+        $conn->query($updateSQL);
+        header("Location: ../view/checkout.php");
+    }
+}
+
+if (isset($_POST['removeItem'])) {
+    $basketID = $_POST['basketID'];  
+    $sql = "SELECT quantity FROM mimosami_basket WHERE basketID='$basketID'";
+    $result = $conn->query($sql);
+    if ($result && $result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        $quantity = max($row['quantity'] - 1, 1); 
+        $updateSQL = "UPDATE mimosami_basket SET quantity='$quantity' WHERE basketID='$basketID'";
+        $conn->query($updateSQL);
+        header("Location: ../view/checkout.php");
+    }
+}
+
+if (isset($_POST['delete'])) {
+    $basketID = $_POST['basketID'];  
+    $sql = "DELETE FROM mimosami_basket WHERE basketID='$basketID'";
+    $conn->query($sql);
+    header("Location: ../view/checkout.php");
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -37,9 +75,9 @@ if ($result && $result->num_rows > 0) {
   </header>
 
   <main>
+  <form id="checkout" method="POST" action="../actions/uploadorder.php">
       <h2>Basket</h2>
       <div class="grid-container card">
-
           <table class="table">
               <tr class="headings">
                   <th>Product ID</th>
@@ -58,9 +96,12 @@ if ($result && $result->num_rows > 0) {
                       <td><?php echo htmlspecialchars($item['price'], 2); ?></td>
                       <td><?php echo htmlspecialchars($item['itemTotal'],2 ); ?></td>
                       <td>
-                        <button id="smallButton">+</button>
-                        <button class="smallButton">-</button>
-                        <button class="smallButton">Delete</button>
+                        <form method="POST" action="">
+                            <input type="hidden" name="basketID" value="<?php echo htmlspecialchars($item['basketID']); ?>" />
+                            <button class="smallButton addItem" type="submit" name="addItem">Add Item</button>
+                            <button class="smallButton removeItem" type="submit" name="removeItem">Remove Item</button>
+                            <button class="smallButton delete" type="submit" name="delete">Delete</button>
+                        </form>
                       </td>
                   </tr>
               <?php endforeach; ?>
@@ -72,6 +113,7 @@ if ($result && $result->num_rows > 0) {
           </table>
 
           <h3>Total: <?php echo htmlspecialchars($total); ?></h3>
+          <a href="../view/Products.php"><button id="action-button" class="custom-button">Continue Shopping</button></a>
       </div>
 
       <div class="card" style="text-align:left">
@@ -86,27 +128,27 @@ if ($result && $result->num_rows > 0) {
             <input id="phoneNumber" name="phoneNumber" type="text" required >
             <br>
 
-        <form id="checkout" method="POST" action="order.php">
+
           <h2>Payment</h2>
             <label for="cardNumber">Card Number</label>
             <input id="cardNumber" name="card_number" type="text" required>
             <br>
 
             <label for="cardName">Name</label>
-            <input id="cardName" name="cardName" type="text" required />
+            <input id="cardName" name="cardName" type="text" required>
             <br>
 
             <label for="expiry">Expiry Date</label>
-            <input id="expiry" name="expiry" type="date" required />
+            <input id="expiry" name="expiry" type="date" required>
             <br>
 
             <label for="cvc">CVC</label>
-            <input id="cvc" name="cvc" type="text" required />
+            <input id="cvc" name="cvc" type="text" required>
             <br>
 
-            <button type="submit">PURCHASE</button>
+            <button type="submit" name="purchase">PURCHASE</button>
+            </div>    
         </form>
-        </div>
       
   </main>
 
@@ -123,5 +165,6 @@ if ($result && $result->num_rows > 0) {
   </footer>
 
 </body>
+
 </html>
 
