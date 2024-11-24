@@ -4,32 +4,34 @@ session_start();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Get data from the form
-    $productID = $_POST['product_id'] ?? '';
-    $productName = $_POST['product_name'] ?? '';
-    $price = floatval($_POST['product_price'] ?? 0);
-    $quantity = intval($_POST['quantity'] ?? 0);
-    $itemTotal = $price * $quantity;
+    $productID = htmlspecialchars($_POST['productID'] ?? '');
+    $productName = htmlspecialchars($_POST['productName'] ?? '');
+    $price = htmlspecialchars($_POST['price'] ??);
+    $quantity = htmlspecialchars($_POST['quantity'] ??);
+    $itemTotal = htmlspecialchars($price * $quantity);
 
     if (empty($productID) || empty($productName) || $quantity <= 0 || $price <= 0) {
         echo "<script>alert('Invalid input. Please check your form values.');</script>";
         exit();
     }
 
-    // Insert data into the checkout table
+    // Insert data into the basket table
     $stmt = $conn->prepare(
         "INSERT INTO mimosami_basket (productID, productName, quantity, price, itemTotal) VALUES (?, ?, ?, ?, ?)"
     );
+
+    if (!$stmt) {
+        die("Prepare failed: " . $conn->error);
+    }
+
     $stmt->bind_param("ssidd", $productID, $productName, $quantity, $price, $itemTotal);
 
     if ($stmt->execute()) {
-        echo "<script>alert('Product added to checkout successfully!');</script>";
         header("Location: ../view/Products.php");
-
+        exit;
     } else {
         echo "<script>alert('Error: " . addslashes($stmt->error) . "');</script>";
     }
-
-    //clear basket when user checkout
 
     // Clean up
     $stmt->close();
@@ -38,4 +40,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     echo "Invalid request.";
 }
 ?>
+
 
