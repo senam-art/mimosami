@@ -61,11 +61,11 @@
 
         <div class="grid-container">
             <?php foreach ($products as $product): 
-                $id = $product['productID'] ?? ''; // Updated to match database column
-                $productName = $product['productName'] ?? 'Unknown Product';
-                $price = $product['price'] ?? '0.00';
-                $image = $imageMap[$id] ?? '../assets/images/default.jpg';
-                $description = $descriptionMap[$id] ?? 'No description available.';
+                $productID = $product['productID'];
+                $productName = $product['productName'];
+                $price = $product['price'];
+                $image = $imageMap[$productID];
+                $description = $descriptionMap[$productID];
             ?>
                 <div class="grid-container-2-columns" id="card">
                     <!-- Product Image -->
@@ -81,9 +81,9 @@
                         
                         <!-- Add to Basket Form -->
                         <form id="addToBasket" method="POST" action="../actions/basket.php">
-                            <input type="hidden" name="product_id" value="<?php echo htmlspecialchars($id); ?>">
-                            <input type="hidden" name="product_name" value="<?php echo htmlspecialchars($productName); ?>">
-                            <input type="hidden" name="product_price" value="<?php echo htmlspecialchars($price); ?>">
+                            <input type="hidden" name="productID" value="<?php echo htmlspecialchars($productID); ?>">
+                            <input type="hidden" name="productName" value="<?php echo htmlspecialchars($productName); ?>">
+                            <input type="hidden" name="price" value="<?php echo htmlspecialchars($price); ?>">
                             <input type="text" name="quantity" id="quantity">
                             <button type="submit" class="custom-button">Add to basket</button>
                         </form>

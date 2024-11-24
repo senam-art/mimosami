@@ -4,7 +4,7 @@ session_start();
 require "../db/onlineconfig.php";
 
 //Fetch items from the database
-$query = "SELECT ItemId, Item Name,Cost,Supplier ID,status FROM inventory"; // Replace 'inventory' with your table name
+$query = "SELECT ItemID, ItemName,Cost,SupplierID,status FROM mimosami_inventory"; 
 $result = $conn->query($query);
 ?>
 

@@ -4,6 +4,7 @@ session_start();
 
 $total = 0; 
 
+$basketItems = [];
 $sql = "SELECT * FROM mimosami_basket";
 $result = $conn->query($sql);
 
@@ -15,6 +16,8 @@ if ($result && $result->num_rows > 0) {
         $price = $row['price'];
         $itemTotal = $quantity * $price;
         $total += $itemTotal;
+
+        $basketItems[] = $row;
     }
 }
 ?>
@@ -23,8 +26,9 @@ if ($result && $result->num_rows > 0) {
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Mimosami Basket</title>
-    <link rel="stylesheet" href="../assets/css/MimosamiStyleLogin.css">
+    <title>Basket</title>
+	<link rel="icon" type="image/x-icon" href="../assets/favicon/mimosamifav.ico">
+	<link rel="stylesheet" href="../assets/css/MimosamiStyleLogin.css?v=1.0">
 </head>
 
 <body>
@@ -37,12 +41,13 @@ if ($result && $result->num_rows > 0) {
       <div class="grid-container card">
 
           <table class="table">
-              <tr>
+              <tr class="headings">
                   <th>Product ID</th>
                   <th>Product Name</th>
                   <th>Quantity</th>
                   <th>Price</th>
                   <th>Item Total</th>
+                  <th>Actions</th>
               </tr>
               <?php if (!empty($basketItems)): ?>
               <?php foreach ($basketItems as $item): ?>
@@ -52,6 +57,11 @@ if ($result && $result->num_rows > 0) {
                       <td><?php echo htmlspecialchars($item['quantity']); ?></td>
                       <td><?php echo htmlspecialchars($item['price'], 2); ?></td>
                       <td><?php echo htmlspecialchars($item['itemTotal'],2 ); ?></td>
+                      <td>
+                        <button id="smallButton">+</button>
+                        <button class="smallButton">-</button>
+                        <button class="smallButton">Delete</button>
+                      </td>
                   </tr>
               <?php endforeach; ?>
               <?php else: ?>
@@ -94,7 +104,7 @@ if ($result && $result->num_rows > 0) {
             <input id="cvc" name="cvc" type="text" required />
             <br>
 
-            <button type="submit" class="purchase-button" data-content="PURCHASE">PURCHASE</button>
+            <button type="submit">PURCHASE</button>
         </form>
         </div>
       

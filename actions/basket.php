@@ -6,14 +6,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Get data from the form
     $productID = htmlspecialchars($_POST['productID'] ?? '');
     $productName = htmlspecialchars($_POST['productName'] ?? '');
-    $price = htmlspecialchars($_POST['price'] ??);
-    $quantity = htmlspecialchars($_POST['quantity'] ??);
+    $quantity = htmlspecialchars($_POST['quantity'] ?? 0);
+    $price = htmlspecialchars($_POST['price'] ?? 0);
     $itemTotal = htmlspecialchars($price * $quantity);
-
-    if (empty($productID) || empty($productName) || $quantity <= 0 || $price <= 0) {
-        echo "<script>alert('Invalid input. Please check your form values.');</script>";
-        exit();
-    }
 
     // Insert data into the basket table
     $stmt = $conn->prepare(
