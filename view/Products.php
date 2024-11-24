@@ -1,5 +1,5 @@
 <?php
-    include '../db/config.php';
+    include '../db/onlineconfig.php';
 
     session_start();
 
@@ -80,7 +80,7 @@
                         <h3 id="price">$<?php echo htmlspecialchars($price); ?></h3>
                         
                         <!-- Add to Basket Form -->
-                        <form id="addToBasket" method="POST" action="basket.php">
+                        <form id="addToBasket" method="POST" action="../actions/basket.php">
                             <input type="hidden" name="product_id" value="<?php echo htmlspecialchars($id); ?>">
                             <input type="hidden" name="product_name" value="<?php echo htmlspecialchars($productName); ?>">
                             <input type="hidden" name="product_price" value="<?php echo htmlspecialchars($price); ?>">
@@ -93,14 +93,16 @@
         </div>
     </div>
 
-    <footer>
+    <footer id="footer">
         <div class="footer-content">
             <p class="follow-text">Connect</p>
             <img src="../assets/images/insta.png" alt="Instagram Logo" class="social-logo">
         </div>
-        <p class="footer-note">© 2024 All rights reserved <br> 
-        <a href="#">Privacy Policy</a> | <a href="#">Terms and Conditions</a> <br>
-        Powered by Power</p>
+        <div class="footer-content">
+            <p class="footer-note">© 2024 All rights reserved <br> 
+            <a href="#">Privacy Policy</a> | <a href="#">Terms and Conditions</a> <br>
+            Powered by Power</p>
+        </div>
     </footer>
 </main>
 

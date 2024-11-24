@@ -1,5 +1,5 @@
 <?php
-    include '../db/config.php';
+    include '../db/onlineconfig.php';
 
     session_start();
 
@@ -9,6 +9,7 @@
 
     if ($result->num_rows > 0) {
       $row = $result->fetch_assoc();
+
       $productName = $row['productName'];
       $price = $row['price'];
       $quantity=$_POST['quantity'];
@@ -61,7 +62,7 @@
 </div>
 
 <h2>Checkout</h2>
-<form id="checkout" class="card" method="POST">
+<form id="checkout" class="card" method="POST" action="order.php>
      <label for="cn">CARD NUMBER</label>
       <input id="cn" type="text" />
       <br>
