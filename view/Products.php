@@ -81,11 +81,11 @@
                         
                         <!-- Add to Basket Form -->
                         <form id="addToBasket" method="POST" action="basket.php">
-                        <input type="hidden" name="product_id" value="<?php echo htmlspecialchars($id); ?>">
-                        <input type="hidden" name="product_name" value="<?php echo htmlspecialchars($productName); ?>">
-                        <input type="hidden" name="product_price" value="<?php echo htmlspecialchars($price); ?>">
-                        <input type="text" name="quantity" id="quantity">
-                        <button type="submit" class="custom-button">Add to basket</button>
+                            <input type="hidden" name="product_id" value="<?php echo htmlspecialchars($id); ?>">
+                            <input type="hidden" name="product_name" value="<?php echo htmlspecialchars($productName); ?>">
+                            <input type="hidden" name="product_price" value="<?php echo htmlspecialchars($price); ?>">
+                            <input type="text" name="quantity" id="quantity">
+                            <button type="submit" class="custom-button">Add to basket</button>
                         </form>
                     </div>
                 </div>

@@ -53,7 +53,7 @@ h3{
   text-align:left;
 }
 
-p: not(footer){
+p:not(footer){
   font-family:'Montserrat',sans-serif;
   color:#1B0B0B;
   text-align:left;
