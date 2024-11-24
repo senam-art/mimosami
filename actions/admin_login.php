@@ -2,12 +2,17 @@
 // Start a session
 session_start();
 
-// Include database configuration
-require "..//db/config.php"; // Ensure this initializes a PDO instance in $conn
+// Create a new mysqli instance
+$conn = new mysqli($host, $username, $password, $dbname);
+
+// Check the connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
 
 // Check if form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    
+
     // Get input values safely
     $username = isset($_POST['uname']) ? htmlspecialchars(trim($_POST['uname'])) : null;
     $password = isset($_POST['pword']) ? trim($_POST['pword']) : null;
@@ -19,19 +24,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     try {
         // Query to fetch the user
-        $sql = "SELECT username, password FROM adminUsers_mimosami WHERE username = :username";
+        $sql = "SELECT username, password FROM adminUsers_mimosami WHERE username = ?";
         $stmt = $conn->prepare($sql);
-        $stmt->bindParam(':username', $username, PDO::PARAM_STR);
+        $stmt->bind_param("s", $username); // 's' means string type
         $stmt->execute();
 
-        // Fetch result
-        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        // Get result
+        $result = $stmt->get_result();
+        $row = $result->fetch_assoc();
 
         if ($row) {
             // Verify the password
             if (password_verify($password, $row['password'])) {
                 $_SESSION['username'] = $username; // Store username in session
-                header("Location: ../view/SalesDashboard.html");
+                header("Location: ../view/SalesDashboard.php");
                 exit();
             } else {
                 echo "Invalid username or password!";
@@ -39,7 +45,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         } else {
             echo "User not found!";
         }
-    } catch (PDOException $e) {
+    } catch (Exception $e) {
         // Handle database errors
         echo "Error: " . $e->getMessage();
     }
