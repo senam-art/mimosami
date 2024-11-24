@@ -19,15 +19,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     try {
         // Query to fetch the user
-        $sql = "SELECT username, password FROM adminUsers_mimosami WHERE username = :username";
+        $sql = "SELECT username, password FROM adminUsers_mimosami WHERE username = ?";
         $stmt = $conn->prepare($sql);
-        $stmt->bindParam(':username', $username, PDO::PARAM_STR);
+        $stmt->bind_param('s', $username);
         $stmt->execute();
 
         // Fetch result
-        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        $row = $stmt->get_result();
 
-        if ($row) {
+        if ($row->num_rows > 0) {
             // Verify the password
             if (password_verify($password, $row['password'])) {
                 $_SESSION['username'] = $username; // Store username in session
