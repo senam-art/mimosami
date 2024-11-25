@@ -66,27 +66,24 @@
                         <th>ID</th>
                         <th>Item</th>
                         <th>Quantity</th>
-                        <th>Status</th>
                         <th>Actions</th>
                     </tr>
                     <tr>
                         <td>001</td>
                         <td>Flour</td>
                         <td>30</td>
-                        <td>Good</td>
                         <td>
-                            <button class="edit">Edit</button>
-                            <button class="restock">Restock</button>
+                            <button class="action">Edit</button>
+                            <button class="action">Restock</button>
                         </td>
                     </tr>
                     <tr>
                         <td>002</td>
                         <td>Sugar</td>
                         <td>50</td>
-                        <td>Low</td>
                         <td>
-                            <button class="edit">Edit</button>
-                            <button class="restock">Restock</button>
+                            <button class="action">Edit</button>
+                            <button class="action">Restock</button>
                         </td>
                     </tr>
 
@@ -111,38 +108,42 @@ document.addEventListener("DOMContentLoaded", () => {
         const button = event.target;
         const row = button.closest("tr");
 
+        if (!row) return; // Ensure the click is on a valid table row
+
         // Handle Edit Button
-        if (button.classList.contains("edit")) {
-            const itemCell = row.children[1]; // Item name
-            const quantityCell = row.children[2]; // Quantity
+        if (button.textContent === "Edit") {
+            const itemCell = row.children[1]; // Item name cell
+            const quantityCell = row.children[2]; // Quantity cell
 
-            if (button.textContent === "Save") {
-                // Save edited values
-                const newItemName = itemCell.querySelector("input").value;
-                const newQuantity = quantityCell.querySelector("input").value;
+            const itemName = itemCell.textContent;
+            const quantityValue = quantityCell.textContent;
 
-                itemCell.textContent = newItemName;
-                quantityCell.textContent = newQuantity;
+            // Enter edit mode
+            itemCell.innerHTML = `<input type="text" value="${itemName}">`;
+            quantityCell.innerHTML = `<input type="number" value="${quantityValue}">`;
 
-                button.textContent = "Edit"; // Switch button back to Edit
-            } else {
-                // Enter edit mode
-                const itemName = itemCell.textContent;
-                const quantityValue = quantityCell.textContent;
+            button.textContent = "Save"; // Switch button to Save
+        } else if (button.textContent === "Save") {
+            // Save edited values
+            const itemCell = row.children[1];
+            const quantityCell = row.children[2];
 
-                itemCell.innerHTML = <input type="text" value="${itemName}">;
-                quantityCell.innerHTML = <input type="number" value="${quantityValue}">;
+            const newItemName = itemCell.querySelector("input").value;
+            const newQuantity = quantityCell.querySelector("input").value;
 
-                button.textContent = "Save"; // Switch button to Save
-            }
+            itemCell.textContent = newItemName;
+            quantityCell.textContent = newQuantity;
+
+            button.textContent = "Edit"; // Switch button back to Edit
         }
 
         // Handle Restock Button
-        if (button.classList.contains("restock")) {
+        if (button.textContent === "Restock") {
             alert("The supplier has been contacted for restocking!");
         }
     });
 });
+
 </script>
  
 </html>
