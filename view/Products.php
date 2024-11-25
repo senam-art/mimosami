@@ -119,7 +119,7 @@ form.addEventListener('submit', function(event) {
     const quantity = document.getElementById('quantity').value;  
 
     if (isNaN(quantity) || quantity <= 0) {
-        alert('Please enter a quantity greater than 0.');
+        alert('Please enter a quantity greater than 0');
         return;  
     }
 
