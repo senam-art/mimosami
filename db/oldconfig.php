@@ -12,7 +12,7 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) {
     echo '<script>alert("Connection failed: " . $conn->connect_error)</script>';
 } else {
-    echo '<script>alert("Connection successful!")</script>';
+    //echo '<script>alert("Connection successful!")</script>';
 }
 
 

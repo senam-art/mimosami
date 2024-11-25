@@ -1,11 +1,12 @@
 <?php
-include '../db/config.php';
+session_start();
+
+require '../db/config.php';
 
 // Enable error reporting to display errors for debugging
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-session_start(); // Start session at the beginning
 
 // Check if the required POST keys exist
 if (!isset($_POST['uname']) || !isset($_POST['pword'])) {
@@ -25,7 +26,7 @@ if (empty($uname) || empty($pword)) {
 // var_dump($pword);
 
 // Prepare a statement to check if the email is already registered in the database
-$stmt = $conn->prepare("SELECT uname, pword FROM mimosami_customers WHERE uname = ?");
+$stmt = $conn->prepare("SELECT uname, pword FROM mimosami_customer WHERE uname = ?");
 $stmt->bind_param('s', $uname); // Bind the email parameter to the query
 $stmt->execute(); // Execute the query
 $results = $stmt->get_result(); // Get the result of the query
