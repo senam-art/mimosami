@@ -34,6 +34,16 @@
                     <input id="uname" name="uname" type="text" placeholder="Username" required><br>
                     <input id="email" name="email" type="email" placeholder="Email" required><br>
                     <input id="pword" name="pword" type="password" placeholder="Password" required><br>
+                    
+                    <!-- Updated Gender Field -->
+                    <label for="gender">Gender:</label>
+                    <select id="gender" name="gender" required>
+                        <option value="">Select Gender</option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                        <option value="other">Other</option>
+                    </select><br><br>
+                    
                     <input id="pwordretype" name="pwordretype" type="password" placeholder="Retype your password" required><br>
                     <button type="submit">Sign Up</button>
                 </form>
@@ -41,9 +51,6 @@
         </div>
     </div>
 </body>
-
-</html>
-
 
 <script>
     document.getElementById("signup-form").addEventListener("submit", function(event) {
@@ -54,6 +61,7 @@
         const uname = document.getElementById("uname").value.trim();
         const email = document.getElementById("email").value.trim();
         const pword = document.getElementById("pword").value.trim();
+        const gender = document.getElementById("gender").value.trim();
         const pwordretype = document.getElementById("pwordretype").value.trim();
 
         let isValid = true;
@@ -91,6 +99,12 @@
         // Validate Password
         if (pword.length < 8) {
             displayError("pword", "Password must be at least 8 characters long.");
+            isValid = false;
+        }
+
+        // Validate Gender Selection
+        if (!gender) {
+            displayError("gender", "Please select your gender.");
             isValid = false;
         }
 

@@ -6,9 +6,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Get data from the form
     $productID = htmlspecialchars($_POST['productID'] ?? '');
     $productName = htmlspecialchars($_POST['productName'] ?? '');
-    $quantity = htmlspecialchars($_POST['quantity'] ?? 0);
-    $price = htmlspecialchars($_POST['price'] ?? 0);
-    $itemTotal = htmlspecialchars($price * $quantity);
+    $quantity = (float)($_POST['quantity'] ?? 0); // Cast quantity to a float
+    $price = (float)($_POST['price'] ?? 0); // Cast price to a float
+    $itemTotal = $price * $quantity; // Perform the multiplication with numeric values
 
     // Insert data into the basket table
     $stmt = $conn->prepare(
@@ -19,8 +19,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         die("Prepare failed: " . $conn->error);
     }
 
+    // Bind parameters with the appropriate types
     $stmt->bind_param("ssidd", $productID, $productName, $quantity, $price, $itemTotal);
 
+    // Execute the statement and handle errors
     if ($stmt->execute()) {
         header("Location: ../view/Products.php");
         exit;
@@ -35,5 +37,3 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     echo "Invalid request.";
 }
 ?>
-
-

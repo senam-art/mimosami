@@ -98,59 +98,35 @@ $salesJson = json_encode($sales);
 /*
 Code to query database and extract data for the Sales by product chart
 */
-//Fetching Sales by product
-$salesByProductQuery  = "SELECT mp.productName, SUM(mo.Quantity) AS product_sold
-                            FROM mimosami_order mo
-                            JOIN mimosami_products mp ON mo.productID = mp.productID
-                            GROUP BY mp.productName
-                            ORDER BY product_sold DESC";
+// Fetching Sales by Product
+$salesByProductQuery = "SELECT mimosami_products.productName, SUM(mimosami_productsales.Quantity) AS product_sold
+                        FROM mimosami_productsales
+                        JOIN mimosami_products ON mimosami_products.productID = mimosami_productsales.productID
+                        GROUP BY mimosami_products.productName
+                        ORDER BY product_sold DESC";
+
 
 
 $SalesByProductResult = $conn->query($salesByProductQuery);
-//Error checking
+
+// Error checking
 if (!$SalesByProductResult) {
     die("Query failed: " . $conn->error);
 }
 
-//array to store product and corresponding overall sales
+// Array to store product and corresponding overall sales
 $products = [];
 $salesCount = [];
 
-while ($row = $SalesByProductResult ->fetch_assoc()){
-
+while ($row = $SalesByProductResult->fetch_assoc()) {
     $products[] = $row['productName'];
-    $salesCount[] =$row['product_sold'];
+    $salesCount[] = $row['product_sold'];
 }
 
 // Encoding as JSON
 $productsJson = json_encode($products);
 $salesCountJson = json_encode($salesCount);
 
-
-/*Code to query database to get customer gender
-*/
-$customerGenderQuery = "SELECT Gender, Count(Gender) as gender_count
-                        FROM mimosami_customer 
-                        GROUP BY Gender
-                        ORDER BY gender_count DESC";
-
-$customerGenderResult = $conn->query($customerGenderQuery);
-if (!$SalesByProductResult) {
-    die("Query failed: " . $conn->error);
-}
-
-
-// Initialize arrays for chart labels and data
-$genderLabels = [];
-$genderCounts = [];
-
-while ($row = $customerGenderResult->fetch_assoc()) {
-    $genderLabels[] = $row['Gender'];
-    $genderCounts[] = $row['gender_count'];
-}
-//Encoding as JSON
-$genderLabelsJson = json_encode($genderLabels);
-$genderCountsJson = json_encode($genderCounts);
                         
 ?>
 

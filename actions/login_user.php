@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-require '../db/config.php';
+require '../db/onlineconfig.php';
 
 // Enable error reporting to display errors for debugging
 error_reporting(E_ALL);
@@ -40,7 +40,7 @@ if ($results->num_rows > 0) {
         // Store user data in session variables
         $_SESSION['uname'] = $user['uname'];
 
-        header('Location: ../view/admin/dashboard.php');
+        header('Location: ../view/Products.php');
         exit(); // Make sure to exit after the redirect
     } else {
         echo 'Incorrect password. Please try again.';
