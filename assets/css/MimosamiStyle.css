@@ -25,6 +25,11 @@ body {
   box-sizing: border-box;
 }
 
+.product-main{
+  padding:30px;
+  margin:30px;
+}
+
 /*Test*/
 a{
   text-decoration: none;
@@ -44,24 +49,28 @@ h2{
   text-align:center;
   font-size: 35px;  
   margin:20px;
+  background-color: #dd656b;
+  border-radius: 20px;
 }
 
 h3{
   font-family:'Quicksand',sans-serif;
   color:#1B0B0B;
-  font-size:15px;
+  font-size:25px;
   text-align:left;
 }
 
-p{
+p, label{
   font-family:'Montserrat',sans-serif;
   color:#1B0B0B;
   text-align:left;
+  font-size:15px;
 }
 
 #footer{
   text-align:center;
 }
+
 
 
 /*Nav*/
@@ -96,6 +105,7 @@ header {
   background-color: transparent;
   border-bottom-left-radius:40px;
   border-bottom-right-radius:40px;
+  transition: background-color 0.5s ease;
 }
 
 header.scrolled {
@@ -203,21 +213,13 @@ header.scrolled {
   background-color: #855363;
 }
 
-.image-div img {
-  width: 50%;
-  height: auto;
-  padding-left: 20px;
-}
-
-.image-div img {
+.product-grid-item img{
   width: 100%;
-  /* Make the image responsive */
-  height: auto;
-  /* Maintain aspect ratio */
-  border-radius: 8px;
-  /* Optional: rounded corners */
+  height: 100%;
+  max-height:300px;
+  max-width:300px;
+  border-radius: 20px;
 }
-
 
 /*Gallery*/
 .gallery {
@@ -230,13 +232,16 @@ header.scrolled {
 
 
 .gallery .grid-item{
-  height:300px
+  height:300px;
+  position: relative;
+  overflow: hidden;
 }
 
 .gallery .grid-item img{
   height:300px;
-  width: 100%;
+  width:300px;
   border-radius: 10%;
+  object-fit: cover;
 }
 
 
@@ -316,12 +321,15 @@ footer {
 }
 
 input{
-  font-size: 10px;
+  font-size: 20px;
   border-color: #1B0B0B;
-  border: 1.5px solid black;
-  font-family:'Montserrat', sans-serif; 
-  margin:10px;
+  border:none;
+  border:0.5px #855363 solid;
+  border-bottom: 2px solid black;
+  padding:5px;
+  margin:2px;
   width:50px;
+
 }
 
 

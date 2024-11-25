@@ -16,9 +16,9 @@
 
     // Mapping product IDs to their respective images and descriptions
     $imageMap = [
-        "P001" => "../assets/images/fudgy_brownies.jpg",
-        "P002" => "../assets/images/cookie_monster.jpg",
-        "P003" => "../assets/images/cupcake.jpg"
+        "P002" => "../assets/images/fudgy_brownies.jpg",
+        "P003" => "../assets/images/cookie_monster.jpg",
+        "P001" => "../assets/images/cupcake.jpg"
     ];
 
     $descriptionMap = [
@@ -34,12 +34,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/x-icon" href="xxx">
-    <link rel="stylesheet" href="../assets/css/MimosamiStyle.css">
+    <link rel="stylesheet" href="../assets/css/MimosamiStyle.css?v1.0">
     <title>Products</title>
 </head>
 <body class="products">
 
-<main>
+
     <div class="banner">
         <nav class="nav-links">
             <button class="nav-button"><a href="checkout.php">Basket</a></button>
@@ -55,7 +55,8 @@
             Your browser does not support the video tag.
         </video>
     </div>
-    
+   
+<main>   
     <div>
         <h2>Products</h2>
 
@@ -70,12 +71,12 @@
                 <div class="grid-container-2-columns" id="card">
                     <!-- Product Image -->
                     <div class="product-grid-item">
-                        <img style="width:100px; height:auto" src="<?php echo htmlspecialchars($image); ?>" alt="<?php echo htmlspecialchars($productName); ?>">
+                        <img src="<?php echo htmlspecialchars($image); ?>" alt="<?php echo htmlspecialchars($productName); ?>">
                     </div>
 
                     <!-- Product Details -->
                     <div class="product-grid-item">
-                        <h3 id="productName"><?php echo htmlspecialchars($productName); ?></h3>
+                        <h2 id="productName"><?php echo htmlspecialchars($productName); ?></h2>
                         <p><?php echo htmlspecialchars($description); ?></p>
                         <h3 id="price">$<?php echo htmlspecialchars($price); ?></h3>
                         
@@ -84,7 +85,8 @@
                             <input type="hidden" name="productID" value="<?php echo htmlspecialchars($productID); ?>">
                             <input type="hidden" name="productName" value="<?php echo htmlspecialchars($productName); ?>">
                             <input type="hidden" name="price" value="<?php echo htmlspecialchars($price); ?>">
-                            <input type="text" name="quantity" id="quantity">
+                            <label style="text-align:10px">Enter the quantity:</label>
+                            <input type="text" name="quantity" id="quantity"><br>
                             <button type="submit" class="custom-button">Add to basket</button>
                         </form>
                     </div>
@@ -92,6 +94,7 @@
             <?php endforeach; ?>
         </div>
     </div>
+</main>
 
     <footer id="footer">
         <div class="footer-content">
@@ -104,11 +107,24 @@
             Powered by Power</p>
         </div>
     </footer>
-</main>
+
 
 </body>
 <script>
+const form = document.getElementById("addToBasket");
 
+form.addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    const quantity = document.getElementById('quantity').value;  
+
+    if (isNaN(quantity) || quantity <= 0) {
+        alert('Please enter a quantity greater than 0.');
+        return;  
+    }
+
+    form.submit();
+});
 </script>
 </html>
 

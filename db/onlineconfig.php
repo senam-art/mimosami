@@ -19,8 +19,7 @@ try {
     if ($conn->connect_errno) {
         die("Connection failed: " . $conn->connect_error);
     }
-
-    echo "Connection successful!";
+    
 } catch (Exception $e) {
     // Catch any other errors
     die("An error occurred: " . $e->getMessage());

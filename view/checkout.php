@@ -76,8 +76,8 @@ if (isset($_POST['delete'])) {
 
   <main>
   <form id="checkout" method="POST" action="../actions/uploadorder.php">
-      <h2>Basket</h2>
-      <div class="grid-container card">
+      <h2 class="product_h2">Basket</h2>
+      <div class="grid-container card centerTable">
           <table class="table">
               <tr class="headings">
                   <th>Product ID</th>
@@ -93,8 +93,8 @@ if (isset($_POST['delete'])) {
                       <td><?php echo htmlspecialchars($item['productID']); ?></td>
                       <td><?php echo htmlspecialchars($item['productName']); ?></td>
                       <td><?php echo htmlspecialchars($item['quantity']); ?></td>
-                      <td><?php echo htmlspecialchars($item['price'], 2); ?></td>
-                      <td><?php echo htmlspecialchars($item['itemTotal'],2 ); ?></td>
+                      <td>$ <?php echo htmlspecialchars($item['price'], 2); ?></td>
+                      <td>$ <?php echo htmlspecialchars($item['itemTotal'],2 ); ?></td>
                       <td>
                         <form method="POST" action="">
                             <input type="hidden" name="basketID" value="<?php echo htmlspecialchars($item['basketID']); ?>" />
@@ -112,12 +112,14 @@ if (isset($_POST['delete'])) {
                       <?php endif; ?>
           </table>
 
-          <h3>Total: <?php echo htmlspecialchars($total); ?></h3>
+          <h3>Total: $ <?php echo htmlspecialchars($total); ?></h3>
           <a href="../view/Products.php"><button id="action-button" class="custom-button">Continue Shopping</button></a>
       </div>
+      <br>
+      <br>
 
+      <h2 class="product_h2">Checkout</h2>
       <div class="card" style="text-align:left">
-        <h2>Checkout</h2>
         <p>Please enter your details below</p>
           <h2>Delivery</h2>
             <label for="address">Address</label>
