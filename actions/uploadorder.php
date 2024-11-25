@@ -3,50 +3,74 @@ include '../db/onlineconfig.php';
 session_start();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Fetch items from the basket
     $basketItems = [];
     $basketQuant = [];
-    $customerID=  1;//$_SESSION['customerID']; // Replace with actual customer ID, e.g., from session or form input
-    $total= $_SESSION['total'];
-    
-    $sql = "SELECT productID, quantity FROM mimosami_basket";
+    $customerID = 1; 
+    $total = isset($_SESSION['total']) ? $_SESSION['total'] : 0;
+
+    $sql = "SELECT productID, quantity, price FROM mimosami_basket";
     $result = $conn->query($sql);
 
     if ($result && $result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
-            $basketItems[] = $row['productID'];
-            $basketQuant[] = intval($row['quantity']);
+            $basketItems[] = $row;
         }
     }
 
-    // Check if there are items to insert
-    if (!empty($basketItems) && !empty($basketQuant)) {
-        
-        // Prepare insert statement including Customer ID
-        $stmt = $conn->prepare("INSERT INTO mimosami_order (customerID, productList, quantityList,total) VALUES ( ?, ?,?,?)");
+    if (!empty($basketItems)) {
+        $stmt = $conn->prepare("INSERT INTO mimosami_order (customerID, productList, quantityList, total) VALUES (?, ?, ?, ?)");
         if ($stmt) {
-            // Insert aggregated data as a single record
-            $productList = implode(',', $basketItems); // Combine product IDs as a comma-separated string
-            $quantityList = implode(',', $basketQuant); // Combine quantities as a comma-separated string
-            
-            $stmt->bind_param("isss", $customerID, $productList, $quantityList,$total);
+            $productList = implode(',', array_column($basketItems, 'productID'));
+            $quantityList = implode(',', array_column($basketItems, 'quantity'));
+
+            $stmt->bind_param("issd", $customerID, $productList, $quantityList, $total);
             if (!$stmt->execute()) {
                 echo "Error inserting order: " . $stmt->error;
+                $stmt->close();
+                $conn->close();
+                exit();
             }
-            $stmt->close();}
 
-        // Clear basket after checkout
+            $OrderID = $conn->insert_id;
+            $stmt->close();
+        } else {
+            echo "Failed to prepare order statement: " . $conn->error;
+            $conn->close();
+            exit();
+        }
+
+        $productSalesStmt = $conn->prepare("INSERT INTO mimosami_productsales (OrderID, CustomerID, ProductID, Quantity, Amount) VALUES (?, ?, ?, ?, ?)");
+        if ($productSalesStmt) {
+            foreach ($basketItems as $item) {
+                $productID = $item['productID'];
+                $quantity = $item['quantity'];
+                $price = $item['price'];
+                $cost = $quantity * $price;
+
+                $productSalesStmt->bind_param("iisss", $OrderID, $customerID, $productID, $quantity, $cost);
+                if (!$productSalesStmt->execute()) {
+                    echo "Error inserting product sales: " . $productSalesStmt->error;
+                }
+            }
+            $productSalesStmt->close();
+        } else {
+            echo "Failed to prepare product sales statement: " . $conn->error;
+            $conn->close();
+            exit();
+        }
         $clearBasketSQL = "DELETE FROM mimosami_basket";
         if (!$conn->query($clearBasketSQL)) {
             echo "Error clearing basket: " . $conn->error;
         }
     } else {
         echo "Basket is empty.";
+        header("Location: ../view/thankyou.html");
     }
 }
 
 $conn->close();
-header("Location: ../view/Homepage.html"); // Redirect to a confirmation page
+header("Location: ../view/Homepage.html");
 exit();
 ?>
+
 
