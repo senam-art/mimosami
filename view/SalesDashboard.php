@@ -18,7 +18,7 @@ $userName = $_SESSION['username'];
 Code to query database and extract data for the different divs
 */
 // Fetch Total Sales
-$salesQuery = "SELECT SUM(Amount) AS total_sales FROM mimosami_sales";
+$salesQuery = "SELECT SUM(Amount) AS total_sales FROM mimosami_productsales";
 $salesResult = $conn->query($salesQuery);
 
 $totalSales = $salesResult->fetch_assoc()['total_sales'];
@@ -53,7 +53,7 @@ $newSignups = $newSignupsResult -> fetch_assoc()['new_signups'];
 $latestMonthSalesQuery = "SELECT YEAR(Date) AS year,
                             MONTH(Date) AS month, 
                             SUM(Amount) AS total_sales 
-                            FROM mimosami_sales 
+                            FROM mimosami_productsales 
                             GROUP BY YEAR(Date),Month(Date) 
                             ORDER BY year DESC, month DESC 
                             LIMIT 1";
@@ -76,7 +76,7 @@ Code to query database and extract data for the Monthly sales chart
 $monthlySalesQuery = "SELECT YEAR(Date) AS year,
                         MONTH(Date) AS month,
                         SUM(Amount) AS total_sales
-                        FROM mimosami_sales 
+                        FROM mimosami_productsales 
                         GROUP BY YEAR(Date), MONTH(Date) 
                         ORDER BY year DESC, month DESC";
 $monthlySalesResult = $conn->query($monthlySalesQuery); 
@@ -100,7 +100,7 @@ Code to query database and extract data for the Sales by product chart
 */
 //Fetching Sales by product
 $salesByProductQuery  = "SELECT mp.productName, SUM(mo.Quantity) AS product_sold
-                            FROM mimosami_order mo
+                            FROM mimosami_productsales mo
                             JOIN mimosami_products mp ON mo.productID = mp.productID
                             GROUP BY mp.productName
                             ORDER BY product_sold DESC";
