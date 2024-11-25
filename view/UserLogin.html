@@ -1,76 +1,92 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Login</title>
-	<link rel="icon" type="image/x-icon" href="../assets/favicon/mimosamifav.ico">
-	<link rel="stylesheet" href="../assets/css/MimosamiStyleLogin.css">
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=windows-1252" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="../assets/favicon/mimosamifav.ico"
+    />
+    <link rel="stylesheet" href="../assets/css/MimosamiStyleLogin.css" />
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-</head>
+  </head>
 
-<body>
- 
+  <body>
     <div class="grid-container-webpage-setup">
-        <div class="item1a">
-            <a href="Homepage.html"><img src="../assets/images/MimosamiLogo.png" alt="MimosamiLogo" style="width:100%;max-width:100px"></a>
+      <div class="item1a">
+        <a href="Homepage.html"
+          ><img
+            src="../assets/images/MimosamiLogo.png"
+            alt="MimosamiLogo"
+            style="width: 100%; max-width: 100px"
+        /></a>
+      </div>
 
+      <div class="item1"></div>
+
+      <div class="item1b">
+        <button><a href="AdminLogin.php">Admin</a></button>
+      </div>
+
+      <div class="item2">
+        <div class="grid-container-2-columns">
+          <div class="grid-item">
+            <h1>Welcome to Mimosami!</h1>
+            <p>Login to your account</p>
+            <p>Don't have an account?</p>
+            <button><a href="Signup.php">Sign Up!</a></button>
+          </div>
+
+          <div class="grid-item" id="card">
+            <h2>Login</h2>
+            <form id="login" action="../actions/login_user.php" method="POST">
+              <input
+                id="uname"
+                name="uname"
+                type="text"
+                placeholder="Username"
+                required
+              /><br />
+              <input
+                id="pword"
+                name="pword"
+                type="password"
+                placeholder="Password"
+                required
+              />
+              <br />
+              <button type="submit" name="submitBtn" id="submitBtn">Submit</button>
+            </form>
+          </div>
         </div>
-
-        <div class="item1">
-
-        </div>
-
-        <div class="item1b">
-            <button><a href="AdminLogin.php">Admin</a></button>
-        </div>
-
-        <div class="item2">
-
-            <div class="grid-container-2-columns">
-                <div class="grid-item">
-                    <h1> Welcome to Mimosami!</h1>
-                    <p>Login to your account</p>
-                    <p>Don't have an account?</p>
-                    <button><a href ="Signup.php">Sign Up!</a></button>
-                </div>
-
-                <div class="grid-item" id="card">
-                    <h2>Login</h2>
-                    <form>
-                        <input id="uname" type="text" placeholder="Username" required><br>
-                        <input id="pword" type="password" placeholder="Password" required> <br>
-                        <input type="submit" id="submit">
-                    </form>
-                </div>
-
-            </div>
-        </div>
+      </div>
     </div>
+  </body>
 
-</body>
+  <script>
+    const form = document.getElementById("login");
 
-<script>
-const form=document.getElementById("login");
+    form.addEventListener("submit", function (event) {
+      event.preventDefault();
 
-form.addEventListener('submit', function(event){
-    event.preventDefault();
+      const uname = document.getElementById("uname").value;
+      const pword = document.getElementById("pword").value;
 
-    const uname=document.getElementById('uname').value;
-    const pword=document.getElementById('pword').value;
-
-    if(uname ===""){
-        alert('Please enter your username.');
+      if (uname === "") {
+        alert("Please enter your username.");
         return;
-    }
+      }
 
-
-    if(pword ===""){
-        alert('Please enter your password.');
+      if (pword === "") {
+        alert("Please enter your password.");
         return;
-    }
+      }
 
-    alert("Waiting to login.");
-    form.submit();
+      //alert("Waiting to login.");
+      form.submit();
+      
     });
-    
-</script>
+  </script>
 </html>

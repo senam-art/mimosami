@@ -2,23 +2,12 @@
 // Start a session
 session_start();
 
-// Database configuration
-$host = 'localhost'; 
-$dbname = 'mimosami'; 
-$username = 'root'; // Your database username, 'root' for local development
-$password = ''; // Your database password, empty for local development unless set
-
-// Create a new mysqli instance
-$conn = new mysqli($host, $username, $password, $dbname);
-
-// Check the connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+// Include database configuration
+require "..//db/config.php"; // Ensure this initializes a PDO instance in $conn
 
 // Check if form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-
+    
     // Get input values safely
     $username = isset($_POST['uname']) ? htmlspecialchars(trim($_POST['uname'])) : null;
     $password = isset($_POST['pword']) ? trim($_POST['pword']) : null;
@@ -32,18 +21,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Query to fetch the user
         $sql = "SELECT username, password FROM adminUsers_mimosami WHERE username = ?";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("s", $username); // 's' means string type
+        $stmt->bind_param('s', $username);
         $stmt->execute();
 
-        // Get result
-        $result = $stmt->get_result();
-        $row = $result->fetch_assoc();
+        // Fetch result
+        $row = $stmt->get_result();
 
-        if ($row) {
+        if ($row->num_rows > 0) {
             // Verify the password
             if (password_verify($password, $row['password'])) {
                 $_SESSION['username'] = $username; // Store username in session
-                header("Location: ../view/SalesDashboard.php");
+                header("Location: ../view/SalesDashboard.html");
                 exit();
             } else {
                 echo "Invalid username or password!";
@@ -51,7 +39,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         } else {
             echo "User not found!";
         }
-    } catch (Exception $e) {
+    } catch (PDOException $e) {
         // Handle database errors
         echo "Error: " . $e->getMessage();
     }

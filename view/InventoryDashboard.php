@@ -1,3 +1,16 @@
+<?php
+session_start();
+
+require "../db/onlineconfig.php";
+
+//Fetch items from the database
+$query = "SELECT ItemID, ItemName,Cost,SupplierID,status FROM mimosami_inventory"; 
+$result = $conn->query($query);
+?>
+
+
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -34,9 +47,9 @@
 
         <div class="item2">
             <div class="menu-container">
-            <button class="menu"><a href ="../view/SalesDashboard.html">Sales</a></button><br>
-            <button class="menu"><a href ="../view/OrderDashboard.html"></a>Order</button><br>
-            <button class="menu selected"><a href ="../view/InventoryDashboard.html"></a>Inventory</button>
+            <button class="menu"><a href ="SalesDashboard.php">Sales</a></button><br>
+            <button class="menu"><a href ="OrderDashboard.php"></a>Order</button><br>
+            <button class="menu selected"><a href ="InventoryDashboard.php"></a>Inventory</button>
             </div>
         </div>
  
@@ -53,7 +66,7 @@
                 </div>
 
                 <div class="grid-item" id="card">
-                    <p style="font-size:13px">Total Assets</p>
+                    <p style="font-size:13px">Total Items</p>
                     <p style="font-weight:600;font-size:20px;color:#855363">500</p>                   
                 </div>
 
