@@ -2,10 +2,52 @@
 session_start();
 
 require "../db/onlineconfig.php";
+<?php
+session_start();
+require "../db/onlineconfig.php"; // Include the database configuration
 
-//Fetch items from the database
-$query = "SELECT ItemID, ItemName,Cost,SupplierID FROM mimosami_inventory"; 
-$result = $conn->query($query);
+// Set the response header to JSON
+header("Content-Type: application/json");
+
+// Ensure the request method is POST
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    // Get the raw POST data and decode it
+    $input = json_decode(file_get_contents("php://input"), true);
+
+    // Validate input
+    if (isset($input['id'], $input['name'], $input['quantity']) &&
+        !empty($input['id']) && !empty($input['name']) && is_numeric($input['quantity'])) {
+
+        $itemID = $conn->real_escape_string($input['id']);
+        $itemName = $conn->real_escape_string($input['name']);
+        $quantity = (int)$input['quantity'];
+
+        // Prepare the SQL statement
+        $query = "UPDATE mimosami_inventory SET ItemName = ?, Quantity = ? WHERE ItemID = ?";
+        $stmt = $conn->prepare($query);
+
+        if ($stmt) {
+            $stmt->bind_param("sii", $itemName, $quantity, $itemID);
+
+            // Execute the query
+            if ($stmt->execute()) {
+                echo json_encode(["success" => true, "message" => "Item updated successfully"]);
+            } else {
+                echo json_encode(["success" => false, "error" => "Database update failed: " . $stmt->error]);
+            }
+
+            $stmt->close();
+        } else {
+            echo json_encode(["success" => false, "error" => "Failed to prepare statement: " . $conn->error]);
+        }
+    } else {
+        echo json_encode(["success" => false, "error" => "Invalid input data"]);
+    }
+} else {
+    echo json_encode(["success" => false, "error" => "Invalid request method"]);
+}
+
+$conn->close(); // Close the database connection
 ?>
 
 
@@ -79,27 +121,24 @@ $result = $conn->query($query);
                         <th>ID</th>
                         <th>Item</th>
                         <th>Quantity</th>
-                        <th>Status</th>
                         <th>Actions</th>
                     </tr>
                     <tr>
                         <td>001</td>
                         <td>Flour</td>
                         <td>30</td>
-                        <td>Good</td>
                         <td>
-                            <button class="edit">Edit</button>
-                            <button class="restock">Restock</button>
+                            <button class="action">Edit</button>
+                            <button class="action">Restock</button>
                         </td>
                     </tr>
                     <tr>
                         <td>002</td>
                         <td>Sugar</td>
                         <td>50</td>
-                        <td>Low</td>
                         <td>
-                            <button class="edit">Edit</button>
-                            <button class="restock">Restock</button>
+                            <button class="action">Edit</button>
+                            <button class="action">Restock</button>
                         </td>
                     </tr>
 
@@ -124,42 +163,64 @@ document.addEventListener("DOMContentLoaded", () => {
         const button = event.target;
         const row = button.closest("tr");
 
+        if (!row) return; // Ensure the click is on a valid table row
+
         // Handle Edit Button
-        if (button.classList.contains("edit")) {
-            const itemCell = row.children[1]; // Item name
-            const quantityCell = row.children[2]; // Quantity
+        if (button.textContent === "Edit") {
+            const itemCell = row.children[1]; // Item name cell
+            const quantityCell = row.children[2]; // Quantity cell
 
-            if (button.textContent === "Save") {
-                // Save edited values
-                const newItemName = itemCell.querySelector("input").value;
-                const newQuantity = quantityCell.querySelector("input").value;
+            const itemName = itemCell.textContent;
+            const quantityValue = quantityCell.textContent;
 
-                itemCell.textContent = newItemName;
-                quantityCell.textContent = newQuantity;
+            // Enter edit mode
+            itemCell.innerHTML = `<input type="text" value="${itemName}">`;
+            quantityCell.innerHTML = `<input type="number" value="${quantityValue}">`;
 
-                button.textContent = "Edit"; // Switch button back to Edit
-            } else {
-                // Enter edit mode
-                const itemName = itemCell.textContent;
-                const quantityValue = quantityCell.textContent;
+            button.textContent = "Save"; // Switch button to Save
+        } else if (button.textContent === "Save") {
+            const itemID = row.children[0].textContent; // ID is in the first column
+            const itemCell = row.children[1];
+            const quantityCell = row.children[2];
 
-                itemCell.innerHTML = <input type="text" value="${itemName}">;
-                quantityCell.innerHTML = <input type="number" value="${quantityValue}">;
+            const newItemName = itemCell.querySelector("input").value;
+            const newQuantity = quantityCell.querySelector("input").value;
 
-                button.textContent = "Save"; // Switch button to Save
-            }
+            // Send updated data to the server
+            fetch("../db/updateInventory.php", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    id: itemID,
+                    name: newItemName,
+                    quantity: newQuantity
+                })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Update the table with new values
+                        itemCell.textContent = newItemName;
+                        quantityCell.textContent = newQuantity;
+                        button.textContent = "Edit"; // Switch button back to Edit
+                        alert("Item updated successfully!");
+                    } else {
+                        alert("Error updating item: " + data.error);
+                    }
+                })
+                .catch(error => {
+                    console.error("Error:", error);
+                    alert("An error occurred while updating the item.");
+                });
         }
 
         // Handle Restock Button
-        if (button.classList.contains("restock")) {
+        if (button.textContent === "Restock") {
             alert("The supplier has been contacted for restocking!");
         }
     });
 });
+
 </script>
  
-
-    
-
-
 </html>
