@@ -130,8 +130,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 const itemName = itemCell.textContent;
                 const quantityValue = quantityCell.textContent;
 
-                itemCell.innerHTML = <input type="text" value="${itemName}">;
-                quantityCell.innerHTML = <input type="number" value="${quantityValue}">;
+                itemCell.innerHTML = `<input type="text" value="${itemName}">`;
+                quantityCell.innerHTML = `<input type="number" value="${quantityValue}">`;
 
                 button.textContent = "Save"; // Switch button to Save
             }
@@ -143,6 +143,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 });
+
 </script>
  
 </html>
