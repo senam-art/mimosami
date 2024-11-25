@@ -18,7 +18,7 @@ $userName = $_SESSION['username'];
 Code to query database and extract data for the different divs
 */
 // Fetch Total Sales
-$salesQuery = "SELECT SUM(Amount) AS total_sales FROM mimosami_sales";
+$salesQuery = "SELECT SUM('Cost of Sales') AS total_sales FROM mimosami_sales";
 $salesResult = $conn->query($salesQuery);
 
 $totalSales = $salesResult->fetch_assoc()['total_sales'];
