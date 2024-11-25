@@ -70,12 +70,20 @@ if (isset($_POST['delete'])) {
 </head>
 
 <body>
-  <header class="scrolled banner">
-      <a href="Homepage.html"><h1>Mimosami</h1></a>
-  </header>
+<div class="banner">
+    <nav class="nav-links">
+            <button class="nav-button"><a href="UserLogin.html">Log In</a></button>
+            <button class="nav-button"><a href="Signup.php">Sign Up</a></button>
+    </nav>
+
+    <header class="scrolled">
+        <a href="Homepage.html"><h1>Mimosami</h1></a>
+    </header>
+</div>
 
   <main>
   <form id="checkout" method="POST" action="../actions/uploadorder.php">
+
       <h2 class="product_h2">Basket</h2>
       <div class="grid-container card centerTable">
           <table class="table">
@@ -112,16 +120,20 @@ if (isset($_POST['delete'])) {
                       <?php endif; ?>
           </table>
 
+
           <h3>Total: $ <?php echo htmlspecialchars($total); ?></h3>
           <a href="../view/Products.php"><button id="action-button" class="custom-button">Continue Shopping</button></a>
       </div>
+     
       <br>
       <br>
 
       <h2 class="product_h2">Checkout</h2>
+      
       <div class="card" style="text-align:left">
-        <p>Please enter your details below</p>
-          <h2>Delivery</h2>
+            <p>Please enter your details below</p>
+            <h3>Delivery</h3>
+
             <label for="address">Address</label>
             <input id="address" name="address" type="text" required >
             <br>
@@ -131,27 +143,25 @@ if (isset($_POST['delete'])) {
             <br>
 
 
-          <h2>Payment</h2>
+            <h3>Payment</h3>
+                    
             <label for="cardNumber">Card Number</label>
-            <input id="cardNumber" name="card_number" type="text" required>
-            <br>
+            <input id="cardNumber" name="card_number" type="text" required> <br>
 
             <label for="cardName">Name</label>
-            <input id="cardName" name="cardName" type="text" required>
-            <br>
+            <input id="cardName" name="cardName" type="text" required><br>
 
             <label for="expiry">Expiry Date</label>
-            <input id="expiry" name="expiry" type="date" required>
-            <br>
+            <input id="expiry" name="expiry" type="date" required><br>
 
             <label for="cvc">CVC</label>
-            <input id="cvc" name="cvc" type="text" required>
-            <br>
+            <input id="cvc" name="cvc" type="text" required><br>
 
-            <button type="submit" name="purchase">PURCHASE</button>
-            </div>    
-        </form>
-      
+            <button type="submit" name="purchase">PURCHASE</button> 
+        </div> 
+    </form>
+ 
+
   </main>
 
   <footer>

@@ -12,12 +12,16 @@ html, body{
     height: 100%;
     display: flex;
     flex-direction: column;
+    box-sizing: border-box;
     
 }
 
-main{
-  padding:50px;
+.product-main{
+  padding:30px;
+  margin:30px;
 }
+
+
 
 /*Containers*/
 .grid-container-2-columns {
@@ -199,48 +203,43 @@ button{
 
 /*Nav*/
 .banner{
-    position: fixed;
-    width: 100%;
-    z-index: 1000;
-    transition: background-color 0.3s ease, opacity 0.3s ease;
-  }
-  
-  .nav-links {
-    display: flex;
-    gap: 20px; 
-    justify-content: flex-end;
-    flex: 1;
-    padding:10px;
-    background-color: #f1a1a5;
-  }
-  
-  .nav-button{
-    background-color: #f1f1f1; 
-    color:#1b0b0b;
-    border-radius: 10px;
-    border: none;
-    padding:5px;
-    width:80px;
-  }
-  
-  /* Header */
-  header {
-    text-align: center;
-    background-color: transparent;
-    border-bottom-left-radius:40px;
-    border-bottom-right-radius:40px;
-    padding:10px;
-    margin-bottom:20px;
-  }
-  
-  header.scrolled {
-    background-color: #cfe6fc;
-    opacity: 1;
-  }
+  position: fixed;
+  width: 100%;
+  z-index: 1000;
+  transition: background-color 0.3s ease, opacity 0.3s ease;
+}
 
-  main{
-    margin:50px 30px;
-  }
+.nav-links {
+  display: flex;
+  gap: 20px; 
+  justify-content: flex-end;
+  flex: 1;
+  padding:10px;
+  background-color: #f1a1a5;
+}
+
+.nav-button{
+  background-color: #f1f1f1; 
+  color:#1b0b0b;
+  border-radius: 10px;
+  border: none;
+  padding:5px;
+  width:80px;
+}
+
+/* Header */
+header {
+  text-align: center;
+  background-color: transparent;
+  border-bottom-left-radius:40px;
+  border-bottom-right-radius:40px;
+  transition: background-color 0.5s ease;
+}
+
+header.scrolled {
+  background-color: #cfe6fc;
+  opacity: 1;
+}
 
 /*Footer*/
 footer {
@@ -307,4 +306,15 @@ tr:nth-child(even){
 .centerTable {
   display: grid;
   place-items: center;
+}
+
+input{
+  font-size: 15px;
+  border:none;
+  border-bottom: 2px solid black;
+  padding:10px;
+  margin:10px;
+  margin-bottom:10px;
+  font-family:'Montserrat',sans-serif;
+
 }
