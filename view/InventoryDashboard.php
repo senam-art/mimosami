@@ -1,3 +1,47 @@
+<?php
+session_start();
+require "../db/onlineconfig.php"; // Include the database configuration
+
+// Ensure the request method is POST
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    // Get the raw POST data and decode it
+    $input = json_decode(file_get_contents("php://input"), true);
+
+    // Validate input
+    if (isset($input['id'], $input['name'], $input['quantity']) &&
+        !empty($input['id']) && !empty($input['name']) && is_numeric($input['quantity'])) {
+
+        $itemID = $conn->real_escape_string($input['id']);
+        $itemName = $conn->real_escape_string($input['name']);
+        $quantity = (int)$input['quantity'];
+
+        // Prepare the SQL statement
+        $query = "UPDATE mimosami_inventory SET ItemName = ?, Quantity = ? WHERE ItemID = ?";
+        $stmt = $conn->prepare($query);
+
+        if ($stmt) {
+            $stmt->bind_param("sii", $itemName, $quantity, $itemID);
+
+            // Execute the query
+            if ($stmt->execute()) {
+                echo json_encode(["success" => true, "message" => "Item updated successfully"]);
+            } else {
+                echo json_encode(["success" => false, "error" => "Database update failed: " . $stmt->error]);
+            }
+
+            $stmt->close();
+        } else {
+            echo json_encode(["success" => false, "error" => "Failed to prepare statement: " . $conn->error]);
+        }
+    } else {
+        echo json_encode(["success" => false, "error" => "Invalid input data"]);
+    }
+} else {
+    echo json_encode(["success" => false, "error" => "Invalid request method"]);
+}
+
+$conn->close(); // Close the database connection
+?>
 <!DOCTYPE html>
 <html>
 <head>
