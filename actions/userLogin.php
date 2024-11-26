@@ -22,7 +22,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
-        $_SESSION['CustomerID'] = $row['CustomerID'];
 
         if (password_verify($pword, $row['pword'])) {
             $_SESSION['uname'] = $uname;
@@ -58,7 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   <body>
     <div class="grid-container-webpage-setup">
       <div class="item1a">
-        <a href="Homepage.html"
+        <a href="../view/Homepage.html"
           ><img
             src="../assets/logo/MimosamiLogo.png"
             alt="MimosamiLogo"
