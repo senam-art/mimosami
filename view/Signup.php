@@ -5,20 +5,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign Up | Mimosami</title>
-    <link rel="stylesheet" href="../assets/css/MimosamiStyleLogin.css">
+    <link rel="stylesheet" href="../assets/css/MimosamiStyleLogin.css?v.1">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
+    <main>
     <div class="grid-container-webpage-setup">
         <div class="item1a">
             <a href="Homepage.html"><img src="../assets/logo/MimosamiLogo.png" alt="Mimosami Logo" style="width:100%;max-width:100px"></a>
         </div>
+
+        <div class="item1"></div>
+
         <div class="item1b">
-            <button><a href="AdminLogin.html">Admin</a></button>
+            <button><a href="AdminLogin.php">Admin</a></button>
         </div>
 
+    <div class="item2">
         <div class="grid-container-2-columns">
+
             <div class="grid-item">
                 <h1>Welcome to Mimosami!</h1>
                 <p>Login to your account</p>
@@ -33,23 +39,23 @@
                     <input id="lname" name="lname" type="text" placeholder="Last Name" required><br>
                     <input id="uname" name="uname" type="text" placeholder="Username" required><br>
                     <input id="email" name="email" type="email" placeholder="Email" required><br>
-                    <input id="pword" name="pword" type="password" placeholder="Password" required><br>
-                    
-                    <!-- Updated Gender Field -->
-                    <label for="gender">Gender:</label>
                     <select id="gender" name="gender" required>
-                        <option value="">Select Gender</option>
+                        <option value="">Select your gender</option>
                         <option value="male">Male</option>
                         <option value="female">Female</option>
                         <option value="other">Other</option>
-                    </select><br><br>
+                    </select><br>
+                    <input id="pword" name="pword" type="password" placeholder="Password" required><br>
                     
                     <input id="pwordretype" name="pwordretype" type="password" placeholder="Retype your password" required><br>
                     <button type="submit">Sign Up</button>
                 </form>
             </div>
+
         </div>
     </div>
+    </div>
+    </main>
 </body>
 
 <script>

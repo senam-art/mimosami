@@ -308,7 +308,7 @@ tr:nth-child(even){
   place-items: center;
 }
 
-input{
+input, select{
   font-size: 15px;
   border:none;
   border-bottom: 2px solid black;
