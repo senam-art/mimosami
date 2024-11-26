@@ -43,6 +43,7 @@ $result = $conn->query($sql);
                 <button class="menu"><a href="..\view\SalesDashboard.php">Sales</a></button><br>
                 <button class="menu selected"><a href="OrderDashboard.php">Orders</a></button><br>
                 <button class="menu"><a href="InventoryDashboard.php">Inventory</a></button>
+                <button class="menu"><a href="Supplier.php">Supplier</a></button>
             </div>
         </div>
 
