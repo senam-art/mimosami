@@ -71,18 +71,12 @@ if (isset($_POST['delete'])) {
 
 <body>
 <div class="banner">
-    <nav class="nav-links">
-            <button class="nav-button"><a href="UserLogin.html">Log In</a></button>
-            <button class="nav-button"><a href="Signup.php">Sign Up</a></button>
-    </nav>
-
     <header class="scrolled">
         <a href="Homepage.html"><h1>Mimosami</h1></a>
     </header>
 </div>
 
-  <main>
-  <form id="checkout" method="POST" action="../actions/uploadorder.php">
+  <main style="margin-top:100px">
 
       <h2 class="product_h2">Basket</h2>
       <div class="grid-container card centerTable">
@@ -129,6 +123,7 @@ if (isset($_POST['delete'])) {
       <br>
 
       <h2 class="product_h2">Checkout</h2>
+<form id="checkout" method="POST" action="../actions/uploadorder.php">
       
       <div class="card" style="text-align:left">
             <p>Please enter your details below</p>

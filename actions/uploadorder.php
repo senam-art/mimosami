@@ -63,13 +63,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             echo "Error clearing basket: " . $conn->error;
         }
     } else {
+
         echo "Basket is empty.";
-        header("Location: ../view/thankyou.html");
     }
 }
 
 $conn->close();
-header("Location: ../view/Homepage.html");
+header("Location: ../view/thankyou.html");
 exit();
 ?>
 
