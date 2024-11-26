@@ -17,3 +17,8 @@ At Mimosami, the focus is on creating high-quality baked goods that bring joy to
 **Sales Tracking**: The admin dashboard will enable Mimosami to track sales performance, providing insights to inform business decisions.
 
 **Inventory Management**: The inventory management system will automatically track changes in inventory based on customer orders and connect to suppliers to update stock levels when supplies are low.
+
+###How to use Database
+To access our database:
+1. Run XAMPP and start Apache and MySQL
+2. 
