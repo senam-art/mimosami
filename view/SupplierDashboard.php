@@ -91,9 +91,10 @@ $conn->close();
         
         <div class="item2">
             <div class="menu-container">
-                <button class="menu"><a href="SalesDashboard.php">Sales</a></button><br>
-                <button class="menu selected"><a href="SupplierDashboard.php">Suppliers</a></button><br>
+                <button class="menu"><a href="..\view\SalesDashboard.php">Sales</a></button><br>
+                <button class="menu"><a href="..\view\OrderDashboard.php">Orders</a></button><br>
                 <button class="menu"><a href="InventoryDashboard.php">Inventory</a></button>
+                <button class="menu selected"><a href="..\view\SupplierDashboard.php">Supplier</a></button>
             </div>
         </div>
  

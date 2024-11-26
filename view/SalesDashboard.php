@@ -166,9 +166,10 @@ $salesCountJson = json_encode($salesCount);
 
         <div class="item2">
             <div class="menu-container">
-            <button class="menu selected">Sales</button><br>
-            <button class="menu"><a href = 'OrderDashboard.php'>Order</a></button><br>
-            <button class="menu"><a href = 'InventoryDashboard.php'>Inventory</a></button>
+                <button class="menu selected"><a href="..\view\SalesDashboard.php">Sales</a></button><br>
+                <button class="menu"><a href="..\view\OrderDashboard.php">Orders</a></button><br>
+                <button class="menu"><a href="InventoryDashboard.php">Inventory</a></button>
+                <button class="menu"><a href="..\view\SupplierDashboard.php">Supplier</a></button>
             </div>
         </div>
  
