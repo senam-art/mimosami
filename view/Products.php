@@ -14,21 +14,12 @@ if ($result && $result->num_rows > 0) {
     }
 }
 
-<<<<<<< Updated upstream
-    // Mapping product IDs to their respective images and descriptions
-    $imageMap = [
-        "P002" => "../assets/images/fudgy_brownies.jpg",
-        "P003" => "../assets/images/cookie_monster.jpg",
-        "P001" => "../assets/images/cupcake.jpg"
-    ];
-=======
 // Mapping product IDs to their respective images and descriptions
 $imageMap = [
     "P001" => "../assets/images/fudgy_brownies.jpg",
     "P002" => "../assets/images/cookie_monster.jpg",
     "P003" => "../assets/images/cupcake.jpg"
 ];
->>>>>>> Stashed changes
 
 $descriptionMap = [
     "P001" => "Celebrate every occasion with our delightful range of cakes. From velvety layers of moist sponge to creamy, flavorful frostings, our cakes are crafted with love and premium ingredients. Whether it’s a birthday, anniversary, or a simple craving, our cakes make every moment special.",
@@ -50,41 +41,6 @@ $descriptionMap = [
 
 <body class="products">
 
-<<<<<<< Updated upstream
-
-    <div class="banner">
-        <nav class="nav-links">
-            <button class="nav-button"><a href="checkout.php">Basket</a></button>
-        </nav>
-        <header class="scrolled">
-            <a href="Homepage.html"><h1>Mimosami</h1></a>
-        </header>
-    </div>
-
-    <div class="homepageVideo">
-        <video autoplay loop muted>
-            <source src="../assets/videos/mimovid2.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-        </video>
-    </div>
-   
-<main>   
-    <div>
-        <h2>Products</h2>
-
-        <div class="grid-container">
-            <?php foreach ($products as $product): 
-                $productID = $product['productID'];
-                $productName = $product['productName'];
-                $price = $product['price'];
-                $image = $imageMap[$productID];
-                $description = $descriptionMap[$productID];
-            ?>
-                <div class="grid-container-2-columns" id="card">
-                    <!-- Product Image -->
-                    <div class="product-grid-item">
-                        <img src="<?php echo htmlspecialchars($image); ?>" alt="<?php echo htmlspecialchars($productName); ?>">
-=======
     <main>
         <div class="banner">
             <nav class="nav-links">
@@ -143,70 +99,11 @@ $descriptionMap = [
                                 <button type="submit" class="custom-button">Add to basket</button>
                             </form>
                         </div>
->>>>>>> Stashed changes
                     </div>
                 <?php endforeach; ?>
             </div>
         </div>
 
-<<<<<<< Updated upstream
-                    <!-- Product Details -->
-                    <div class="product-grid-item">
-                        <h2 id="productName"><?php echo htmlspecialchars($productName); ?></h2>
-                        <p><?php echo htmlspecialchars($description); ?></p>
-                        <h3 id="price">$<?php echo htmlspecialchars($price); ?></h3>
-                        
-                        <!-- Add to Basket Form -->
-                        <form id="addToBasket" method="POST" action="../actions/basket.php">
-                            <input type="hidden" name="productID" value="<?php echo htmlspecialchars($productID); ?>">
-                            <input type="hidden" name="productName" value="<?php echo htmlspecialchars($productName); ?>">
-                            <input type="hidden" name="price" value="<?php echo htmlspecialchars($price); ?>">
-                            <label style="text-align:10px">Enter the quantity:</label>
-                            <input type="text" name="quantity" id="quantity"><br>
-                            <button type="submit" class="custom-button">Add to basket</button>
-                        </form>
-                    </div>
-                </div>
-            <?php endforeach; ?>
-        </div>
-    </div>
-</main>
-
-    <footer id="footer">
-        <div class="footer-content">
-            <p class="follow-text">Connect</p>
-            <img src="../assets/images/insta.png" alt="Instagram Logo" class="social-logo">
-        </div>
-        <div class="footer-content">
-            <p class="footer-note">© 2024 All rights reserved <br> 
-            <a href="#">Privacy Policy</a> | <a href="#">Terms and Conditions</a> <br>
-            Powered by Power</p>
-        </div>
-    </footer>
-
-
-</body>
-<script>
-const form = document.getElementById("addToBasket");
-
-form.addEventListener('submit', function(event) {
-    event.preventDefault();
-
-    const quantity = document.getElementById('quantity').value;  
-
-    if (isNaN(quantity) || quantity <= 0) {
-        alert('Please enter a quantity greater than 0');
-        return;  
-    }
-
-    form.submit();
-});
-</script>
-</html>
-
-
-
-=======
         <footer id="footer">
             <div class="footer-content">
                 <p class="follow-text">Connect</p>
@@ -222,6 +119,5 @@ form.addEventListener('submit', function(event) {
     </main>
 
 </body>
->>>>>>> Stashed changes
 
 </html>
