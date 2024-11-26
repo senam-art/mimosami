@@ -165,7 +165,7 @@ foreach ($inventoryItems as $item) {
 document.addEventListener("DOMContentLoaded", () => {
     // Initialize DataTable with disabled features
     $('#inventoryTable').DataTable({
-        "paging": false,        // So the pagination does nnot show
+        "paging": false,        // So the pagination does not show
         "searching": false,     // So the search box does not show
         "info": false,         
         "lengthChange": false   
