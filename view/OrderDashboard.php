@@ -16,8 +16,6 @@ $result = $conn->query($sql);
     <link rel="icon" type="image/x-icon" href="xxx">
     <link rel="stylesheet" href="..\assets\css\MimosamiStyle2.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
 </head>
 
 <body>
@@ -36,12 +34,10 @@ $result = $conn->query($sql);
             </div>
         </div>
 
-        <!-- Logo Section -->
         <div class="item2b">
             <img src="..\assets\logo\MimosamiLogo.png" alt="MimosamiLogo" style="width:100%;max-width:100px">
         </div>
 
-        <!-- Sidebar Menu -->
         <div class="item2">
             <div class="menu-container">
                 <button class="menu"><a href="..\view\SalesDashboard.php">Sales</a></button><br>
@@ -50,10 +46,8 @@ $result = $conn->query($sql);
             </div>
         </div>
 
-        <!-- Main Content -->
         <div class="item3">
             <table id="orderTable">
-                <thead>
                     <tr>
                         <th>Order ID</th>
                         <th>Customer ID</th>
@@ -62,8 +56,6 @@ $result = $conn->query($sql);
                         <th>Created At</th>
                         <th>Total</th>
                     </tr>
-                </thead>
-                <tbody>
                     <?php
                     if ($result->num_rows > 0) {
                         while ($row = $result->fetch_assoc()) {
@@ -77,12 +69,11 @@ $result = $conn->query($sql);
                             echo "</tr>";
                         }
                     } else {
-                        echo "<tr><td colspan='6'>No orders found</td></tr>";
+                        echo "<tr>No orders found</tr>";
                     }
 
                     $conn->close();
                     ?>
-                </tbody>
             </table>
         </div>
 
@@ -92,20 +83,6 @@ $result = $conn->query($sql);
         </div>
     </div>
 
-    <!-- DataTable Initialization -->
-    <script>
-    document.addEventListener("DOMContentLoaded", () => {
-    // Initialize DataTable with disabled features
-    $('#inventoryTable').DataTable({
-        "paging": false,        // So the pagination does not show
-        "searching": false,     // So the search box does not show
-        "info": false,         
-        "lengthChange": false   
-    });
-        $(document).ready(function () {
-            $('#orderTable').DataTable();
-        });
-    </script>
 </body>
 </html>
 
