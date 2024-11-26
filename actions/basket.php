@@ -5,9 +5,9 @@ session_start();
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $productID = htmlspecialchars($_POST['productID'] ?? '');
     $productName = htmlspecialchars($_POST['productName'] ?? '');
-    $quantity = htmlspecialchars($_POST['quantity'] ?? 0);
-    $price = htmlspecialchars($_POST['price'] ?? 0);
-    $itemTotal = htmlspecialchars($price * $quantity);
+    $quantity = (float)($_POST['quantity'] ?? 0); // Cast quantity to a float
+    $price = (float)($_POST['price'] ?? 0); // Cast price to a float
+    $itemTotal = $price * $quantity; // Perform the multiplication with numeric values
 
     $stmt = $conn->prepare(
         "INSERT INTO mimosami_basket (productID, productName, quantity, price, itemTotal) VALUES (?, ?, ?, ?, ?)"
@@ -17,8 +17,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         die("Prepare failed: " . $conn->error);
     }
 
+    // Bind parameters with the appropriate types
     $stmt->bind_param("ssidd", $productID, $productName, $quantity, $price, $itemTotal);
 
+    // Execute the statement and handle errors
     if ($stmt->execute()) {
         echo '<script>alert("Your item has been added to your basket");</script>';
         header("Location: ../view/Products.php");
@@ -34,5 +36,3 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     echo "Invalid request.";
 }
 ?>
-
-
