@@ -1,3 +1,45 @@
+<?php
+session_start();
+
+require '../db/onlineconfig.php';
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $conn = new mysqli($servername, $db_username, $db_password, $dbname);
+
+    // Check connection
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+
+    $uname = htmlspecialchars(trim($_POST['uname']));
+    $pword = trim($_POST['pword']);
+
+    $sql = "SELECT CustomerID ,uname, pword FROM mimosami_customers WHERE uname=?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("s", $uname);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        $_SESSION['CustomerID'] = $row['CustomerID'];
+
+        if (password_verify($pword, $row['pword'])) {
+            $_SESSION['uname'] = $uname;
+            header("Location: view/Products.php");
+            exit();
+        } else {
+            echo "Invalid username or password!";
+        }
+    } else {
+        echo "User not found!";
+    }
+
+    $stmt->close();
+    $conn->close();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -27,7 +69,7 @@
       <div class="item1"></div>
 
       <div class="item1b">
-        <button><a href="AdminLogin.php">Admin</a></button>
+        <button><a href="../view/AdminLogin.php">Admin</a></button>
       </div>
 
       <div class="item2">

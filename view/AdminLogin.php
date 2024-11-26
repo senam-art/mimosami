@@ -68,7 +68,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
         <div class="item1"></div>
         <div class="item1b">
-            <button><a href="AdminLogin.html">Admin</a></button>
+
         </div>
         <div class="item2" style="background-color:#f2f7f8">
             <div class="grid-container-2-columns">

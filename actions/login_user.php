@@ -1,6 +1,5 @@
 <?php
 session_start();
-
 require '../db/onlineconfig.php';
 
 // Enable error reporting to display errors for debugging
@@ -39,6 +38,7 @@ if ($results->num_rows > 0) {
     if (password_verify($pword, $user['pword'])) {
         // Store user data in session variables
         $_SESSION['uname'] = $user['uname'];
+        $_SESSION['customerID'] = $user['customerID'];
 
         header('Location: ../view/Products.php');
         exit(); // Make sure to exit after the redirect
@@ -46,7 +46,7 @@ if ($results->num_rows > 0) {
         echo 'Incorrect password. Please try again.';
     }
 } else {
-    echo 'User not in the system please.';
+    echo '<script>alert("User not in the system please.")</script>';
 }
 
 $stmt->close();

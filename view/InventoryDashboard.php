@@ -1,6 +1,6 @@
 <?php
 session_start();
-require "../db/onlineconfig.php"; // Include the database configuration
+require "../db/onlineconfig.php";
 
 // Function to fetch inventory items
 function fetchInventoryItems($conn) {

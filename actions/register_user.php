@@ -31,6 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if ($results->num_rows > 0) {
         echo '<script>alert("A user with this email already exists.")</script>';
+        header("Location: ../view/Signup.php");
         exit();
     } else {
         // Hash the password
@@ -39,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $stmt->bind_param('ssssss', $fname, $lname, $uname, $email, $gender, $hashed_password);
 
         if ($stmt->execute()) {
-            header("Location: ../db/userLogin.php");
+            header("Location: ../actions/userLogin.php");
             exit();
         } else {
             header("Location: ../view/Signup.php");

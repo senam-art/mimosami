@@ -44,6 +44,7 @@ $descriptionMap = [
     <main>
         <div class="banner">
             <nav class="nav-links">
+            <button class="nav-button"><a href="../actions/logout.php">Log Out</a></button>
                 <button class="nav-button"><a href="checkout.php">Basket</a></button>
             </nav>
             <header class="scrolled">

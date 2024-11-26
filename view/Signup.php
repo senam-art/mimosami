@@ -29,7 +29,7 @@
                 <h1>Welcome to Mimosami!</h1>
                 <p>Login to your account</p>
                 <p>Already have an account?</p>
-                <button><a href="UserLogin.html">Login!</a></button>
+                <button class="nav-button"><a href="../actions/userLogin.php">Login</a></button>
             </div>
 
             <div class="grid-item" id="card">
