@@ -134,28 +134,32 @@ if (isset($_POST['delete'])) {
             <p>Please enter your details below</p>
             <h3>Delivery</h3>
 
+            <label for="name">Name</label>
+            <input id="name" name="name" type="text" >
+            <br>
+
             <label for="address">Address</label>
-            <input id="address" name="address" type="text" required >
+            <input id="address" name="address" type="text" >
             <br>
 
             <label for="phoneNumber">Phone Number</label>
-            <input id="phoneNumber" name="phoneNumber" type="text" required >
+            <input id="phoneNumber" name="phoneNumber" type="text" >
             <br>
 
 
             <h3>Payment</h3>
                     
             <label for="cardNumber">Card Number</label>
-            <input id="cardNumber" name="card_number" type="text" required> <br>
+            <input id="cardNumber" name="card_number" type="text" > <br>
 
             <label for="cardName">Name</label>
-            <input id="cardName" name="cardName" type="text" required><br>
+            <input id="cardName" name="cardName" type="text" ><br>
 
             <label for="expiry">Expiry Date</label>
-            <input id="expiry" name="expiry" type="date" required><br>
+            <input id="expiry" name="expiry" type="date" ><br>
 
             <label for="cvc">CVC</label>
-            <input id="cvc" name="cvc" type="text" required><br>
+            <input id="cvc" name="cvc" type="text" ><br>
 
             <button type="submit" name="purchase">PURCHASE</button> 
         </div> 
