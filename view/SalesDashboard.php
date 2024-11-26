@@ -18,7 +18,7 @@ $userName = $_SESSION['username'];
 Code to query database and extract data for the different divs
 */
 // Fetch Total Sales
-$salesQuery = "SELECT SUM(Amount) AS total_sales FROM mimosami_productsales";
+$salesQuery = "SELECT SUM('Cost of Sales') AS total_sales FROM mimosami_sales";
 $salesResult = $conn->query($salesQuery);
 
 $totalSales = $salesResult->fetch_assoc()['total_sales'];
@@ -53,7 +53,7 @@ $newSignups = $newSignupsResult -> fetch_assoc()['new_signups'];
 $latestMonthSalesQuery = "SELECT YEAR(Date) AS year,
                             MONTH(Date) AS month, 
                             SUM(Amount) AS total_sales 
-                            FROM mimosami_productsales 
+                            FROM mimosami_sales 
                             GROUP BY YEAR(Date),Month(Date) 
                             ORDER BY year DESC, month DESC 
                             LIMIT 1";
@@ -76,7 +76,7 @@ Code to query database and extract data for the Monthly sales chart
 $monthlySalesQuery = "SELECT YEAR(Date) AS year,
                         MONTH(Date) AS month,
                         SUM(Amount) AS total_sales
-                        FROM mimosami_productsales 
+                        FROM mimosami_sales 
                         GROUP BY YEAR(Date), MONTH(Date) 
                         ORDER BY year DESC, month DESC";
 $monthlySalesResult = $conn->query($monthlySalesQuery); 
@@ -98,59 +98,35 @@ $salesJson = json_encode($sales);
 /*
 Code to query database and extract data for the Sales by product chart
 */
-//Fetching Sales by product
-$salesByProductQuery  = "SELECT mp.productName, SUM(mo.Quantity) AS product_sold
-                            FROM mimosami_productsales mo
-                            JOIN mimosami_products mp ON mo.productID = mp.productID
-                            GROUP BY mp.productName
-                            ORDER BY product_sold DESC";
+// Fetching Sales by Product
+$salesByProductQuery = "SELECT mimosami_products.productName, SUM(mimosami_productsales.Quantity) AS product_sold
+                        FROM mimosami_productsales
+                        JOIN mimosami_products ON mimosami_products.productID = mimosami_productsales.productID
+                        GROUP BY mimosami_products.productName
+                        ORDER BY product_sold DESC";
+
 
 
 $SalesByProductResult = $conn->query($salesByProductQuery);
-//Error checking
+
+// Error checking
 if (!$SalesByProductResult) {
     die("Query failed: " . $conn->error);
 }
 
-//array to store product and corresponding overall sales
+// Array to store product and corresponding overall sales
 $products = [];
 $salesCount = [];
 
-while ($row = $SalesByProductResult ->fetch_assoc()){
-
+while ($row = $SalesByProductResult->fetch_assoc()) {
     $products[] = $row['productName'];
-    $salesCount[] =$row['product_sold'];
+    $salesCount[] = $row['product_sold'];
 }
 
 // Encoding as JSON
 $productsJson = json_encode($products);
 $salesCountJson = json_encode($salesCount);
 
-
-/*Code to query database to get customer gender
-*/
-$customerGenderQuery = "SELECT Gender, Count(Gender) as gender_count
-                        FROM mimosami_customer 
-                        GROUP BY Gender
-                        ORDER BY gender_count DESC";
-
-$customerGenderResult = $conn->query($customerGenderQuery);
-if (!$SalesByProductResult) {
-    die("Query failed: " . $conn->error);
-}
-
-
-// Initialize arrays for chart labels and data
-$genderLabels = [];
-$genderCounts = [];
-
-while ($row = $customerGenderResult->fetch_assoc()) {
-    $genderLabels[] = $row['Gender'];
-    $genderCounts[] = $row['gender_count'];
-}
-//Encoding as JSON
-$genderLabelsJson = json_encode($genderLabels);
-$genderCountsJson = json_encode($genderCounts);
                         
 ?>
 

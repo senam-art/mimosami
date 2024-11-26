@@ -1,17 +1,50 @@
 <?php
 session_start();
+require "../db/onlineconfig.php"; // Include the database configuration
 
+// Set the response header to JSON
+header("Content-Type: application/json");
 
-require "../db/onlineconfig.php";
+// Ensure the request method is POST
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    // Get the raw POST data and decode it
+    $input = json_decode(file_get_contents("php://input"), true);
 
-// //Fetch items from the database
-// $query = "SELECT ItemId, Item Name,Cost,Supplier ID,status FROM inventory"; // Replace 'inventory' with your table name
-// $result = $conn->query($query);
+    // Validate input
+    if (isset($input['id'], $input['name'], $input['quantity']) &&
+        !empty($input['id']) && !empty($input['name']) && is_numeric($input['quantity'])) {
 
+        $itemID = $conn->real_escape_string($input['id']);
+        $itemName = $conn->real_escape_string($input['name']);
+        $quantity = (int)$input['quantity'];
+
+        // Prepare the SQL statement
+        $query = "UPDATE mimosami_inventory SET ItemName = ?, Quantity = ? WHERE ItemID = ?";
+        $stmt = $conn->prepare($query);
+
+        if ($stmt) {
+            $stmt->bind_param("sii", $itemName, $quantity, $itemID);
+
+            // Execute the query
+            if ($stmt->execute()) {
+                echo json_encode(["success" => true, "message" => "Item updated successfully"]);
+            } else {
+                echo json_encode(["success" => false, "error" => "Database update failed: " . $stmt->error]);
+            }
+
+            $stmt->close();
+        } else {
+            echo json_encode(["success" => false, "error" => "Failed to prepare statement: " . $conn->error]);
+        }
+    } else {
+        echo json_encode(["success" => false, "error" => "Invalid input data"]);
+    }
+} else {
+    echo json_encode(["success" => false, "error" => "Invalid request method"]);
+}
+
+$conn->close(); // Close the database connection
 ?>
-
-
-
 
 <!DOCTYPE html>
 <html>
@@ -49,7 +82,7 @@ require "../db/onlineconfig.php";
 
         <div class="item2">
             <div class="menu-container">
-            <button class="menu"><a href ="SalesDashboard.php">Sales</a></button><br>
+            <button class="menu"><a href ="../view/SalesDashboard.php">Sales</a></button><br>
             <button class="menu"><a href ="OrderDashboard.php"></a>Order</button><br>
             <button class="menu selected"><a href ="InventoryDashboard.php"></a>Inventory</button>
             </div>
@@ -81,24 +114,21 @@ require "../db/onlineconfig.php";
                         <th>ID</th>
                         <th>Item</th>
                         <th>Quantity</th>
-                        <th>Status</th>
                         <th>Actions</th>
                     </tr>
                     <tr>
                         <td>001</td>
                         <td>Flour</td>
                         <td>30</td>
-                        <td>Good</td>
                         <td>
                             <button class="action">Edit</button>
                             <button class="action">Restock</button>
                         </td>
                     </tr>
                     <tr>
-                        <td>001</td>
-                        <td>Flour</td>
-                        <td>30</td>
-                        <td>Good</td>
+                        <td>002</td>
+                        <td>Sugar</td>
+                        <td>50</td>
                         <td>
                             <button class="action">Edit</button>
                             <button class="action">Restock</button>
@@ -120,52 +150,70 @@ require "../db/onlineconfig.php";
 </body>
 
 <script>
-    document.addEventListener("DOMContentLoaded", () => {
-        // Add event listeners to Edit buttons
-        const editButtons = document.querySelectorAll("button.action:nth-child(1)");
-        editButtons.forEach(button => {
-            button.addEventListener("click", (event) => {
-                const row = event.target.closest("tr");
-                const itemCell = row.children[1]; // Assuming "Item" is the second column
-                const quantityCell = row.children[2]; // Assuming "Quantity" is the third column
-                
-                // If the button is in "Save" mode, save the changes
-                if (button.textContent === "Save") {
-                    const newItemName = itemCell.querySelector("input").value;
-                    const newQuantity = quantityCell.querySelector("input").value;
-                    
-                    // Update the table with new values
-                    itemCell.textContent = newItemName;
-                    quantityCell.textContent = newQuantity;
-                    
-                    // Revert the button text back to "Edit"
-                    button.textContent = "Edit";
-                } else {
-                    // If the button is in "Edit" mode, replace text with input fields for editing
-                    const itemName = itemCell.textContent;
-                    const quantityValue = quantityCell.textContent;
-                    
-                    itemCell.innerHTML = `<input type="text" value="${itemName}">`;
-                    quantityCell.innerHTML = `<input type="number" value="${quantityValue}">`;
-                    
-                    // Change the button text to "Save"
-                    button.textContent = "Save";
-                }
-            });
-        });
+document.addEventListener("DOMContentLoaded", () => {
+    // Event delegation for buttons in the table
+    document.querySelector("table").addEventListener("click", (event) => {
+        const button = event.target;
+        const row = button.closest("tr");
 
-        // Add event listeners to Restock buttons
-        const restockButtons = document.querySelectorAll("button.action:nth-child(2)");
-        restockButtons.forEach(button => {
-            button.addEventListener("click", () => {
-                alert("The supplier has been contacted for restocking!");
-            });
-        });
+        if (!row) return; // Ensure the click is on a valid table row
+
+        // Handle Edit Button
+        if (button.textContent === "Edit") {
+            const itemCell = row.children[1]; // Item name cell
+            const quantityCell = row.children[2]; // Quantity cell
+
+            const itemName = itemCell.textContent;
+            const quantityValue = quantityCell.textContent;
+
+            // Enter edit mode
+            itemCell.innerHTML = `<input type="text" value="${itemName}">`;
+            quantityCell.innerHTML = `<input type="number" value="${quantityValue}">`;
+
+            button.textContent = "Save"; // Switch button to Save
+        } else if (button.textContent === "Save") {
+            const itemID = row.children[0].textContent; // ID is in the first column
+            const itemCell = row.children[1];
+            const quantityCell = row.children[2];
+
+            const newItemName = itemCell.querySelector("input").value;
+            const newQuantity = quantityCell.querySelector("input").value;
+
+            // Send updated data to the server
+            fetch("../db/updateInventory.php", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    id: itemID,
+                    name: newItemName,
+                    quantity: newQuantity
+                })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Update the table with new values
+                        itemCell.textContent = newItemName;
+                        quantityCell.textContent = newQuantity;
+                        button.textContent = "Edit"; // Switch button back to Edit
+                        alert("Item updated successfully!");
+                    } else {
+                        alert("Error updating item: " + data.error);
+                    }
+                })
+                .catch(error => {
+                    console.error("Error:", error);
+                    alert("An error occurred while updating the item.");
+                });
+        }
+
+        // Handle Restock Button
+        if (button.textContent === "Restock") {
+            alert("The supplier has been contacted for restocking!");
+        }
     });
+});
+
 </script>
  
-
-    
-
-
 </html>

@@ -1,24 +1,33 @@
 <?php
-include '../db/config.php';
+include '../db/onlineconfig.php';
 session_start();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Get data from the form
-    $productID = $_POST['product_id'];
-    $productName = $_POST['product_name'];
-    $price = $_POST['product_price'];
-    $quantity = $_POST['quantity'];
-    $itemTotal = $price * $quantity;
+    $productID = htmlspecialchars($_POST['productID'] ?? '');
+    $productName = htmlspecialchars($_POST['productName'] ?? '');
+    $quantity = (float)($_POST['quantity'] ?? 0); // Cast quantity to a float
+    $price = (float)($_POST['price'] ?? 0); // Cast price to a float
+    $itemTotal = $price * $quantity; // Perform the multiplication with numeric values
 
-    // Insert data into the checkout table
-    $stmt = $conn->prepare("INSERT INTO mimosami_checkout (productID, productName, quantity, price, itemTotal) VALUES (?, ?, ?, ?, ?)");
+    $stmt = $conn->prepare(
+        "INSERT INTO mimosami_basket (productID, productName, quantity, price, itemTotal) VALUES (?, ?, ?, ?, ?)"
+    );
+
+    if (!$stmt) {
+        die("Prepare failed: " . $conn->error);
+    }
+
+    // Bind parameters with the appropriate types
     $stmt->bind_param("ssidd", $productID, $productName, $quantity, $price, $itemTotal);
 
+    // Execute the statement and handle errors
     if ($stmt->execute()) {
-        echo "Product added to checkout successfully!";
-        exit();
+        echo '<script>alert("Your item has been added to your basket");</script>';
+        header("Location: ../view/Products.php");
+        exit;
+
     } else {
-        echo "Error: " . $stmt->error;
+        echo "<script>alert('Error: We could not add your item to your basket');</script>";
     }
 
     $stmt->close();
