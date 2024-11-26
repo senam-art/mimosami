@@ -1,3 +1,21 @@
+<?php
+
+require "../db/onlineconfig.php";
+
+// Query to get the total number of suppliers
+$totalSuppliersQuery = "SELECT COUNT(*) AS totalSuppliers FROM mimosami_supplier";
+$resultTotal = $conn->query($totalSuppliersQuery);
+$totalSuppliers = $resultTotal->fetch_assoc()['totalSuppliers'];
+
+// Query to get the number of active suppliers
+$activeSuppliersQuery = "SELECT COUNT(*) AS activeSuppliers FROM mimosami_supplier WHERE status = 'active' OR status = 'Active'";
+$resultActive = $conn->query($activeSuppliersQuery);
+$activeSuppliers = $resultActive->fetch_assoc()['activeSuppliers'];
+
+// Close connection
+$conn->close();
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -5,47 +23,52 @@
     <title>Supplier Dashboard</title>
     <link rel="icon" type="image/x-icon" href="xxx">
     <link rel="stylesheet" href="../assets/css/MimosamiStyle2.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <link rel="stylesheet" href="../assets/css/suppliersdashboard.css">
+    <script src="../assets/js/fetchSuppliers.js"></script>
+    <script src="../assets/js/addSuppliers.js"></script>
+    <script src="../assets/js/editSuppliers.js"></script>
+
+
     <style>
-        /* Additional styles for form containers */
-        .form-container {
-            display: none;
-            background-color: #f4f4f4;
-            padding: 20px;
-            margin-top: 20px;
-            border-radius: 8px;
+           #supplierListContainer {
+        max-width: 100%;
+        overflow-x: auto;  /* Enables horizontal scrolling if content overflows */
         }
-        .form-container.active {
-            display: block;
-        }
-        .form-group {
-            margin-bottom: 15px;
-        }
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-        }
-        .form-group input, 
-        .form-group select {
+
+        /* Styling for the table */
+        #supplierTable {
             width: 100%;
-            padding: 8px;
+            border-collapse: collapse;
+        }
+
+        #supplierTable th, #supplierTable td {
+            padding: 10px;
+            text-align: left;
             border: 1px solid #ddd;
-            border-radius: 4px;
         }
-        .btn {
-            padding: 10px 15px;
-            background-color: #855363;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            margin-right: 10px;
+
+        #supplierTable th {
+            background-color: #f4f4f4;
         }
-        .btn-secondary {
-            background-color: #6c757d;
+
+        #supplierTable tr:nth-child(even) {
+            background-color: #f9f9f9;
         }
+
+        #supplierTable tr:hover {
+            background-color: #f1f1f1;
+        }
+
+
+
+        /* Optional: Ensures responsiveness on smaller screens */
+        @media (max-width: 768px) {
+            #supplierTable {
+                width: 100%; /* Makes sure the table fits the screen on mobile */
+                font-size: 12px; /* Smaller font size for mobile screens */
+            }
+        }
+        
     </style>
 </head>
 <body>
@@ -70,7 +93,7 @@
             <div class="menu-container">
                 <button class="menu"><a href="SalesDashboard.php">Sales</a></button><br>
                 <button class="menu selected"><a href="SupplierDashboard.php">Suppliers</a></button><br>
-                <button class="menu"><a href="InventoryDashbaord.html">Inventory</a></button>
+                <button class="menu"><a href="InventoryDashboard.php">Inventory</a></button>
             </div>
         </div>
  
@@ -79,214 +102,325 @@
             
             <!-- Action Buttons -->
             <div style="margin-bottom: 20px;">
-                <button class="btn" id="btnShowAddSupplier">Add Supplier</button>
-                <button class="btn" id="btnShowEditSupplier">Edit Supplier</button>
-                <button class="btn btn-secondary" id="btnShowSupplierList">Supplier List</button>
+                  <!-- Button to open the modal (For adding a new supplier) -->
+                <button id="addSupplierButton">Add Supplier</button>
+                <button class="btn btn-secondary" id="btnShowSupplierList">Hide Suppliers</button>
+                
             </div>
 
-            <!-- Supplier Statistics -->
-            <div class="grid-container-3-columns">
-                <div class="grid-item" id="card">
-                    <p style="font-size:13px">Total Suppliers</p>
-                    <p style="font-weight:600;font-size:20px;color:#855363" id="totalSuppliersCount">0</p>
-                </div>
-                <div class="grid-item" id="card">
-                    <p style="font-size:13px">Alerts</p>  
-                    <p style="font-weight:600;font-size:20px;color:#bd4444" id="supplierAlertsCount">0</p>                  
-                </div>
-                <div class="grid-item" id="card">
-                    <p style="font-size:13px">Active Suppliers</p>
-                    <p style="font-weight:600;font-size:20px;color:#855363" id="activeSuppliersCount">0</p>                   
-                </div>
-            </div>
+           
+            
 
-            <!-- Add Supplier Form -->
-            <div id="addSupplierForm" class="form-container">
-                <h3>Add New Supplier</h3>
-                <form id="supplierAddForm">
-                    <div class="form-group">
-                        <label>Supplier Name</label>
-                        <input type="text" name="supplierName" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Contact Email</label>
-                        <input type="email" name="supplierEmail" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Phone Number</label>
-                        <input type="tel" name="supplierPhone" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Status</label>
-                        <select name="supplierStatus">
-                            <option value="active">Active</option>
-                            <option value="inactive">Inactive</option>
-                        </select>
-                    </div>
-                    <button type="submit" class="btn">Save Supplier</button>
-                    <button type="button" class="btn btn-secondary" id="btnCancelAdd">Cancel</button>
-                </form>
-            </div>
+            <!-- Add/Edit Modal -->
+            <!-- Modal backdrop -->
+        <div id="supplierModalBackdrop"></div>
 
-            <!-- Edit Supplier Form -->
-            <div id="editSupplierForm" class="form-container">
-                <h3>Edit Existing Supplier</h3>
-                <form id="supplierEditForm">
-                    <div class="form-group">
-                        <label>Select Supplier</label>
-                        <select id="supplierEditSelect" name="supplierId" required>
-                            <option value="">Choose Supplier</option>
-                            <!-- Dynamically populated options -->
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Supplier Name</label>
-                        <input type="text" name="supplierName" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Contact Email</label>
-                        <input type="email" name="supplierEmail" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Phone Number</label>
-                        <input type="tel" name="supplierPhone" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Status</label>
-                        <select name="supplierStatus">
-                            <option value="active">Active</option>
-                            <option value="inactive">Inactive</option>
-                        </select>
-                    </div>
-                    <button type="submit" class="btn">Update Supplier</button>
-                    <button type="button" class="btn btn-secondary" id="btnCancelEdit">Cancel</button>
-                </form>
-            </div>
+        <!-- Add/Edit Modal -->
+        <div id="supplierModal">
+            <form id="supplierForm">
+                <input type="hidden" name="id" id="supplierId">
+                <label>Name:</label>
+                <input type="text" name="name" id="supplierName" required>
+                <label>Address:</label>
+                <input type="address" name="address" id="supplierAddress" required>
+                <label>Email:</label>
+                <input type="email" name="email" id="supplierEmail" required>
+                <label>Phone:</label>
+                <input type="tel" name="phone" id="supplierPhone" required>
+                <label>Status:</label>
+                <select name="status" id="supplierStatus">
+                    <option value="active">Active</option>
+                    <option value="inactive">Inactive</option>
+                </select>
+                <button type="submit">Save</button>
+                <button type="button" id="btnCancel">Cancel</button>
+            </form>
+        </div>
 
-            <!-- Supplier List -->
-            <div id="supplierListContainer" class="form-container">
+      
+
+
+                <!-- Supplier List -->
+            <div id="supplierListContainer" class="form-container" style = display:block;>
                 <h3>Supplier List</h3>
                 <table id="supplierTable" class="display" style="width:100%">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Phone</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- Dynamically populated rows -->
-                    </tbody>
-                </table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Dynamically populated rows -->
+                        </tbody>
+                    </table>
+                </div>
             </div>
+
         </div>
-            
+
         <div class="item4">
             <p style="text-align: center;">Created by Power</p>
         </div>
     </div>
 
-    
-   <script>
-    $(document).ready(function() {
-        // Function to load supplier statistics
-        function loadSupplierStatistics() {
-            $.ajax({
-                url: '../actions/supplier_handler.php',
-                method: 'POST',
-                data: { action: 'get_supplier_stats' },
-                dataType: 'json',
-                success: function(response) {
-                    $('#totalSuppliersCount').text(response.total_suppliers);
-                    $('#activeSuppliersCount').text(response.active_suppliers);
-                },
-                error: function() {
-                    alert('Failed to load supplier statistics');
-                }
-            });
-        }
+    <script>
+        const showSupplierListButton = document.getElementById('btnShowSupplierList');
+        const supplierListContainer = document.getElementById('supplierListContainer');
 
-        // Function to load suppliers
-        function loadSuppliers(search = '', page = 1) {
-            $.ajax({
-                url: '../actions/supplier_handler.php',
-                method: 'POST',
-                data: { 
-                    action: 'get_suppliers', 
-                    search: search, 
-                    page: page 
-                },
-                dataType: 'json',
-                success: function(response) {
-                    // Clear existing table rows
-                    $('#supplierTable tbody').empty();
-                    
-                    // Populate table
-                    response.suppliers.forEach(function(supplier) {
-                        $('#supplierTable tbody').append(`
-                            <tr>
-                                <td>${supplier.SupplierID}</td>
-                                <td>${supplier.SupplierName}</td>
-                                <td>${supplier.PhoneNumber}</td>
-                                <td>${supplier.Address}</td>
-                                <td>${supplier.IsActive ? 'Active' : 'Inactive'}</td>
-                            </tr>
-                        `);
+               
+        showSupplierListButton.addEventListener('click', () => {
+     
+            if (supplierListContainer.style.display === 'block') {
+                supplierListContainer.style.display = 'none'; // Hide the supplier list
+                showSupplierListButton.textContent = 'Show Suppliers'; // Update button text
+            } else {
+                supplierListContainer.style.display = 'block'; // Show the supplier list
+                showSupplierListButton.textContent = 'Hide Suppliers'; // Update button text
+            }
+        });
+
+      //Add/edit supplier
+      // DOM Elements
+        const supplierModal = document.getElementById('supplierModal');
+        const supplierModalBackdrop = document.getElementById('supplierModalBackdrop');
+        const btnCancel = document.getElementById('btnCancel');
+        const supplierForm = document.getElementById('supplierForm');
+        
+        // Function to fetch supplier data and populate the table
+        // Function to fetch supplier data and populate the table
+    function fetchSuppliers() {
+        fetch('../actions/suppliers.php')  // Replace with your actual API endpoint
+            .then(response => response.json())  // Parse the JSON response
+            .then(data => {
+                const supplierTableBody = document.querySelector('#supplierTable tbody');
+                supplierTableBody.innerHTML = '';  // Clear existing table rows
+
+                if (data.length === 0) {
+                    supplierTableBody.innerHTML = '<tr><td colspan="5">No suppliers found.</td></tr>';
+                } else {
+                    // Loop through each supplier and create a new table row
+                    data.forEach(supplier => {
+                        const row = document.createElement('tr');
+                        
+                        row.innerHTML = `
+                            <td>${supplier.SupplierID}</td>
+                            <td>${supplier.SupplierName}</td>
+                            <td>${supplier.Email}</td>
+                            <td>${supplier.PhoneNumber}</td>
+                            <td>${supplier.Status}</td>
+                            <td>
+                                <button class="editButton" data-id="${supplier.SupplierID}">Edit</button>
+                                <button class="deleteButton" data-id="${supplier.SupplierID}">Delete</button>
+                            </td>
+                        `;
+
+                        supplierTableBody.appendChild(row);
                     });
 
-                    // Update pagination
-                    // (You can add pagination controls here)
-                },
-                error: function() {
-                    alert('Failed to load suppliers');
+                    // Add event listeners for Edit and Delete buttons
+                    const editButtons = document.querySelectorAll('.editButton');
+                    editButtons.forEach(button => {
+                        button.addEventListener('click', handleEdit);
+                    });
+
+                    const deleteButtons = document.querySelectorAll('.deleteButton');
+                    deleteButtons.forEach(button => {
+                        button.addEventListener('click', handleDelete);
+                    });
                 }
+            })
+            .catch(error => {
+                console.error('Error fetching supplier data:', error);
+                alert('There was an error fetching supplier data.');
             });
+    }
+
+
+    // Fetch suppliers when the page loads
+    window.onload = fetchSuppliers;
+
+
+    /*Editing Suppliers
+    */ 
+    // Fetch supplier details for editing
+    function fetchSupplierDetails(id) {
+    fetch(`../actions/supplier.php?id=${id}`, {
+        method: 'GET',
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.error) {
+        console.error("Error fetching supplier:", data.error);
+        } else {
+        // Populate the form fields with the fetched supplier data
+        document.getElementById('supplierName').value = data.SupplierName;
+        document.getElementById('supplierEmail').value = data.Email;
+        document.getElementById('supplierAddress').value = data.Address;
+        document.getElementById('supplierPhone').value = data.PhoneNumber;
+        document.getElementById('supplierStatus').value = data.Status;
+        }
+    })
+    .catch(error => console.error('Error:', error));
+    }
+
+    // Update supplier details
+    function updateSupplier(id) {
+    const updatedSupplier = {
+        id: id,
+        name: document.getElementById('name').value,
+        email: document.getElementById('email').value,
+        address: document.getElementById('address').value,
+        phone: document.getElementById('phone').value,
+        status: document.getElementById('status').value
+    };
+
+    fetch('../actions/suppliers.php', {
+        method: 'PUT',
+        headers: {
+        'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(updatedSupplier)
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.error) {
+        console.error("Error updating supplier:", data.error);
+        // Handle error, maybe display a message to the user
+        } else {
+        alert('Supplier updated successfully');
+        // Optionally redirect or reset the form
+        }
+    })
+    .catch(error => console.error('Error:', error));
+    }
+
+    // Function to handle edit button click event
+    function handleEditButtonClick(event) {
+        // Get supplier ID from the button's data-id attribute
+        const supplierId = event.target.getAttribute('data-id');
+
+        if (!supplierId) {
+            console.error('No supplier ID provided');
+            return;
         }
 
-        // Add Supplier Form Submission
-        $('#supplierAddForm').submit(function(e) {
-            e.preventDefault();
-            
-            $.ajax({
-                url: '../actions/supplier_handler.php',
-                method: 'POST',
-                data: {
-                    action: 'add_supplier',
-                    supplierName: $('input[name="supplierName"]').val(),
-                    phoneNumber: $('input[name="supplierPhone"]').val(),
-                    address: $('input[name="supplierAddress"]').val()
-                },
-                dataType: 'json',
-                success: function(response) {
-                    if (response.status === 'success') {
-                        alert('Supplier added successfully');
-                        loadSupplierStatistics();
-                        loadSuppliers();
-                        $('#addSupplierForm').removeClass('active');
-                    } else {
-                        alert(response.message);
-                    }
-                },
-                error: function() {
-                    alert('Failed to add supplier');
+        // Fetch the supplier details
+        fetchSupplierDetails(supplierId);
+
+        // Add event listener for the update button once the modal/form is shown
+        document.getElementById('updateButton').addEventListener('click', () => {
+            // Call the update function to send the updated data
+            updateSupplier(supplierId);
+        });
+        }
+
+
+        // Handle Delete Button
+    function handleDelete(event) {
+        const supplierId = event.target.getAttribute('data-id');
+        
+        // Ask for confirmation before deletion
+        if (confirm('Are you sure you want to delete this supplier?')) {
+            // Send DELETE request to delete the supplier
+            fetch(`../actions/supplier.php?id=${supplierId}`, {
+                method: 'DELETE',  // Use 'DELETE' for deleting the supplier
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Supplier deleted successfully!');
+                    fetchSuppliers(); // Refresh the supplier list
+                } else {
+                    alert('Failed to delete supplier!');
                 }
+            })
+            .catch(error => {
+                console.error('Error deleting supplier:', error);
+                alert('An error occurred while deleting the supplier.');
             });
+        }
+    }
+
+        
+
+        // Show Modal Function
+        function showModal() {
+            supplierModal.style.display = 'block';
+            supplierModalBackdrop.style.display = 'block';
+        }
+
+        // Hide Modal Function
+        function hideModal() {
+            supplierModal.style.display = 'none';
+            supplierModalBackdrop.style.display = 'none';
+        }
+
+        // Open modal when needed (e.g., for editing or adding)
+        document.getElementById('addSupplierButton').addEventListener('click', () => {
+            // Reset form for adding new supplier
+            supplierForm.reset();
+            document.getElementById('supplierId').value = ''; // Clear the ID
+            showModal();
         });
 
-        // Initial load of suppliers and statistics
-        loadSupplierStatistics();
-        loadSuppliers();
-
-        // Search functionality
-        $('input[placeholder="Search.."]').on('keyup', function() {
-            loadSuppliers($(this).val());
+        // Close modal when cancel button is clicked
+        btnCancel.addEventListener('click', () => {
+            hideModal();
         });
 
-        // (Rest of the previous JavaScript remains the same)
+
+        //Adding a new supplier 
+        supplierForm.addEventListener('submit', (event) => {
+        event.preventDefault(); // Prevent default form submission
+
+        const formData = new FormData(supplierForm);
+        const data = {};
+        formData.forEach((value, key) => {
+            data[key] = value;
+        });
+
+         // Remove the 'id' field from the data object
+        delete data.id;
+
+        // Print the data object to the console
+        console.log(data);
+
+        fetch('../actions/suppliers.php', {
+            method: 'POST', // Use 'PUT' for editing existing supplier
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data), // Send data as JSON
+        })
+        .then((response) => response.json())
+        .then((data) => {
+            console.log(data);  // Log the server response
+            if (data.success) {
+                alert('Supplier saved successfully!');
+                hideModal();
+                fetchSuppliers();  // Optionally, refresh the supplier list
+            } else {
+                alert('Failed to save supplier!');
+            }
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+            alert('Failed to save supplier: ' + data.error);
+        });
     });
+
+
+
+
+
+
     </script>
+
 
 </body>
 </html>
