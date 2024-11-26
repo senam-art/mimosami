@@ -18,7 +18,10 @@ At Mimosami, the focus is on creating high-quality baked goods that bring joy to
 
 **Inventory Management**: The inventory management system will automatically track changes in inventory based on customer orders and connect to suppliers to update stock levels when supplies are low.
 
-###How to use Database
-To access our database:
-1. Run XAMPP and start Apache and MySQL
-2. 
+// Database configuration
+$host = 'localhost:3306';
+$dbname = 'webtech_fall2024_senam_dzomeku'; 
+$username = 'senam.dzomeku'; 
+$password = "857120261"; 
+
+Live Demo Link: http://169.239.251.102:3341/~senam.dzomeku/power/view/Homepage.html
