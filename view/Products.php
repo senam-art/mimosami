@@ -1,7 +1,12 @@
 <?php
+session_start();
 include '../db/onlineconfig.php';
 
-session_start();
+// Check if user is logged in
+if (!isset($_SESSION['uname'])) {
+    header("Location: ../view/userLogin.php");
+    exit();
+}
 
 // Query to fetch all products from the database
 $sql = "SELECT * FROM mimosami_products";
@@ -107,8 +112,10 @@ $descriptionMap = [
 
         <footer id="footer">
             <div class="footer-content">
+                <a href="https://www.instagram.com/mimosami.gh/" target="_blank">
                 <p class="follow-text">Connect</p>
                 <img src="../assets/images/insta.png" alt="Instagram Logo" class="social-logo">
+                </a>  
             </div>
             <div class="footer-content">
                 <p class="footer-note">© 2024 All rights reserved <br>

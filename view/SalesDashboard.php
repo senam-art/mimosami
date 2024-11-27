@@ -18,7 +18,7 @@ $userName = $_SESSION['username'];
 Code to query database and extract data for the different divs
 */
 // Fetch Total Sales
-$salesQuery = "SELECT SUM('Cost of Sales') AS total_sales FROM mimosami_sales";
+$salesQuery = "SELECT SUM(Amount) AS total_sales FROM mimosami_productsales";
 $salesResult = $conn->query($salesQuery);
 
 $totalSales = $salesResult->fetch_assoc()['total_sales'];
@@ -51,12 +51,13 @@ $newSignups = $newSignupsResult -> fetch_assoc()['new_signups'];
 //Latest month sales data
 //Fetch latest month sales data
 $latestMonthSalesQuery = "SELECT YEAR(Date) AS year,
-                            MONTH(Date) AS month, 
-                            SUM(Amount) AS total_sales 
-                            FROM mimosami_sales 
-                            GROUP BY YEAR(Date),Month(Date) 
-                            ORDER BY year DESC, month DESC 
-                            LIMIT 1";
+                        MONTH(Date) AS month,
+                        SUM(Amount) AS total_sales
+                        FROM mimosami_productsales
+                        GROUP BY YEAR(Date), MONTH(Date)
+                        ORDER BY year DESC, month DESC
+                        LIMIT 1";
+
 
 $latestMonthSalesResult = $conn -> query($latestMonthSalesQuery);
 
@@ -76,7 +77,7 @@ Code to query database and extract data for the Monthly sales chart
 $monthlySalesQuery = "SELECT YEAR(Date) AS year,
                         MONTH(Date) AS month,
                         SUM(Amount) AS total_sales
-                        FROM mimosami_sales 
+                        FROM mimosami_productsales 
                         GROUP BY YEAR(Date), MONTH(Date) 
                         ORDER BY year DESC, month DESC";
 $monthlySalesResult = $conn->query($monthlySalesQuery); 
@@ -98,35 +99,59 @@ $salesJson = json_encode($sales);
 /*
 Code to query database and extract data for the Sales by product chart
 */
-// Fetching Sales by Product
-$salesByProductQuery = "SELECT mimosami_products.productName, SUM(mimosami_productsales.Quantity) AS product_sold
-                        FROM mimosami_productsales
-                        JOIN mimosami_products ON mimosami_products.productID = mimosami_productsales.productID
-                        GROUP BY mimosami_products.productName
-                        ORDER BY product_sold DESC";
-
+//Fetching Sales by product
+$salesByProductQuery  = "SELECT mp.productName, SUM(mo.Quantity) AS product_sold
+                            FROM mimosami_productsales mo
+                            JOIN mimosami_products mp ON mo.productID = mp.productID
+                            GROUP BY mp.productName
+                            ORDER BY product_sold DESC";
 
 
 $SalesByProductResult = $conn->query($salesByProductQuery);
-
-// Error checking
+//Error checking
 if (!$SalesByProductResult) {
     die("Query failed: " . $conn->error);
 }
 
-// Array to store product and corresponding overall sales
+//array to store product and corresponding overall sales
 $products = [];
 $salesCount = [];
 
-while ($row = $SalesByProductResult->fetch_assoc()) {
+while ($row = $SalesByProductResult ->fetch_assoc()){
+
     $products[] = $row['productName'];
-    $salesCount[] = $row['product_sold'];
+    $salesCount[] =$row['product_sold'];
 }
 
 // Encoding as JSON
 $productsJson = json_encode($products);
 $salesCountJson = json_encode($salesCount);
 
+
+/*Code to query database to get customer gender
+*/
+$customerGenderQuery = "SELECT Gender, Count(Gender) as gender_count
+                        FROM mimosami_customer 
+                        GROUP BY Gender
+                        ORDER BY gender_count DESC";
+
+$customerGenderResult = $conn->query($customerGenderQuery);
+if (!$SalesByProductResult) {
+    die("Query failed: " . $conn->error);
+}
+
+
+// Initialize arrays for chart labels and data
+$genderLabels = [];
+$genderCounts = [];
+
+while ($row = $customerGenderResult->fetch_assoc()) {
+    $genderLabels[] = $row['Gender'];
+    $genderCounts[] = $row['gender_count'];
+}
+//Encoding as JSON
+$genderLabelsJson = json_encode($genderLabels);
+$genderCountsJson = json_encode($genderCounts);
                         
 ?>
 
@@ -166,10 +191,10 @@ $salesCountJson = json_encode($salesCount);
 
         <div class="item2">
             <div class="menu-container">
-                <button class="menu selected"><a href="..\view\SalesDashboard.php">Sales</a></button><br>
-                <button class="menu"><a href="..\view\OrderDashboard.php">Orders</a></button><br>
-                <button class="menu"><a href="InventoryDashboard.php">Inventory</a></button>
-                <button class="menu"><a href="..\view\SupplierDashboard.php">Supplier</a></button>
+            <button class="menu selected">Sales</button><br>
+            <button class="menu"><a href = 'OrderDashboard.php'>Order</a></button><br>
+            <button class="menu"><a href = 'InventoryDashboard.php'>Inventory</a></button>
+            <button class="menu"><a href="..\view\SupplierDashboard.php">Supplier</a></button>
             </div>
         </div>
  

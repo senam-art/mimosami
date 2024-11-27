@@ -91,8 +91,7 @@ foreach ($inventoryItems as $item) {
         <div class="item1">
             <div class="grid-container-2-columns">
                 <div class="grid-item">
-                    <h1 style="text-align:left">Dashboard</h1>
-                    <p style="text-align:left">Welcome to your Inventory</p>
+                    <h1 style="text-align:left">Inventory Dashboard</h1>
                 </div>
                 <div class="grid-item" style="text-align: right;">
                     <input type="text" placeholder="Search..">

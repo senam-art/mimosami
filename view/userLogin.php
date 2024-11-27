@@ -1,20 +1,15 @@
 <?php
 session_start();
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
 require '../db/onlineconfig.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $conn = new mysqli($servername, $db_username, $db_password, $dbname);
-
-    // Check connection
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
-
     $uname = htmlspecialchars(trim($_POST['uname']));
     $pword = trim($_POST['pword']);
 
-    $sql = "SELECT CustomerID ,uname, pword FROM mimosami_customers WHERE uname=?";
+    $sql = "SELECT CustomerID, uname, pword FROM mimosami_customer WHERE uname=?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $uname);
     $stmt->execute();
@@ -22,10 +17,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
-
         if (password_verify($pword, $row['pword'])) {
             $_SESSION['uname'] = $uname;
-            header("Location: view/Products.php");
+            $_SESSION['CustomerID'] = $row['CustomerID'];
+            header("Location: ../view/Products.php");
             exit();
         } else {
             echo "Invalid username or password!";
@@ -33,11 +28,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     } else {
         echo "User not found!";
     }
-
     $stmt->close();
-    $conn->close();
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -82,7 +76,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
           <div class="grid-item" id="card">
             <h2>Login</h2>
-            <form id="login" action="../actions/login_user.php" method="POST">
+            <form id="login" method="POST">
               <input
                 id="uname"
                 name="uname"

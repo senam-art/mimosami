@@ -342,3 +342,116 @@ button {
   font-size: 10px;
   border-radius: 5px;
 }
+
+/* Viewport adjustments */
+@media (max-width: 1200px) {
+  .gallery {
+      grid-template-columns: repeat(2, 1fr);
+  }
+
+  .nav-links {
+      gap: 15px;
+  }
+
+  .marquee p {
+      font-size: 35px;
+  }
+}
+
+@media (max-width: 992px) {
+  .grid-container-2-columns {
+      grid-template-columns: 1fr 1fr;
+      padding: 1%;
+  }
+
+  h1 {
+      font-size: 40px;
+  }
+
+  h2 {
+      font-size: 30px;
+  }
+
+  .product-main {
+      padding: 20px;
+      margin: 20px;
+  }
+
+  #card {
+      margin: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .nav-links {
+      flex-direction: column;
+      gap: 10px;
+      align-items: center;
+  }
+
+  .gallery {
+      grid-template-columns: 1fr;
+      padding: 15px;
+  }
+
+  .grid-container-2-columns {
+      grid-template-columns: 1fr;
+  }
+
+  .marquee {
+      height: 8vh;
+  }
+
+  .marquee p {
+      font-size: 30px;
+  }
+
+  .description {
+      height: auto;
+      padding: 15px;
+  }
+
+  .footer-content {
+      flex-direction: column;
+      gap: 15px;
+  }
+
+  .product-grid-item img {
+      max-height: 250px;
+      max-width: 250px;
+  }
+
+  h1 {
+      font-size: 35px;
+  }
+
+  h2 {
+      font-size: 25px;
+      margin: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .marquee p {
+      font-size: 25px;
+  }
+
+  .nav-button {
+      width: 70px;
+  }
+
+  #card {
+      margin: 15px;
+      padding: 8px;
+  }
+
+  .product-main {
+      padding: 15px;
+      margin: 15px;
+  }
+
+  input {
+      width: 40px;
+      font-size: 16px;
+  }
+}

@@ -1,6 +1,13 @@
 <?php
-include '../db/onlineconfig.php';
 session_start();
+include '../db/onlineconfig.php';
+
+// Check if user is logged in
+if (!isset($_SESSION['uname'])) {
+    header("Location: ../view/login.php");
+    exit();
+}
+
 
 $total = 0; 
 
